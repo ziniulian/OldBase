@@ -1,0 +1,74 @@
+<html>
+	<head>
+		<title>testGridBorder</title>
+		<meta charset="utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<style type="text/css">
+			.LHUL_GridBorder_Title {
+				width: 100%;
+				height: 10%;
+				background-color: #069DD5;
+			}
+			.LHUL_GridBorder_Pack {
+				width: 100%;
+				height: 85%;
+				background-color: white;
+			}
+			.LHUL_GridBorder_Footer {
+				width: 100%;
+				height: 5%;
+				background-color: #069DD5;
+			}
+			.LHUL_GridBorder_Div {
+				width: 500px;
+				height: 500px;
+				overflow: hidden;
+				box-shadow: 0 0 20px #777;
+				border-radius: 5px;
+			}
+			.e {
+				background-color: red;
+			}
+			.g {
+				margin: 20px;
+			}
+		</style>
+
+		<script type="text/javascript">
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Layout/GridLayout.js" ]);
+
+				var gl = new LZR.HTML5.Util.Layout.GridLayout ({
+					minWidth: 200,	// 最小宽度
+					maxWidth: 300,	// 最大宽度
+					minNum: 2,	// 最小个数
+					maxNum: 5,	// 最大个数
+					wMargin: 20,	// 宽度方向间距
+					hMargin: 20,	// 高度方向间距
+					maxMargin: 100,	// 宽度方向最大间距
+					ratio: 1,	// 宽高比
+				});
+				gl.addClass("g");
+				gl.placeTo (document.body);
+				for (var i=0; i<10; i++) {
+					var c = "rgba(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", 1)";
+					var e = new LZR.HTML5.Util.Layout.GridElement ({
+						width: Math.floor(1 + Math.random() * 4),
+						height: Math.floor(1 + Math.random() * 2)
+					});
+					e.addClass ("e");
+					e.div.style.backgroundColor = c;
+					e.div.innerText = i + " : " + e.width + " , " + e.height + "<br>" + c;
+// console.log(e.div.innerText);
+					gl.addChild (e);
+				}
+				gl.init();
+			}
+		</script>
+	</head>
+
+	<body onload="init();">
+	</body>
+</html>

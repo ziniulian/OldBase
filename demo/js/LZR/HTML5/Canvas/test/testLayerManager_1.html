@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>testLayerManager</title>
+		<script src="../../../LZR.js"></script>
+
+		<script>
+			var lm = {};
+			var i=0;
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Canvas/LayerManager.js"
+				]);
+				lm = new LZR.HTML5.Canvas.LayerManager( document.getElementById("canvas") );
+
+				var pic = new Image();
+				pic.onload = function() {
+					lm.addLayer (new LZR.HTML5.Canvas.Layer({name:"test", obj:pic}));
+					lm.ctrlEnable ();
+					ctrl();
+				}
+				pic.src ="../../../../../../data/canvas.png";
+			}
+
+			function ctrl() {
+				requestAnimationFrame(ctrl);
+				lm.ctrlUpdate();
+				lm.flush();
+			}
+
+		</script>
+	</head>
+
+	<body onload="init()">
+		<canvas id="canvas" width="600"height="400" style="background-color:yellow">
+			<p>Your browserdoes not support the canvas element!</p>
+		</canvas>
+	</body>
+</html>  

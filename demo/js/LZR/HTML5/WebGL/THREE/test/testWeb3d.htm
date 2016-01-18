@@ -1,0 +1,71 @@
+<html>
+	<head>
+		<title>testWeb3d</title>
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+			// 初始化
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/Web3d.js" ]);
+
+				loger = document.getElementById('log');
+ 				var d = new LZR.HTML5.WebGL.Three.Web3d ({
+ 					// fov: 75,
+
+ 					// file: LZR.HTML5.upPath (7) + "data/asm.obj",
+ 					// center: {x:0, y:50,z:0},
+ 					// cameraPosition: {x:0, y:50,z:200},
+ 					// zoom: 2,
+ 					// backColor: 0,
+
+ 					// file: LZR.HTML5.upPath (7) + "data/whzt.obj",
+ 					// file: LZR.HTML5.upPath (7) + "data/ff.json",
+ 					// file: LZR.HTML5.upPath (7) + "data/ship/ship_main.js.txt",
+ 					// file: LZR.HTML5.upPath (7) + "data/port.json",
+
+ 					// file: LZR.HTML5.upPath (7) + "data/book/bookHouse.json",
+ 					file: LZR.HTML5.upPath (7) + "data/book/book.json",
+ 					cameraPosition: {x:0, y:0,z:6},
+ 					zoom: 100,
+
+ 					// file: LZR.HTML5.upPath (7) + "data/house/house.json",
+ 					// center: {x:0, y:1,z:0},
+ 					// cameraPosition: {x:0, y:1,z:10},
+ 					// zoom: 30,
+
+ 					// file: LZR.HTML5.upPath (7) + "data/house/34ap.json",
+
+ 					// file: LZR.HTML5.upPath (7) + "data/book01/book.json",
+ 					// cameraPosition: {x:0, y:2,z:0},
+ 					// zoom: 200,
+
+ 					// file: LZR.HTML5.upPath (7) + "data/3DS/PJ/pj.json",
+ 					// cameraPosition: {x:0, y:0,z:10},
+ 					// zoom: 30,
+
+ 					// file: LZR.HTML5.upPath (7) + "data/3DS/YLJ/ylj.json",
+ 					// center: {x:0, y:3,z:0},
+ 					// cameraPosition: {x:0, y:3,z:10},
+ 					// zoom: 30,
+
+ 					canvas: document.getElementById('mainCanvas')
+ 				});
+ 				//d.rotate();
+/*
+ 				var d2 = new Web3d ({
+ 					fov: 75,
+ 					file: LZR.HTML5.upPath (7) + "data/port.obj",
+ 					canvas: document.getElementById('aCanvas')
+ 				});
+*/
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div style="float:left"><canvas id="mainCanvas" width="800px" height="600px" ></canvas></div>
+		<pre id="LZR_LOG"></pre>
+		<!-- <canvas id="aCanvas" width="400px" height="300px" ></canvas> -->
+	</body>
+</html>

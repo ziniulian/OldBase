@@ -1,0 +1,44 @@
+<html>
+	<head>
+		<title>testUtil_appendTbody</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Util.js" ]);
+
+				var o = {
+					title:{a:1, b:"yuyuyyuyuyu", c:3},
+					data:[
+						{a:"1.1 sdaw", b:"1.2", c:"1.3"},
+						{a:21000, b:"2.2", c:"2.3ghttt"},
+						{a:"3.1", b:32, c:"3.3"}
+					]
+				};
+
+				var tb = document.getElementById ("tb");
+				LZR.HTML5.Util.appendTbody ( tb, o, false, true );
+ 
+				o = {
+					title:["a1", "b1", "c1"],
+					data:[
+						{a:"1.1 sdaw", b:"1.2", c:"1.3"},
+						{a:21000, b:"2.2", c:"2.3ghttt"},
+						["dfe", "dr", "tt"]
+					]
+				};
+				LZR.HTML5.Util.appendTbody ( tb, o, false, false );
+				alert ( LZR.HTML5.Util.toAbsURL ( "/js/" ) );
+				// delete o.title;
+				o.data[0].a = "no title";
+				LZR.HTML5.Util.appendTbody ( tb, o, true, false );
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<table><tbody id="tb"></tbody></table>
+	</body>
+</html>

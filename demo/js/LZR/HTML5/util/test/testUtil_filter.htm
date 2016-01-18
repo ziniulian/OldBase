@@ -1,0 +1,256 @@
+<html>
+	<head>
+		<title>testUtil_filter</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/Util.js",
+					LZR.HTML5.jsPath + "util/expand/json2.js"
+				]);
+
+				// 基本过滤及名字转换
+				var s = JSON.stringify ( LZR.HTML5.Util.filter (
+					{	// src
+						a:"a",
+						b:"b",
+						c:"c",
+						d:"d",
+						e:"e",
+						f:"f",
+						g:"g",
+						h:"h"
+					},
+					{	// tmp
+						a:null,
+						b:null,
+						f:"FF"
+					}, false ) );
+				LZR.HTML5.alog (s);
+
+				// 参数读取
+				var s = JSON.stringify ( LZR.HTML5.Util.filter (
+					{	// src
+						a:"a",
+						b:"b",
+						c:"c",
+						d:"d",
+						e:"e",
+						f:"f",
+						g:"g",
+						h:"h"
+					},
+					{	// tmp
+						a:0,
+						X:2,
+						f:"FF"
+					}, false, {}, "aa", "bb", "xx" ) );
+				LZR.HTML5.alog (s);
+
+				// obj 递归转换
+				var s = JSON.stringify ( LZR.HTML5.Util.filter (
+					{	// src
+						a:"a",
+						b:{
+							b1: "B_1",
+							b2: "B_2",
+							b3: "B_3",
+							b4: "B_4",
+							b5: "B_5",
+							b6: "B_6",
+							b7: "B_7"
+						},
+						c:"c",
+						d:{
+							d1: "D_1",
+							d2: "D_2",
+							d3: "D_3",
+							d4: "D_4",
+							d5: "D_5",
+							d6: "D_6",
+							d7: "D_7"
+						},
+						e:"e",
+						f:{
+							f1: "F_1",
+							f2: "F_2",
+							f3: "F_3",
+							f4: "F_4",
+							f5: "F_5",
+							f6: "F_6",
+							f7: "F_7"
+						},
+						g:"g",
+						h:{
+							h1: "H_1",
+							h2: {
+								h21: "H_21",
+								h22: "H_22",
+								h23: "H_23",
+								h24: "H_24",
+								h25: "H_25"
+							},
+							h3: {
+								h21: "H_21",
+								h22: "H_22",
+								h23: "H_23",
+								h24: "H_24",
+								h25: "H_25"
+							}
+						}
+					},
+					{	// tmp
+						f:"FF",
+						c:null,
+						b:{
+							tmp: {
+								b1: null,
+								b3: null,
+								b2: "2B",
+								b7: "7B"
+							}
+						},
+						d:{
+							name: "DDD",
+							tmp: {
+								d5: "5D",
+								d2: null
+							}
+						},
+						h: {
+							name: "HH",
+							tmp: {
+								h2: {
+									tmp: {
+										h21: "h2_h21",
+										h25:null
+									}
+								},
+								h3: {
+									name: "3H",
+									tmp: {
+										h22: "H32",
+										h24: "34H"
+									}
+								},
+								h1: "111H"
+							}
+						},
+						e: "END"
+					}, false ) );
+				LZR.HTML5.alog (s);
+
+				// 数组转换
+				var s = JSON.stringify ( LZR.HTML5.Util.filter (
+					{	// src
+						a: [
+							[11, 12, 13, 14, 15, 16, 17, 18, 19],
+							[21, 22 ,23 ,24 ,25 ,26, 27, 28, 29],
+							[31, 32 ,33 ,34 ,35 ,36, 37, 38, 39],
+							[41, 42 ,43 ,44 ,45 ,46, 47, 48, 49]
+						],
+						b: [1, 2 ,3 ,4 ,5 ,6, 7, 8, 9],
+						c: [
+							{ a:11, b:12, c:13 , d:14 },
+							{ b:22, c:23 , d:24 , e:25 , f:26 },
+							{ a:31, b:32, c:33  },
+							{ a:41, b:42, c:43 , d:44 , e:45 , f:46 }
+						],
+						d: [1, 2 ,3 ,4 ,5 ,6, 7, 8, 9],
+						e: [1, 2 ,3 ,4 ,5 ,6, 7, 8, 9],
+						f: [
+							[11, 12, 13, 14, 15, 16, 17, 18, 19],
+							[21, 22 ,23 ,24 ,25 ,26, 27, 28, 29],
+							[31, 32 ,33 ,34 ,35 ,36, 37, 38, 39],
+							[41, 42 ,43 ,44 ,45 ,46, 47, 48, 49]
+						],
+						g: {
+							g1: { a:11, b:12, c:13 , d:14 },
+							g2: { b:22, c:23 , d:24 , e:25 , f:26 },
+							g3: { a:31, b:32, c:33  },
+							g4: { a:41, b:42, c:43 , d:44 , e:45 , f:46 }
+						},
+						h:{
+							h1: "H_1",
+							h2: {
+								h21: "H_21",
+								h22: "H_22",
+								h23: "H_23",
+								h24: "H_24",
+								h25: "H_25"
+							},
+							h3: {
+								h21: "H_21",
+								h22: "H_22",
+								h23: "H_23",
+								h24: "H_24",
+								h25: "H_25"
+							}
+						}
+					},
+					{	// tmp
+						g: {
+							type: "ary"
+						},
+						a: {
+							name: "AA",
+							tmp: {
+								"2": "0",
+								"0": "1"
+							}
+						},
+						b: {	// 元素反向 BUG
+							tmp: {
+								"7": "b1",
+								"4": "b2",
+								"2": "b3"
+							}
+						},
+						f: {
+							name: "OF",
+							type: "ary",
+							tmp: {
+								"3": "1",
+								"5": "3"
+							}
+						},
+						c: {
+							name: "COC",
+							type: "ary",
+							tmp: {
+								num: 0,
+								a: null,
+								e: "CE"
+							}
+						},
+						h: {
+							name: "HH",
+							tmp: {
+								h3: {
+									name: "3H",
+									tmp: {
+										h22: "H32",
+										h24: "34H"
+									}
+								},
+								h2: {
+									tmp: {
+										h22: "1",
+										h21: "0",
+										h25: "2"
+									}
+								},
+								h1: "111H"
+							}
+						}
+					}, false ) );
+				LZR.HTML5.alog (s);
+			}
+		</script>
+	</head>
+
+	<body onload="init()"/>
+</html>

@@ -1,0 +1,76 @@
+<html>
+	<head>
+		<title>testDate</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<script>
+			function init() {
+				var a = 6;
+				switch (a) {
+					case 0:
+						alert(a);
+						break;
+					case 5:
+						alert(a+"++");
+						break;
+					default:
+						var b = "==";
+							case 8:
+								alert(b + a);
+								break;
+							case 2:
+								alert(b + a + "++");
+								break;
+							case 4:
+								alert(a + b);
+								break;
+							case 6:
+								alert("++" + a + b);
+								break;
+						break;
+				}
+
+				var d = document.createElement("div");
+				d.className = "g";
+				var d2 = document.createElement("div");
+				d2.className = "b";
+				var d3 = document.createElement("div");
+				d3.className = "b";
+
+				d.appendChild(d2);
+				d.innerHTML += "dhsdh<br>hduu";
+				d.appendChild(d3);
+
+				document.body.appendChild(d);
+
+			}
+		</script>
+
+		<style type="text/css">
+			.a .b{
+				width: 300px;
+				height: 300px;
+				background-color: yellow;
+			}
+			.d .c{
+				height: 100px;
+			}
+			.a{
+				background-color: red;
+			}
+			.e{
+				background: blue;
+			}
+			.f .e{
+				background: green;
+			}
+			.a .g{
+				background: white;
+			}
+		</style>
+	</head>
+
+	<body class="a d" onload="init()">
+		<div class="b c e" ></div>
+	</body>
+</html> 

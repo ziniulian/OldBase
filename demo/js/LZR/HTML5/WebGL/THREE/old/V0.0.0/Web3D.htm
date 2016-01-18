@@ -1,0 +1,24 @@
+<html>
+	
+	<head>
+		<script src="js\Web3D\threejs\three.min.js"></script>
+		<script src="js\Web3D\threejs\TrackballControls.js"></script>
+		<script src="js\Web3D\threejs\OBJLoader.js"></script>
+		<script src="js\\LZRutil\\LZRutil.js"></script>
+		<script src="js\Web3D\Web3d.js"></script>
+
+		<script>
+ 			function init() {
+ 				var d = new Web3d ({
+ 					fov: 75,
+ 					file: "../../../../../../../../data/port.obj",
+ 					canvas: document.getElementById('mainCanvas')
+ 				});
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<canvas id="mainCanvas" width="800px" height="600px" ></canvas>
+	</body>
+</html>

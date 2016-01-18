@@ -1,0 +1,79 @@
+<html>
+	<head>
+		<title>testCatchImgByWebsocket</title>
+		<meta charset="utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				// V0.0.2版
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/Util/CatchImgByWebsocket/Forecast.js",
+					LZR.HTML5.jsPath + "HTML5/Bp/Util/CatchImgByWebsocket/Truth.js"
+				]);
+				var Foc = LZR.HTML5.Bp.Util.CatchImgByWebsocket.Forecast;
+				var Tru = LZR.HTML5.Bp.Util.CatchImgByWebsocket.Truth;
+
+				var foc = new Foc({
+					url: "ws://127.0.0.1:8989",
+					num: "35",
+					area: "d01",
+					mod: "NAQPMS",
+					tim: "2015082320",
+					start: 5,
+					end: 6
+				});
+				foc.event.close.append (function (rs) {
+					for (var i=0; i<rs.length; i++) {
+						var img = document.createElement("img");
+						img.src = rs[i].ret;
+						document.body.appendChild(img);
+					}
+				});
+
+				var redo = true;
+				var redofun = function (rs) {
+					for (var i=0; i<rs.length; i++) {
+						console.log (rs[i].ret);
+					}
+					if (redo) {
+						redo = false;
+						foc.start = 20;
+						foc.end = 23;
+						foc.open();
+					}
+				};
+				foc.event.close.append (redofun);
+				foc.event.close.delete (redofun);
+				// foc.event.close.delete (0);
+
+				foc.setUrlPre ("http://127.0.0.1:8085/data/RegImg/pic/figure/");
+				foc.open();
+
+
+				var tru = new Tru({
+					url: "ws://127.0.0.1:8989",
+					num: "4F",
+					area: "d01",
+					mod: "NAQPMS",
+					start: "2015071100",
+					end: "2015071102"
+				});
+				tru.resultType = tru.REULT_TYPE.base64;
+				tru.onClose = function (rs) {
+					for (var i=0; i<rs.length; i++) {
+						var img = document.createElement("img");
+						img.src = rs[i].ret;
+						document.body.appendChild(img);
+					}
+				};
+				tru.open();
+
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+	</body>
+</html>

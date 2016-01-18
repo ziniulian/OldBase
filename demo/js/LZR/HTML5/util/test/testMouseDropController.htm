@@ -1,0 +1,60 @@
+<html>
+	<head>
+		<title>testMouseDropController</title>
+		<script src="../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/MouseDropController.js" ]);	// V0.0.4
+
+ 				var d = document.getElementById('mainCanvas');
+ 				var control = new LZR.HTML5.Util.MouseDropController(d);
+ 				control.leftCursor = "hand";
+ 				control.midCursor = "move";
+ 				control.rightCursor = "wait";
+
+ 				control.noLong = false;
+ 				control.clickTime = 300;
+ 				control.autoClick = function (x, y) {
+ 					alert ("click : " + x + " , " + y);
+ 				};
+ 				control.autoLong = function (x, y) {
+ 					alert ("long : " + x + " , " + y);
+ 				};
+
+ 				// 鼠标经过事件测试（V0.0.4）
+ 				control.noCurrentMove = false;
+ 				control.autoCurrentMove = function (x, y) {
+ 					LZR.HTML5.log( "MouseMove : " + x + " , " + y );
+ 				};
+
+				control.autoFlush = function () {
+					d.innerHTML = "state : " + control.state + "<br>";
+					d.innerHTML += "leftStart : " + control.leftStart.x + " , " + control.leftStart.y + "<br>";
+					d.innerHTML += "leftEnd : " + control.leftEnd.x + " , " + control.leftEnd.y + "<br>";
+					d.innerHTML += "midStart : " + control.midStart.x + " , " + control.midStart.y + "<br>";
+					d.innerHTML += "midEnd : " + control.midEnd.x + " , " + control.midEnd.y + "<br>";
+					d.innerHTML += "rightStart : " + control.rightStart.x + " , " + control.rightStart.y + "<br>";
+					d.innerHTML += "rightEnd : " + control.rightEnd.x + " , " + control.rightEnd.y + "<br>";
+					d.innerHTML += "currentPage : " + control.currentPage.x + " , " + control.currentPage.y + "<br>";
+					d.innerHTML += "currentSelf : " + control.currentSelf.x + " , " + control.currentSelf.y + "<br>";
+					d.innerHTML += "wheelValue : " + control.wheelValue + "<br>";
+					/*
+					// 测试 getDomPositionForDocument（获取DOM元素的文档坐标）
+					var p = Lzrut.getDomPositionForDocument(d);
+					d.innerHTML += "left : " + p.left + "<br>";
+					d.innerHTML += "top : " + p.top + "<br>";
+					d.innerHTML += "width : " + p.width + "<br>";
+					d.innerHTML += "height : " + p.height + "<br>";
+					*/
+				}
+				control.enable();
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div id="mainCanvas" style="width:2400; height:2300; background-color:#FF0"></div>
+	</body>
+</html>

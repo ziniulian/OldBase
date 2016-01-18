@@ -1,0 +1,1 @@
+java -jar wpi-0.0.1-SNAPSHOT-executable.jar

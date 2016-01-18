@@ -1,0 +1,27 @@
+﻿"C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files		--enable-webgl --ignore-gpu-blacklist
+
+
+V0.0.0：（原 V1.00）
+	1. 导入OBJ档案
+	2. 正交 及 透视投影显示
+	3. 旋转、平移、缩放控制
+
+V0.0.1：（原 V1.01）
+	1. 优化 this 指针调用方法
+	2. 导入 JSON 档案
+	3. 工具码改静态类形式
+	4. 改良正交投影的 旋转、平移、缩放控制
+
+V0.0.2：
+	1. LZR 库整合（2014-12-30）
+
+V0.0.3：
+	1. 所有 delete 方法改用 LZR.HTML5.Util.del（2015-1-5）
+	2. 所有 bind 方法改用 LZR.HTML5.Util.bind（2015-1-5）
+	3. ThisTag 改用 LZR.HTML5.Util.bind（2015-1-5）
+	4. 新增 加入实体 和 删除实体 两方法（2015-5-20）
+
+
+
+
+

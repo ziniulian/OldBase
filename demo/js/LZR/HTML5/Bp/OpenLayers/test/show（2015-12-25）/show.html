@@ -1,0 +1,95 @@
+<html>
+	<head>
+		<title>Temp</title>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" href="show.css">
+		<link rel="stylesheet" type="text/css" href="../../../../expand/ol3/ol.css">
+		<script src="../../../../expand/ol3/ol.js"></script>
+		<script src="../../../../../LZR.js"></script>
+		<script src="HelloWorld.js"></script>
+		<script src="show.js"></script>
+
+		<style type="text/css">
+			.hidMapCtr {
+				display: none;
+			}
+		</style>
+
+		<script>
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(5);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/Util/BpTimeAxis.js",
+					LZR.HTML5.jsPath + "HTML5/util/Ajax.js",
+					LZR.HTML5.jsPath + "util/expand/json2.js"
+				]);
+				hw = HelloWorld();
+
+				show.map = new ol.Map({
+					layers: [
+						new ol.layer.Tile({
+							source: new ol.source.OSM()
+						})
+					],
+					target: 'map',
+					view: new ol.View({
+						zoom: 5,
+						center: ol.proj.fromLonLat([100, 35]),
+					}),
+					controls: ol.control.defaults({
+						attributionOptions: {
+							className: "hidMapCtr"
+						},
+						rotateOptions: {
+							className: "hidMapCtr"
+						},
+						zoomOptions: {
+							className: "hidMapCtr"
+						}
+					})
+				});
+
+				show.init();
+			}
+		</script>
+	</head>
+
+	<body class="body" onload="init()">
+		<div id="map" class="map"></div>
+
+		<div>
+			<div id="CityAndStation_dateOut" class="date">
+				<span>产品时间</span>
+				<input id="CityAndStation_date"
+					class="dojo_date"
+					data-dojo-attach-point="CityAndStation_date"
+					required="true" type="text"
+					data-dojo-type="dijit/form/DateTextBox"
+					data-dojo-props="constraints:{datePattern: 'yyyy-MM-dd'}, readonly:'true'" />
+			</div>
+
+			<div id="CityAndStation_timOut" class="tim">
+				<select id="CityAndStation_tim"
+					class="dojo"
+					data-dojo-attach-point="CityAndStation_tim"
+					data-dojo-type="dijit/form/Select">
+					<option value="20" selected>20时</option>
+					<option value="8">08时</option>
+				</select>
+			</div>
+
+			<div id="CityAndStation_modOut" class="mod">
+				<span>预报模式</span>
+				<select id="CityAndStation_mod"
+					class="dojo_mod"
+					data-dojo-attach-point="CityAndStation_mod"
+					data-dojo-type="dijit/form/Select">
+					<option value="naqpms" selected>NAQPMS</option>
+					<option value="cmaq" >CMAQ</option>
+					<option value="camx" >CAMx</option>
+					<option value="wrfch" >WRF-Chem</option>
+				</select>
+			</div>
+		</div>
+	</body>
+</html>

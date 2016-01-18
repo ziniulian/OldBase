@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<title>testLayerManager</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../LZR.js"></script>
+
+		<script>
+			var lm = {};
+			var imgs = {
+				map:{},
+				distribute:{},
+				wind:{},
+				point:{}
+			};
+			var i=0;
+			function init() {
+				// LZR.HTML5.jsPath = document.getElementsByTagName("script").item(0).src;
+				// LZR.HTML5.jsPath = LZR.HTML5.jsPath.substr(0, LZR.HTML5.jsPath.length-6);
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Canvas/LayerManager.js"
+				]);
+				lm = new LZR.HTML5.Canvas.LayerManager( document.getElementById("mainCanvas") );
+				lm.init();
+				ctrl();
+
+				imgs.map = new Image();
+				imgs.map.onload = lmInit;
+				imgs.map.src ="../../../../../../data/融昭普瑞DemoImg/map.jpg";
+
+				imgs.distribute = new Image();
+				imgs.distribute.onload = lmInit;
+				imgs.distribute.src ="../../../../../../data/融昭普瑞DemoImg/2.jpg";
+
+				imgs.wind = new Image();
+				imgs.wind.onload = lmInit;
+				imgs.wind.src ="../../../../../../data/融昭普瑞DemoImg/6.jpg";
+
+				imgs.point = new Image();
+				imgs.point.onload = lmInit;
+				imgs.point.src ="../../../../../../data/canvas.png";
+			}
+
+			function lmInit () {
+				i++;
+				if (i == 4) {
+					setTimeout(function () {
+						var y = new LZR.HTML5.Canvas.Layer(imgs.map);
+						lm.addLayer (y, "地图");
+					}, 2000);
+
+					setTimeout(function () {
+						var y = new LZR.HTML5.Canvas.Layer(imgs.distribute);
+						y.alpha = 0.3;
+						lm.addLayer (y, "分布图");
+					}, 4000);
+
+					setTimeout(function () {
+						var y = new LZR.HTML5.Canvas.Layer(imgs.wind);
+						y.alpha = 0.3;
+						lm.addLayer (y, "风向");
+					}, 6000);
+
+					setTimeout(function () {
+						var y = new LZR.HTML5.Canvas.Layer(imgs.point);
+						y.alpha = 0.3;
+						lm.addLayer (y, "站点");
+					}, 8000);
+
+					setTimeout(function () {
+						lm.resetMax (0, 0, 1197, 872);
+						lm.s.top = 50;
+						lm.s.left = 50;
+						lm.s.w = 100;
+						lm.s.reHeight();
+					}, 10000);
+				}
+			}
+
+			function ctrl() {
+				requestAnimationFrame(ctrl);
+				lm.ctrlUpdate();
+				lm.flush();
+			}
+
+			// 透明度变更事件
+			function changeAlpha (obj, v, txt) {
+				if (v) {
+					txt.value -= v;
+				}
+				v = txt.value;
+
+				if (v < 0) {
+					v = 0;
+					txt.value = v;
+				}
+
+				if (v > 1) {
+					v = 1;
+					txt.value = v;
+				}
+
+				obj.alpha = v;
+			}
+
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div style="float:left; background-color:yellow;"><canvas id="mainCanvas" width="600px" height="400px" >
+			<p>您的浏览器不支持 canvas 元素！</p>
+		</canvas></div>
+
+		<form autocomplete="off">
+			<br><input type="checkbox" checked=true onclick="lm.layers[3].visible = !lm.layers[3].visible;" /> 站点 ： 透明度：
+			<input type="button" value="-" onclick="changeAlpha(lm.layers[3], 0.1, point);"/>
+			<input type="text" size="10" id="point" value=0.3 onchange="changeAlpha(lm.layers[3], null, point);" />
+			<input type="button" value="+" onclick="changeAlpha(lm.layers[3], -0.1, point);"/><br>
+
+			<br><input type="checkbox" checked=true onclick="lm.layers[2].visible = !lm.layers[2].visible;" /> 风向 ： 透明度：
+			<input type="button" value="-" onclick="changeAlpha(lm.layers[2], 0.1, wind);"/>
+			<input type="text" size="10" id="wind" value=0.3 onchange="changeAlpha(lm.layers[2], null, wind);" />
+			<input type="button" value="+" onclick="changeAlpha(lm.layers[2], -0.1, wind);"/><br>
+
+			<br><input type="checkbox" checked=true onclick="lm.layers[1].visible = !lm.layers[1].visible;" /> 分布图：透明度：
+			<input type="button" value="-" onclick="changeAlpha(lm.layers[1], 0.1, distribute);"/>
+			<input type="text" size="10" id="distribute" value=0.3 onchange="changeAlpha(lm.layers[1], null, distribute);" />
+			<input type="button" value="+" onclick="changeAlpha(lm.layers[1], -0.1, distribute);"/><br>
+
+			<br><input type="checkbox" checked=true onclick="lm.layers[0].visible = !lm.layers[0].visible;" /> 地图 ： 透明度：
+			<input type="button" value="-" onclick="changeAlpha(lm.layers[0], 0.1, map);"/>
+			<input type="text" size="10" id="map" value=1 onchange="changeAlpha(lm.layers[0], null, map);" />
+			<input type="button" value="+" onclick="changeAlpha(lm.layers[0], -0.1, map);"/><br>
+		</form>
+	</body>
+</html>  

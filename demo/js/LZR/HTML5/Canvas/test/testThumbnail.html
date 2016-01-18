@@ -1,0 +1,112 @@
+<html>
+	<head>
+		<title>testThumbnail</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../LZR.js"></script>
+
+		<script>
+			var t, t2, t3;
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Canvas/Thumbnail.js"
+				]);
+
+				t = new LZR.HTML5.Canvas.Thumbnail( document.getElementById("canvas") );
+				t.init();
+				t.count = 3;
+				t.width = 180;
+
+				t2 = new LZR.HTML5.Canvas.Thumbnail( document.getElementById("canvas2") );
+				t2.direction = 2;
+				t2.count = 20;
+				t2.width = 180;
+				t2.paddingU = 30;
+
+				// t2 添加文字信息
+				t2.ctx.fillStyle="pink";
+				t2.ctx.font="20px Verdana";
+				t2.draw = function (tb, i, x, y, w, h) {
+					tb.ctx.fillText("第 " + ++i + " 张图", x + 45, y + h + 20);
+				};
+
+				t3 = new LZR.HTML5.Canvas.Thumbnail( document.getElementById("canvas3") );
+				t3.direction = 2;
+				t3.count = 25;
+				t3.rows = 3;
+				t3.paddingV = 50;
+				t3.width = 180;
+				t3.paddingU = 15;
+				t3.buff = 10;
+				t3.offsetU = 3;
+				t3.offsetV = 3;
+
+				// t3 添加文字信息
+				t3.ctx.fillStyle="yellow";
+				t3.ctx.font="20px Verdana";
+				t3.draw = function (tb, i, x, y, w, h) {
+					tb.ctx.fillText("T3_第 " + ++i + " 张图", x + 20, y + h - 5);
+				};
+				t3.onchange = function (i) {
+					alert(i+1);
+				};
+
+				var pic = new Image();
+				pic.onload = function() {
+					var img = new LZR.HTML5.Canvas.ThumbnailImg();
+					img.layers.push ( new LZR.HTML5.Canvas.Layer(pic) );
+					img.getLayers = function () {return this.layers};
+
+					// t
+					t.count = 15;
+					for (var i=0; i<t.count; i++) {
+						t.imgs.push( LZR.HTML5.Util.clone(img) );
+					}
+					t.calculateMax();	// 先初始化，再改动count的方法
+
+					// t2
+					for (var i=0; i<t2.count; i++) {
+						t2.imgs.push( LZR.HTML5.Util.clone(img) );
+					}
+					t2.init();
+
+					// t3
+					for (var i=0; i<t3.count; i++) {
+						t3.imgs.push( LZR.HTML5.Util.clone(img) );
+					}
+					t3.init();
+
+					ctrl();
+				}
+				pic.src ="../../../../../../data/canvas.png";
+			}
+
+			function ctrl() {
+				requestAnimationFrame(ctrl);
+
+				t.ctrlUpdate();
+				t2.ctrlUpdate();
+				t3.ctrlUpdate();
+
+				t.flush();
+				t2.flush();
+				t3.flush();
+			}
+
+		</script>
+	</head>
+
+	<body onload="init()">
+		<canvas id="canvas2" width="180"height="600" style="background-color:blue">
+			<p>Your browserdoes not support the canvas element!</p>
+		</canvas>
+
+		<canvas id="canvas" width="700"height="100" style="background-color:blue">
+			<p>Your browserdoes not support the canvas element!</p>
+		</canvas>
+
+		<canvas id="canvas3" width="700"height="600" style="background-color:blue">
+			<p>Your browserdoes not support the canvas element!</p>
+		</canvas>
+	</body>
+</html>  

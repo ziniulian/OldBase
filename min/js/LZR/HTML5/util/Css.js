@@ -1,0 +1,2 @@
+LZR.HTML5.loadJs([LZR.HTML5.jsPath+"HTML5/util/Util.js"]);
+LZR.HTML5.Util.Css={version:"0.0.0",hasClass:function(b,a){return a&&""!==a?b.className.match(RegExp("(\\s|^)"+a+"(\\s|$)")):!1},addClass:function(b,a){a&&(""!==a&&!LZR.HTML5.Util.Css.hasClass(b,a))&&(b.className+=" "+a+" ")},removeClass:function(b,a){LZR.HTML5.Util.Css.hasClass(b,a)&&(b.className=b.className.replace(RegExp("(\\s|^)"+a+"(\\s|$)"),""))},toggleClass:function(b,a){LZR.HTML5.Util.Css.hasClass(b,a)?LZR.HTML5.Util.Css.removeClass(b,a):LZR.HTML5.Util.Css.addClass(b,a)}};

@@ -1,0 +1,860 @@
+﻿
+product:
+{
+	supplierID:0,
+	brand:"",
+	name:"乾燥劑",
+	otherPro:[
+		{key:"材質",value:"二氧化硅", },
+		{key:"指標",value:"合格品", },
+	],
+	performance:[
+		{key:"二氧化硅與結構水含量",value:"99.6%", },
+		{key:"PH值",value:"4~8", },
+		{key:"比電阻Ω.cm",value:"4300", },
+		{key:"烘乾失重",value:"2.86", },
+		{key:"吸濕率RH=90%",value:"31.8", },
+		{key:"吸濕率RH=50%",value:"22.1", },
+		{key:"吸濕率RH=20%",value:"8.2", },
+		{key:"",value:"", },
+	],
+	struct:[
+		{
+			rawID:1,
+			pro:[
+				{key:"克重g/m2",value:"75", },
+				{key:"橫向最大力 N",value:"183.27", },
+				{key:"橫向伸長率%",value:"60.02", },
+				{key:"縱向最大力 N",value:"211.08", },
+				{key:"縱向伸長率%",value:"35.23", },
+				{key:"印刷內容",value:"DESICCATN\nSILICA GEL\nDO NOT EAT\nTHROW AWAY", },
+			], 
+		},
+		{
+			rawID:10,
+			pro:[
+				{key:"成份",value:[
+					"SiO2",
+					"Na2O",
+					"Fe2O3",
+					"MgO",
+					"CaO",
+					"Al2O3",
+				], },
+				{key:"含量",value:[
+					"99.60%",
+					"0.17%",
+					"0.02%",
+					"0.01%",
+					"0.04%",
+					"0.16%",
+				], },
+			], 
+		},
+	],
+	proc:[
+		{
+			num:1,
+			name:"",
+			child:{
+				name:"加工步驟",
+				member:[
+					{
+						num:1,
+						name:"投料",
+						rawConsump:[
+							{
+								rawID:5,
+								demand:{value:1, unit:"", },
+							},
+						],
+						parameter:{
+							target:{value:"1.25~2.5", unit:"Kg/min", },
+							setValue:{value:1.25, unit:"Kg/min", },
+						},
+						manpower:{
+							perManp:{value:1/4, unit:"", },
+							totalManp:{value:1/4, unit:"", },
+						},
+						craft:{
+							yield:{value:100, unit:"%", },
+							cycle:{value:1, unit:"包/20分鐘", },
+							capacity:{},
+						},
+						otherPro:[
+							{key:"步驟說明",value:"每袋25Kg硅膠拆開封口，物料倒進漏斗中", },
+						],
+					},
+				],
+			},
+		},
+		{
+			num:2,
+			name:"顆粒分包",
+			child:{
+				name:"加工步驟",
+				member:[
+					{
+						num:1,
+						name:"分包",
+						rawConsump:[
+							{
+								rawID:6,
+								demand:{value:1, unit:"", },
+							},
+							{
+								rawID:1,
+								consumption:{value:0.013, unit:"M2（15克包裝規格用量）", },
+							},
+						],
+						parameter:{
+							target:{value:"80~100", unit:"pcs/min", },
+							setValue:{value:80, unit:"pcs/min", },
+						},
+						manpower:{
+							perManp:{value:1/4, unit:"", },
+							totalManp:{value:1/4, unit:"", },
+						},
+						craft:{
+							yield:{value:100, unit:"%", },
+							cycle:{value:80, unit:"pcs/分", },
+							capacity:{value:4800, unit:"pcs/H", },
+						},
+						otherPro:[
+							{key:"步驟說明",value:"將設定好一定規格（重量相同）的杯狀治具分裝在分包機旋轉盤上，治具裝滿干燥劑后自動旋轉到指定位置，治具下方的自動閥自動打開，干燥劑裝入袋中，進行自動分包", },
+						],
+					},
+				],
+			},
+		},
+		{
+			num:3,
+			name:"成品包裝",
+			child:{
+				name:"加工步驟",
+				member:[
+					{
+						num:1,
+						name:"包裝",
+						rawConsump:[
+							{
+								rawID:7,
+								demand:{value:1, unit:"", },
+							},
+							{
+								rawID:8,
+								demand:{value:15, unit:"kg/箱", },
+							},
+							{
+								rawID:2,
+								consumption:{value:1, unit:"PCS", },
+							},
+							{
+								rawID:3,
+								consumption:{value:1, unit:"PCS", },
+							},
+							{
+								rawID:4,
+								consumption:{value:1/20, unit:"卷", },
+							},
+						],
+						parameter:{
+							target:{value:"100~120", unit:"pcs/min", },
+							setValue:{value:120, unit:"pcs/min", },
+						},
+						manpower:{
+							perManp:{value:1/4, unit:"", },
+							totalManp:{value:1/4, unit:"", },
+						},
+						craft:{
+							yield:{value:100, unit:"%", },
+							cycle:{value:2, unit:"PCS/秒", },
+							capacity:{},
+						},
+						otherPro:[
+							{key:"步驟說明",value:"每袋25Kg硅膠拆開封口，物料倒進漏斗中", },
+						],
+					},
+				],
+			},
+		},
+	],
+	child:{
+		name:"類型",
+		member:[
+			{
+				name:"A型",
+				basePro:[
+					{key:"粒度",value:[
+						"1~2mm",
+						"2~4mm",
+						"2~5mm",
+						"4~8mm"
+					], },
+					{key:"二氧化硅與結構水含量",value:"99.6%", },
+					{key:"PH值",value:"4~8", },
+					{key:"比電阻Ω.cm",value:"4300", },
+					{key:"耐溫",value:"1500℃", },
+					{key:"價格",value:"4.0487RMB/Kg", },
+					{key:"備註",value:"HG/T 2765.1-2005\n中華人民共和國化工行業標準\nA型硅膠", },
+				],
+				use:[
+					{key:"吸濕率RH=90%",value:"31.8", },
+					{key:"吸濕率RH=50%",value:"22.1", },
+					{key:"吸濕率RH=20%",value:"8.2", },
+					{key:"作用及用途",value:"防潮，防銹，用于紡織、電子、皮革、計算機器件、不銹鋼產品,放入包裝箱中密封（重要），每立方米包裝空間不少于1500克干燥劑", },
+				],
+				topRawID:[10,1,11,6,7,2,3,],
+				child:{
+					name:"規格",
+					member:[
+						{
+							name:"0.5±0.05g/包",
+							use:[
+								{key:"形狀",value:"顆粒狀", },
+								{key:"適裝空間",value:"0.00034 M3/PCS", },
+								{key:"使用環境",value:"溫度≧25℃，RH≧20%", },
+							],
+							rawCost:[
+								{
+									otherPro:[
+										{key:"單PCS成本",value:0.00339, },
+									],
+								},
+								{
+									rawID:9,
+									otherPro:[
+										{key:"品名",value:"硅膠", },
+									],
+									consumption:{value:0.003, unit:"kg/PCS", },
+									loss:{value:1, unit:"%", },
+									uPrice:{value:0.6482, unit:"USD/Kg", },
+									tPrice:{value:0.00196, unit:"USD/PCS", },
+								},
+								{
+									rawID:1,
+									otherPro:[
+										{key:"品名",value:"無紡布", },
+									],
+									consumption:{value:0.00385, unit:"M2", },
+									loss:{value:3, unit:"%", },
+									uPrice:{value:0.3241, unit:"USD/M2", },
+									tPrice:{value:0.00129, unit:"USD/PCS", },
+								},
+								{
+									rawID:[2,3,],
+									otherPro:[
+										{key:"品名",value:"紙箱+膠帶", },
+									],
+									consumption:{value:0.000220, unit:"單PCS", },
+									loss:{value:0.0, unit:"%", },
+									uPrice:{value:0.6522, unit:"USD/PCS", },
+									tPrice:{value:0.00014, unit:"USD/PCS", },
+								},
+							],
+							proc:[
+								{
+									num:1,
+									procCost:{
+										procCT:{value:13500, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00019, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:2,
+									procCost:{
+										procCT:{value:9000, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00029, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:3,
+									procCost:{
+										procCT:{value:9000, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00029, unit:"USD/PCS", },
+									},
+								},
+							],
+							busiCost:{
+								transport:{value:0.0001, unit:"USD/PCS", },
+								manage:{value:0.00017, unit:"USD/PCS", },
+								tax:{},
+							},
+							otherCost:{
+								testFee:{},
+								otherPro:[
+									{key:"利潤",value:{}, },
+								],
+							},
+							statistic:{
+								sum:{value:0.00443, unit:"", },
+								costSum:{value:0.0276949, unit:"RMB", },
+								otherPro:[
+									{key:"備註",value:"", },
+								],
+							},
+						},
+						{
+							name:"2±0.2g/包",
+							use:[
+								{key:"形狀",value:"顆粒狀", },
+								{key:"適裝空間",value:"0.0013 M3/PCS", },
+								{key:"使用環境",value:"溫度≧25℃，RH≧20%", },
+							],
+							rawCost:[
+								{
+									otherPro:[
+										{key:"單PCS成本",value:0.00247, },
+									],
+								},
+								{
+									rawID:9,
+									otherPro:[
+										{key:"品名",value:"硅膠", },
+									],
+									consumption:{value:0.002, unit:"kg/PCS", },
+									loss:{value:1, unit:"%", },
+									uPrice:{value:0.6482, unit:"USD/Kg", },
+									tPrice:{value:0.0013, unit:"USD/PCS", },
+								},
+								{
+									rawID:1,
+									otherPro:[
+										{key:"品名",value:"無紡布", },
+									],
+									consumption:{value:0.00315, unit:"M2", },
+									loss:{value:3, unit:"%", },
+									uPrice:{value:0.3241, unit:"USD/M2", },
+									tPrice:{value:0.00105, unit:"USD/PCS", },
+								},
+								{
+									rawID:[2,3,],
+									otherPro:[
+										{key:"品名",value:"紙箱+膠帶", },
+									],
+									consumption:{value:0.000166, unit:"單PCS", },
+									loss:{value:0.0, unit:"%", },
+									uPrice:{value:0.6522, unit:"USD/PCS", },
+									tPrice:{value:0.00011, unit:"USD/PCS", },
+								},
+							],
+							proc:[
+								{
+									num:1,
+									procCost:{
+										procCT:{value:12500, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.0002, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:2,
+									procCost:{
+										procCT:{value:12000, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00022, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:3,
+									procCost:{
+										procCT:{value:12000, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00022, unit:"USD/PCS", },
+									},
+								},
+							],
+							busiCost:{
+								transport:{value:0.00005, unit:"USD/PCS", },
+								manage:{value:0.00013, unit:"USD/PCS", },
+								tax:{},
+							},
+							otherCost:{
+								testFee:{},
+								otherPro:[
+									{key:"利潤",value:{}, },
+								],
+							},
+							statistic:{
+								sum:{value:0.00329, unit:"", },
+								costSum:{value:0.0205422, unit:"RMB", },
+								otherPro:[
+									{key:"備註",value:"", },
+								],
+							},
+						},
+						{
+							name:"3±0.3g/包",
+							use:[
+								{key:"形狀",value:"顆粒狀", },
+								{key:"適裝空間",value:"0.002 M3/PCS", },
+								{key:"使用環境",value:"溫度≧25℃，RH≧20%", },
+							],
+							rawCost:[
+								{
+									otherPro:[
+										{key:"單PCS成本",value:0.00339, },
+									],
+								},
+								{
+									rawID:9,
+									otherPro:[
+										{key:"品名",value:"硅膠", },
+									],
+									consumption:{value:0.003, unit:"kg/PCS", },
+									loss:{value:1, unit:"%", },
+									uPrice:{value:0.6482, unit:"USD/Kg", },
+									tPrice:{value:0.00196, unit:"USD/PCS", },
+								},
+								{
+									rawID:1,
+									otherPro:[
+										{key:"品名",value:"無紡布", },
+									],
+									consumption:{value:0.00385, unit:"M2", },
+									loss:{value:3, unit:"%", },
+									uPrice:{value:0.3241, unit:"USD/M2", },
+									tPrice:{value:0.00129, unit:"USD/PCS", },
+								},
+								{
+									rawID:[2,3,],
+									otherPro:[
+										{key:"品名",value:"紙箱+膠帶", },
+									],
+									consumption:{value:0.000220, unit:"單PCS", },
+									loss:{value:0.0, unit:"%", },
+									uPrice:{value:0.6522, unit:"USD/PCS", },
+									tPrice:{value:0.00014, unit:"USD/PCS", },
+								},
+							],
+							proc:[
+								{
+									num:1,
+									procCost:{
+										procCT:{value:13500, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00019, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:2,
+									procCost:{
+										procCT:{value:9000, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00029, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:3,
+									procCost:{
+										procCT:{value:9000, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00029, unit:"USD/PCS", },
+									},
+								},
+							],
+							busiCost:{
+								transport:{value:0.0001, unit:"USD/PCS", },
+								manage:{value:0.00017, unit:"USD/PCS", },
+								tax:{},
+							},
+							otherCost:{
+								testFee:{},
+								otherPro:[
+									{key:"利潤",value:{}, },
+								],
+							},
+							statistic:{
+								sum:{value:0.00443, unit:"", },
+								costSum:{value:0.0276865, unit:"RMB", },
+								otherPro:[
+									{key:"備註",value:"", },
+								],
+							},
+						},
+						{
+							name:"15±1.5g/包",
+							use:[
+								{key:"形狀",value:"顆粒狀", },
+								{key:"適裝空間",value:"0.01 M3/PCS", },
+								{key:"使用環境",value:"溫度≧25℃，RH≧20%", },
+							],
+							rawCost:[
+								{
+									otherPro:[
+										{key:"單PCS成本",value:0.01468, },
+									],
+								},
+								{
+									rawID:9,
+									otherPro:[
+										{key:"品名",value:"硅膠", },
+									],
+									consumption:{value:0.015, unit:"kg/PCS", },
+									loss:{value:1, unit:"%", },
+									uPrice:{value:0.6482, unit:"USD/Kg", },
+									tPrice:{value:0.00982, unit:"USD/PCS", },
+								},
+								{
+									rawID:1,
+									otherPro:[
+										{key:"品名",value:"無紡布", },
+									],
+									consumption:{value:0.01291, unit:"M2", },
+									loss:{value:3, unit:"%", },
+									uPrice:{value:0.3241, unit:"USD/M2", },
+									tPrice:{value:0.00431, unit:"USD/PCS", },
+								},
+								{
+									rawID:[2,3,],
+									otherPro:[
+										{key:"品名",value:"紙箱+膠帶", },
+									],
+									consumption:{value:0.000833, unit:"單PCS", },
+									loss:{value:0.0, unit:"%", },
+									uPrice:{value:0.6522, unit:"USD/PCS", },
+									tPrice:{value:0.00054, unit:"USD/PCS", },
+								},
+							],
+							proc:[
+								{
+									num:1,
+									procCost:{
+										procCT:{value:2400, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00107, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:2,
+									procCost:{
+										procCT:{value:1200, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00215, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:3,
+									procCost:{
+										procCT:{value:2400, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.00109, unit:"USD/PCS", },
+									},
+								},
+							],
+							busiCost:{
+								transport:{value:0.00015, unit:"USD/PCS", },
+								manage:{value:0.00075, unit:"USD/PCS", },
+								tax:{},
+							},
+							otherCost:{
+								testFee:{},
+								otherPro:[
+									{key:"利潤",value:{}, },
+								],
+							},
+							statistic:{
+								sum:{value:0.01989, unit:"", },
+								costSum:{value:0.1242178, unit:"RMB", },
+								otherPro:[
+									{key:"備註",value:"", },
+								],
+							},
+						},
+						{
+							name:"200±10g/包",
+							use:[
+								{key:"形狀",value:"顆粒狀", },
+								{key:"適裝空間",value:"0.1334 M3/PCS", },
+								{key:"使用環境",value:"溫度≧25℃，RH≧20%", },
+							],
+							rawCost:[
+								{
+									otherPro:[
+										{key:"單PCS成本",value:0.15778, },
+									],
+								},
+								{
+									rawID:9,
+									otherPro:[
+										{key:"品名",value:"硅膠", },
+									],
+									consumption:{value:0.2, unit:"kg/PCS", },
+									loss:{value:1, unit:"%", },
+									uPrice:{value:0.6482, unit:"USD/Kg", },
+									tPrice:{value:0.13094, unit:"USD/PCS", },
+								},
+								{
+									rawID:1,
+									otherPro:[
+										{key:"品名",value:"無紡布", },
+									],
+									consumption:{value:0.056, unit:"M2", },
+									loss:{value:3, unit:"%", },
+									uPrice:{value:0.3241, unit:"USD/M2", },
+									tPrice:{value:0.01871, unit:"USD/PCS", },
+								},
+								{
+									rawID:[2,3,],
+									otherPro:[
+										{key:"品名",value:"紙箱+膠帶", },
+									],
+									consumption:{value:0.01246, unit:"單PCS", },
+									loss:{value:0.0, unit:"%", },
+									uPrice:{value:0.6522, unit:"USD/PCS", },
+									tPrice:{value:0.00813, unit:"USD/PCS", },
+								},
+							],
+							proc:[
+								{
+									num:1,
+									procCost:{
+										procCT:{value:120, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.02131, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:2,
+									procCost:{
+										procCT:{value:80, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.03229, unit:"USD/PCS", },
+									},
+								},
+								{
+									num:3,
+									procCost:{
+										procCT:{value:120, unit:"PCS/H", },
+										workRate:{value:2.6089, unit:"USD/H", },
+										pcsCost:{value:0.02174, unit:"USD/PCS", },
+									},
+								},
+							],
+							busiCost:{
+								transport:{value:0.00476, unit:"USD/PCS", },
+								manage:{value:0.00952, unit:"USD/PCS", },
+								tax:{},
+							},
+							otherCost:{
+								testFee:{},
+								otherPro:[
+									{key:"利潤",value:{}, },
+								],
+							},
+							statistic:{
+								sum:{value:0.2474, unit:"", },
+								costSum:{value:1.5452599, unit:"RMB", },
+								otherPro:[
+									{key:"備註",value:"", },
+								],
+							},
+						},
+					],
+				},
+			},
+		],
+	},
+}
+
+
+
+
+
+rawMaterial:
+{
+	ID:1,
+	productID:undefined,
+	category:"耗材",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"無防布",
+	type:"63",
+	spec:"120mm(10克）",
+	brand:"友恒",
+	provenance:"江蘇常州",
+	price:{value:1.95, unit:"RMB/M2"},
+	supplierID:1,
+}
+{
+	ID:2,
+	productID:undefined,
+	category:"包材",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"紙箱",
+	type:"37*30*25cm",
+	spec:"37*30*25cm",
+	brand:"華利凱",
+	provenance:"廣東深圳",
+	price:{value:0.2402, unit:"USD/箱"},
+	supplierID:2,
+}
+{
+	ID:3,
+	productID:undefined,
+	category:"包材",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"膠帶",
+	type:"50mm*2500mm",
+	spec:"50mm*2500mm",
+	brand:"鴻景",
+	provenance:"廣東東莞",
+	price:{value:0.3922, unit:"USD/卷"},
+	supplierID:3,
+}
+{
+	ID:4,
+	productID:undefined,
+	category:"包材",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"封箱膠",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:5,
+	productID:undefined,
+	category:"設備",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"普通漏斗",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:6,
+	productID:undefined,
+	category:"設備",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"顆粒分包機",
+	type:"DXDK40",
+	spec:"",
+	brand:"森橋",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:4,
+}
+{
+	ID:7,
+	productID:undefined,
+	category:"設備",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"封口機",
+	type:"SF-B",
+	spec:"0.45KW",
+	brand:"多奇",
+	provenance:"廣東深圳",
+	price:{value:165, unit:"RMB/臺"},
+	supplierID:5,
+}
+{
+	ID:8,
+	productID:undefined,
+	category:"輔助治工具",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"電子秤",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:9,
+	productID:undefined,
+	category:"耗材",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"硅膠",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:10,
+	productID:undefined,
+	category:"原材料",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"干燥劑",
+	type:"A型",
+	spec:"2~4mm",
+	brand:"匯源",
+	provenance:"山東招遠",
+	price:{value:4048.7, unit:"RMB/T"},
+	supplierID:6,
+}
+{
+	ID:11,
+	productID:undefined,
+	category:"原材料",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"油墨",
+	type:"G432",
+	spec:"17公斤/桶",
+	brand:"印美",
+	provenance:"廣東東莞",
+	price:{value:0, unit:""},
+	supplierID:7,
+}
+
+
+supplier:
+{
+	ID:0,
+	name:"深圳市利英達防潮保鮮技朮有限公司",
+	contact:"楊楊",
+	phone:"075527175145",
+	supplierLegal:{
+		comType:"私營",
+		regCapital:"RMB 180萬元",
+		emplTotal:"136人",
+		supAddr:"深圳市寶安區公明鎮塘家村麗英達工業區1棟廠房",
+		supNature:"制造商",
+		legaler:"刁麗英",
+		busiScope:"干燥劑系列\n相防鏽系列\n保鮮劑系列",
+	},
+}
+{
+	ID:1,
+	name:"常州友恒無防布有限公司",
+	contact:"",
+	phone:"0519-85353109",
+}
+{
+	ID:2,
+	name:"深圳市華利凱紙品包裝有限公司",
+	contact:"馮軍",
+	phone:"18908645650",
+}
+{
+	ID:3,
+	name:"東莞市鴻景膠沾帶有限公司",
+	contact:"",
+	phone:"0769-85532446",
+}
+{
+	ID:4,
+	name:"天津市森橋自動機械有限公司",
+	contact:"",
+	phone:"",
+}
+{
+	ID:5,
+	name:"深圳市沙井街道德普沙井電子城",
+	contact:"周作飛",
+	phone:"15118051929",
+}
+{
+	ID:6,
+	name:"招遠匯源硅膠有限公司",
+	contact:"溫亭功",
+	phone:"0535-8251155",
+}
+{
+	ID:7,
+	name:"東莞印美油墨有限公司",
+	contact:"李先生",
+	phone:"0769-83533612",
+}
+

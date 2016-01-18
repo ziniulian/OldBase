@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<title>testSelector</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<link rel="stylesheet" href="../../../../../../data/icon/style.css">
+
+		<style type="text/css">
+			.a {
+				color: yellow;
+			}
+			.b {
+				color: red;
+			}
+			.c {
+				color: blue;
+			}
+			.d{
+				font-size: 10px;
+				color:red;
+			}
+		</style>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Selector.js" ]);	// V0.0.4
+
+ 				var d = document.getElementById('mainCanvas');
+ 				var s1 = new LZR.HTML5.Util.Selector ({
+ 					data:[
+ 						{
+							title: "| 全国 | ",
+							pic: ""
+						},
+ 						{
+							title: "华东<sub>55</sub> | ",
+							value:"华南",
+							pic: "",
+							checked: true
+						},
+ 						{
+							title: "华南 | ",
+							pic: ""
+						},
+ 						{
+							title: "华北 |",
+							pic: ""
+						}
+ 					],
+ 					type: 5,
+ 					checked: 2,
+ 					titleClass: "",
+ 					defaultClass: "a",
+ 					overClass: "b",
+ 					downClass: "c",
+ 					rowNum: 0,
+ 					div: d
+ 				});
+ 				s1.onDown = function(d, i) {
+ 					LZR.HTML5.log (d[i].title + " , " + d[i].checked);
+ 				}
+
+ 				var s2 = new LZR.HTML5.Util.Selector ({
+ 					data:[
+ 						{
+							title: "全国",
+							pic: "bpicon-stopwatch"
+						},
+ 						{
+							title: "华东",
+							pic: "bpicon-spinner9"
+						},
+ 						{
+							title: "华南",
+							pic: "bpicon-pause",
+							value:88,
+							checked: true
+						},
+ 						{
+							title: "华北",
+							pic: "bpicon-forward2"
+						}
+ 					],
+ 					type: 5,
+ 					checked: 1,
+ 					titleClass: "d",
+ 					defaultClass: "a",
+ 					overClass: "b",
+ 					downClass: "c",
+ 					rowNum: 1
+ 				});
+ 				s2.onDown = function(d, i) {
+ 					LZR.HTML5.log (d[i].title + " , " + d[i].checked);
+ 				}
+ 				d.appendChild(s2.div);
+
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div id="mainCanvas" style="width:2400; height:2300; font-size: 50px;"></div>
+		<span>dsffsd</span><span class="bpicon-stopwatch" style="color:red;"></span>
+	</body>
+</html>

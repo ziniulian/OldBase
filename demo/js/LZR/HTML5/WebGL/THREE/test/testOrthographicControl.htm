@@ -1,0 +1,70 @@
+<html>
+	<head>
+		<title>testOrthographicControl</title>
+		<script src="../../../../LZR.js"></script>
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/OrthographicControl.js" ]);
+
+				// 生成描绘器
+				var canvas = document.getElementById('mainCanvas');
+				var renderer = new THREE.WebGLRenderer({canvas:canvas});
+				renderer.setClearColor(0xcccccc);
+
+				// 生成场景
+				var scene = new THREE.Scene();
+
+				// 生成坐标系
+				var po = new THREE.Vector3(0, 0, 0);
+				var p = [ new THREE.Vector3(1000, 0, 0), new THREE.Vector3(0, 1000, 0), new THREE.Vector3(0, 0, 1000) ];
+				var c = [ 0xff0000, 0x00ff00, 0x0000ff ];
+				for (var i =0; i<3; i++) {
+					var geometry = new THREE.Geometry();
+					geometry.vertices.push(po);
+					geometry.vertices.push(p[i]);
+					scene.add( new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: c[i] } ), THREE.LinePieces ) );
+				}
+
+				// 生成模型
+				scene.add( new THREE.Mesh(
+					new THREE.CubeGeometry(300, 300, 300),
+					new THREE.MeshLambertMaterial ({ color: 0xff0000, opacity:0.75 })
+				) );
+
+				// 生成相机
+				// var camera = new THREE.PerspectiveCamera ( 75, 4/3, 0.001, 10000 );				// 透视图
+				var camera = new THREE.OrthographicCamera ( -400, 400, 300, -300, -1000, 1000 );		// 正投影
+				camera.position.set(0, 0, 500);
+				scene.add(camera);
+
+				// 生成光照
+				light = new THREE.DirectionalLight(0xffffff);
+				light.position.copy(camera.position);
+				scene.add(light);
+
+				// 生成控制器
+				var controls = new LZR.HTML5.WebGL.Three.OrthographicControl ({
+					ctrlDom: canvas,
+					camera: camera,
+					light: light,
+					center: {x:0, y:0, z:0}
+				});
+
+				// 启动控制
+				controls.enable();
+				var update = function () {
+					requestAnimationFrame (update);
+					controls.update();
+					renderer.render (scene, camera);
+				};
+				update();
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div style="float:left"><canvas id="mainCanvas" width="800px" height="600px" ></canvas></div>
+		<pre id="LZR_LOG"></pre>
+	</body>
+</html>

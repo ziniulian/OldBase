@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<title>testBackground</title>
+		<meta charset="utf-8" />
+	</head>
+
+	<body>
+		<div
+			id = "ddd"
+			style = "
+				width: 500px;
+				height: 500px;
+				padding: 50px;
+				margin: 20px;
+				background-color: red;
+				background-image: url(../../../../../../../data/canvas.png);
+				background-repeat: no-repeat;
+				background-clip: content-box;
+				background-origin: content-box;
+				background-position: -100px;
+				background-size: 100% 100%;
+			"
+		></div>
+	</body>
+	<script type="text/javascript">
+		alert(ddd.clientWidth);
+		alert(ddd.style.paddingLeft);
+	</script>
+</html>

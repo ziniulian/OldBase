@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>testAjax2</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<script>
+			var aj;
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Ajax.js" ]);
+
+				// 同步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				var img = document.createElement("img");
+				document.body.appendChild(img);
+				var data = JSON.parse( aj.post ("http://127.0.0.1:8080/", {type:"getPic", index:1}) );
+				img.src = "data:image/jpeg;base64," + data.Base64;
+			}
+
+		</script>
+	</head>
+
+	<body onload="init();"></body>
+</html>

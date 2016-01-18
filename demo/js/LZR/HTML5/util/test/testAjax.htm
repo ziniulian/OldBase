@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>testAjax</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<script>
+			var aj;
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Ajax.js" ]);
+
+				// 同步GET
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 同步GET：" );
+				LZR.HTML5.alog ( aj.get ( " data/testAjax.txt" ) );
+				LZR.HTML5.alog ( "end ---------- 同步GET" );
+
+				// 同步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 同步POST：" );
+				LZR.HTML5.alog ( aj.post ( " data/testAjax.txt", {a:1, b:2, c:[ "fe", "th", "fr" ]} ) );
+				LZR.HTML5.alog ( "end ---------- 同步POST" );
+
+				// 异步GET
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 异步GET：" );
+				aj.get ( " data/testAjax.txt", function (text, status) {
+					LZR.HTML5.alog ( "------------Start ---------- 异步GET：" );
+					LZR.HTML5.alog ( "---------- status："  + status );
+					LZR.HTML5.alog ( text );
+					LZR.HTML5.alog ( "-----------end ---------- 异步GET" );
+				} );
+				LZR.HTML5.alog ( "end ---------- 异步GET" );
+
+				// 异步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 异步POST：" );
+				aj.post ( " data/testAjax.txt", {a:1, b:2, c:[ "fe", "th", "fr" ]}, function (text, status) {
+					LZR.HTML5.alog ( "---------Start ---------- 异步POST：" );
+					LZR.HTML5.alog ( "---------- status："  + status );
+					LZR.HTML5.alog ( text );
+					LZR.HTML5.alog ( "--------------end ---------- 异步POST" );
+				} );
+				LZR.HTML5.alog ( "end ---------- 异步POST" );
+
+				// 跨域 8085 异步GET
+				aj = new LZR.HTML5.Util.Ajax ();
+// alert(aj.ajax.readyState);
+				LZR.HTML5.alog ( "\nStart ---------- 跨域 8085 异步GET：" );
+				aj.get ( "http://127.0.0.1:8085/js/LZR/HTML5/util/test/data/testAjax.txt", function (text, status) {
+					LZR.HTML5.alog ( "------------Start ---------- 跨域 8085 异步GET：" );
+					LZR.HTML5.alog ( "---------- status："  + status );
+					LZR.HTML5.alog ( text );
+					LZR.HTML5.alog ( "-----------end ---------- 跨域 8085 异步GET" );
+				} );
+				LZR.HTML5.alog ( "end ---------- 跨域 8085 异步GET" );
+// testSyn ();	
+// alert(11);
+
+				// 跨域 8088 同步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 跨域 8088 同步POST：" );
+				LZR.HTML5.alog ( aj.post ( "http://127.0.0.1:8088/js/LZR/HTML5/util/test/data/testAjax.txt", {a:1, b:2, c:[ "fe", "th", "fr" ]} ) );
+				LZR.HTML5.alog ( "end ---------- 跨域 8088 同步POST" );
+ 
+				// 跨域 8085 同步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 跨域 8085 同步POST：" );
+				LZR.HTML5.alog ( aj.post ( "http://127.0.0.1:8085/js/LZR/HTML5/util/test/data/testAjax.txt", {a:1, b:2, c:[ "fe", "th", "fr" ]} ) );
+				LZR.HTML5.alog ( "end ---------- 跨域 8085 同步POST" );
+			}
+
+ 			// 测试 ajax 能否多线程执行 或 能同步
+ 			function testSyn () {
+ 				/*
+					经测试：在页面执行循环的时间里，ajax 不会工作，不是多线程，更无法同步。
+					经测试：经测试 ajax send 时服务器已响应并返回数据，但回调函数必须在循环和 alert 结束时才会执行。
+							由上可知，ajax 异步回调不能及时处理服务器的回复，只有等主程序结束后，才会执行。
+ 				*/
+				for (var i = 0; i<30; i++) {
+					for (var j = 0; j<10000; j++) {
+						for (var k = 0; k<10000; k++) {}
+					}
+				}
+				alert(aj.ajax.readyState);
+
+				// while (aj.ajax.readyState != 4) {
+				// 	alert ( "---------- readyState：" +  aj.ajax.readyState);
+				// }
+				// LZR.HTML5.alog ( "OK");
+ 			}
+		</script>
+	</head>
+
+	<body onload="init(); //testSyn();"></body>
+</html>

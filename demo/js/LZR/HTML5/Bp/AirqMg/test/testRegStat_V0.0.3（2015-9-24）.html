@@ -1,0 +1,792 @@
+<html>
+	<head>
+		<title>testRegStat</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../../../../../../data/icon/style.css">
+		<script src="../../../../LZR.js"></script>
+
+		<style type="text/css">
+			.b1 {
+				width: 30px;
+				height: 30px;
+				background-color:#F00;
+				opacity: 0.5;
+			}
+			.s1 {
+				width: 10px;
+				height: 50%;
+				margin: 60px;
+				background-color:#0F0;
+			}
+		</style>
+
+		<script>
+			// 可单机演示
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/Event.js",
+					LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat.js"	// V0.0.3
+				]);
+
+				LZR.temp = {};
+				LZR.temp.rs = new LZR.HTML5.Bp.AirqMg.RegStat({
+					condition: {
+						timName: "20时",	// 产品时次名
+						_tim: "20",		// 产品查询时次
+						tim: 0,			// 产品初始时次
+						ttypName: "小时",	// 日均/小时 名
+						ttyp: 1,			// 日均/小时值	（小时:1, 日均:0）
+						areaName: "全国",	// 区域名
+						area: 1,		// 区域		（全国:1, 华东:2, 京津冀:3）
+						mod: "NAQPMS",	// 模式
+						fomName: "PM2.5",	// 污染物名
+						fom:"PM25",		// 污染物
+					},
+
+					scrollObj: {	// 滚动条
+						stripClass: "s1",	// 长条 CSS 样式
+						btnClass: "b1",	// 按钮 CSS 样式
+						div: document.getElementById("scr")		// 容器
+					},
+
+					title: document.getElementById("regStatTitle"),
+					map: document.getElementById("regStatMap"),
+					tbn: document.getElementById("regStatTbn"),
+					eys: document.getElementById("regStatEys")
+				});
+				LZR.temp.rs.loadCompass (LZR.temp.rs.path + "compass1.png");
+				LZR.temp.rs.loadLegend (LZR.temp.rs.path + "legendRS.png");
+				LZR.temp.rs.setDate ("2015-8-23");
+				LZR.temp.rs.init();
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+
+		<!-- 左边窗体 -->
+		<div style="
+			width:280;
+			height:100%
+		">
+
+
+<!-- Widget 开始处 -->
+			<br>
+			<span>产品时间：</span>
+			<input id="regStatDate" type="text"
+				onchange = '
+					var v = this.value;
+					LZR.temp.rs.setDate (v, true);
+				'
+				class="cityAndStaDt" required="true" value="2015-6-17"
+				data-dojo-type="dijit/form/DateTextBox"
+				data-dojo-props="constraints:{datePattern: 'yyyy-MM-dd'}" />
+			<br><br>
+
+			<span>预报时次：</span>
+			<select id="regStatTim"
+				onchange = '
+					var n = this.options[this.selectedIndex].text;
+					var v = this.value;
+					LZR.temp.rs.setTim (n, v, true);
+				'
+				data-dojo-type="dijit/form/Select">
+				<option value="20" selected>20时</option>
+			</select><br><br>
+
+			<span>预报模式：</span>
+			<select id="regStatMod"
+				onchange = '
+					var v = this.value;
+					LZR.temp.rs.setMod (v, true);
+				'
+				data-dojo-type="dijit/form/Select">
+				<option value="NAQPMS" selected>NAQPMS</option>
+				<option value="CMAQ" >CMAQ</option>
+				<option value="CAMx" >CAMx</option>
+				<option value="WRF-Chem" >WRF-Chem</option>
+			</select><br><br>
+			<pre id = "LZR_LOG" />
+<!-- Widget 结束处 -->
+
+
+		</div>
+
+		<!-- 右边窗体 -->
+		<div style="
+			position:absolute;
+			left: 280;
+			right:0;
+			top:0;
+			bottom:0;
+		">
+
+
+<!-- 内容开始处 -->
+			<!-- 标题 -->
+			<div id="regStatTitle" style="
+				font-family: 微软雅黑;
+				font-size : 40px;
+				text-align: center;
+				height:60px;
+				overflow:hidden;
+			">
+				区域形势
+			</div>
+
+			<!-- 区域选择 -->
+			<div style="
+				font-family: 微软雅黑;
+				font-size: 18px;
+				font-weight: bold;
+				text-align: center;
+				height:25px;
+				overflow:hidden;
+			">
+				| <a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("全国", 1, true);
+					'
+					>全国</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("中东部", 2, true);
+					'
+					>中东部</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("京津冀及周边", 3, true);
+					'
+					>京津冀及周边</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("京津冀", 3, true);
+					'
+					>京津冀</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("长三角", 2, true);
+					'
+					>长三角</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("珠三角", 2, true);
+					'
+					>珠三角</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("东北", 1, true);
+					'
+					>东北</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("华中", 2, true);
+					'
+					>华中</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("西南", 1, true);
+					'
+					>西南</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("西北", 1, true);
+					'
+					>西北</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("新疆", 1, true);
+					'
+					>新疆</a> |
+				<a href="#"
+					onclick = '
+						LZR.temp.rs.setArea ("西藏", 1, true);
+					'
+					>西藏</a> |
+			</div>
+
+			<!-- 内容 -->
+			<div style="
+				position:absolute;
+				left: 0;
+				right:0;
+				top:90px;
+				bottom:35px;
+			">
+
+				<!-- 缩略图 -->
+				<div style="
+					position:absolute;
+					left: 0;
+					top:0;
+					width:177px;
+					height:100%;
+				">
+					<canvas id="regStatTbn" style="
+						width:100%;
+						height:100%;
+					"/>
+				</div>
+
+				<!-- 滚动条 -->
+				<div
+					id = "scr"
+					style="
+						position:absolute;
+						left: -100;
+						top:0;
+						height:100%;
+						<!-- background-color: #ff0 -->
+					"></div>
+
+				<!-- 左翻页 -->
+				<div style="
+					position:absolute;
+					left: 220px;
+					top:50%;
+					height: 90px;
+				">
+					<div
+						style="
+							position:relative;
+							width: 50px;
+							height: 50px;
+							padding: 20px;
+							font-size: 50px;
+							user-select:none;
+							top: -50%;
+							opacity: 0;	// 透明度
+						"
+						onMouseDown = '
+							this.style.color = "#ffbb00";
+							LZR.temp.rs.changePage (-1);
+						'
+						onMouseUp = '
+							this.style.color = "#ff9900";
+						'
+						onMouseOver= '
+							this.style.opacity = 1;
+							this.style.color = "#ff9900";
+						'
+						onMouseOut = '
+							this.style.opacity = 0;
+						'
+						onselectstart = 'return false';
+					>
+						<span
+							class="bpicon-circle-left"
+							title="前一页"
+						></span>
+					</div>
+				</div>
+
+				<!-- 地图 -->
+				<div style="
+					margin-left: 190px;
+					margin-right: 180px;
+					height:100%;
+				">
+					<canvas id="regStatMap" style="
+						width:100%;
+						height:100%;
+					"/>
+						<p>您的浏览器不支持 canvas 元素！</p>
+					</canvas>
+				</div>
+
+				<!-- 查询条件 -->
+				<div style="
+					position:absolute;
+					right: 0;
+					top:0;
+					height:100%;
+				">
+						<div
+							style="
+								font-size: 32px;
+								color: #999999;
+							"
+							onselectstart = 'return false';
+						>
+
+							<span id = "regStatFom_PM25"
+								class="bpicon-paypal3"
+								title="PM2.5"
+								style="
+									color: #ff9900;
+									font-size: 38px;
+								"
+								onclick = '
+									regStatFom_PM25.style.color = "#ff9900";
+									regStatFom_PM25.style.fontSize = "38px";
+									regStatFom_PM10.style.color = "#999999";
+									regStatFom_PM10.style.fontSize = "32px";
+									regStatFom_SO2.style.color = "#999999";
+									regStatFom_SO2.style.fontSize = "32px";
+									regStatFom_NO2.style.color = "#999999";
+									regStatFom_NO2.style.fontSize = "32px";
+									regStatFom_CO.style.color = "#999999";
+									regStatFom_CO.style.fontSize = "32px";
+									regStatFom_O3.style.color = "#999999";
+									regStatFom_O3.style.fontSize = "32px";
+									regStatFom_AQI.style.color = "#999999";
+									regStatFom_AQI.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("PM2.5", "PM25", true);
+								'
+							></span>
+
+							<span id = "regStatFom_PM10"
+								class="bpicon-paypal2"
+								title="PM10"
+								onclick = '
+									regStatFom_PM10.style.color = "#ff9900";
+									regStatFom_PM10.style.fontSize = "38px";
+									regStatFom_PM25.style.color = "#999999";
+									regStatFom_PM25.style.fontSize = "32px";
+									regStatFom_SO2.style.color = "#999999";
+									regStatFom_SO2.style.fontSize = "32px";
+									regStatFom_NO2.style.color = "#999999";
+									regStatFom_NO2.style.fontSize = "32px";
+									regStatFom_CO.style.color = "#999999";
+									regStatFom_CO.style.fontSize = "32px";
+									regStatFom_O3.style.color = "#999999";
+									regStatFom_O3.style.fontSize = "32px";
+									regStatFom_AQI.style.color = "#999999";
+									regStatFom_AQI.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("PM10", "PM10", true);
+								'
+							></span>
+
+							<span id = "regStatFom_SO2"
+								class="bpicon-skype"
+								title="SO2"
+								onclick = '
+									regStatFom_SO2.style.color = "#ff9900";
+									regStatFom_SO2.style.fontSize = "38px";
+									regStatFom_PM10.style.color = "#999999";
+									regStatFom_PM10.style.fontSize = "32px";
+									regStatFom_PM25.style.color = "#999999";
+									regStatFom_PM25.style.fontSize = "32px";
+									regStatFom_NO2.style.color = "#999999";
+									regStatFom_NO2.style.fontSize = "32px";
+									regStatFom_CO.style.color = "#999999";
+									regStatFom_CO.style.fontSize = "32px";
+									regStatFom_O3.style.color = "#999999";
+									regStatFom_O3.style.fontSize = "32px";
+									regStatFom_AQI.style.color = "#999999";
+									regStatFom_AQI.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("SO2", "SO2", true);
+								'
+							></span>
+
+							<br>
+
+							<span id = "regStatFom_NO2"
+								class="bpicon-flattr"
+								title="NO2"
+								onclick = '
+									regStatFom_NO2.style.color = "#ff9900";
+									regStatFom_NO2.style.fontSize = "38px";
+									regStatFom_PM10.style.color = "#999999";
+									regStatFom_PM10.style.fontSize = "32px";
+									regStatFom_SO2.style.color = "#999999";
+									regStatFom_SO2.style.fontSize = "32px";
+									regStatFom_PM25.style.color = "#999999";
+									regStatFom_PM25.style.fontSize = "32px";
+									regStatFom_CO.style.color = "#999999";
+									regStatFom_CO.style.fontSize = "32px";
+									regStatFom_O3.style.color = "#999999";
+									regStatFom_O3.style.fontSize = "32px";
+									regStatFom_AQI.style.color = "#999999";
+									regStatFom_AQI.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("NO2", "NO2", true);
+								'
+							></span>
+
+							<span id = "regStatFom_CO"
+								class="bpicon-lastfm"
+								title="CO"
+								onclick = '
+									regStatFom_CO.style.color = "#ff9900";
+									regStatFom_CO.style.fontSize = "38px";
+									regStatFom_PM10.style.color = "#999999";
+									regStatFom_PM10.style.fontSize = "32px";
+									regStatFom_SO2.style.color = "#999999";
+									regStatFom_SO2.style.fontSize = "32px";
+									regStatFom_NO2.style.color = "#999999";
+									regStatFom_NO2.style.fontSize = "32px";
+									regStatFom_PM25.style.color = "#999999";
+									regStatFom_PM25.style.fontSize = "32px";
+									regStatFom_O3.style.color = "#999999";
+									regStatFom_O3.style.fontSize = "32px";
+									regStatFom_AQI.style.color = "#999999";
+									regStatFom_AQI.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("CO", "CO", true);
+								'
+							></span>
+
+							<span id = "regStatFom_O3"
+								class="bpicon-opera"
+								title="O3"
+								onclick = '
+									regStatFom_O3.style.color = "#ff9900";
+									regStatFom_O3.style.fontSize = "38px";
+									regStatFom_PM10.style.color = "#999999";
+									regStatFom_PM10.style.fontSize = "32px";
+									regStatFom_SO2.style.color = "#999999";
+									regStatFom_SO2.style.fontSize = "32px";
+									regStatFom_NO2.style.color = "#999999";
+									regStatFom_NO2.style.fontSize = "32px";
+									regStatFom_CO.style.color = "#999999";
+									regStatFom_CO.style.fontSize = "32px";
+									regStatFom_PM25.style.color = "#999999";
+									regStatFom_PM25.style.fontSize = "32px";
+									regStatFom_AQI.style.color = "#999999";
+									regStatFom_AQI.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("O3", "O3", true);
+								'
+							></span>
+
+							<br>
+
+							<span id = "regStatFom_AQI"
+								class="bpicon-reddit"
+								title="AQI"
+								onclick = '
+									regStatFom_AQI.style.color = "#ff9900";
+									regStatFom_AQI.style.fontSize = "38px";
+									regStatFom_PM10.style.color = "#999999";
+									regStatFom_PM10.style.fontSize = "32px";
+									regStatFom_SO2.style.color = "#999999";
+									regStatFom_SO2.style.fontSize = "32px";
+									regStatFom_NO2.style.color = "#999999";
+									regStatFom_NO2.style.fontSize = "32px";
+									regStatFom_CO.style.color = "#999999";
+									regStatFom_CO.style.fontSize = "32px";
+									regStatFom_O3.style.color = "#999999";
+									regStatFom_O3.style.fontSize = "32px";
+									regStatFom_PM25.style.color = "#999999";
+									regStatFom_PM25.style.fontSize = "32px";
+									LZR.temp.rs.setFom ("AQI", "AQI", true);
+								'
+							></span>
+
+							<hr>
+
+							<span id = "regStatTtyp_Hour"
+								class="bpicon-stopwatch"
+								title="小时"
+								style="
+									color: #ff9900;
+									font-size: 38px;
+								"
+								onclick = '
+									regStatTtyp_Hour.style.color = "#ff9900";
+									regStatTtyp_Hour.style.fontSize = "38px";
+									regStatTtyp_Day.style.color = "#999999";
+									regStatTtyp_Day.style.fontSize = "32px";
+									LZR.temp.rs.setTtyp ("小时", 1, true);
+								'
+							></span>
+
+							<span id = "regStatTtyp_Day"
+								class="bpicon-calendar"
+								title="日均"
+								onclick = '
+									regStatTtyp_Day.style.color = "#ff9900";
+									regStatTtyp_Day.style.fontSize = "38px";
+									regStatTtyp_Hour.style.color = "#999999";
+									regStatTtyp_Hour.style.fontSize = "32px";
+									LZR.temp.rs.setTtyp ("日均", 0, true);
+								'
+							></span>
+
+							<hr>
+
+							<span
+								class="bpicon-earth"
+								title="隐藏地图"
+								style="
+									color: #ff9900;
+								"
+								onclick = '
+									if ( this.title == "隐藏地图" ) {
+										LZR.temp.rs.setLayerVisble (1, false);
+										this.style.color = "#999999";
+										this.title = "显示地图";
+									} else {
+										LZR.temp.rs.setLayerVisble (1, true);
+										this.style.color = "#ff9900";
+										this.title = "隐藏地图";
+									}
+								'
+							></span>
+
+							<canvas
+								style="
+									width: 80px;
+									height: 20px;
+									background-color: #ff9900;
+								"
+							></canvas>
+
+							<br>
+
+							<span
+								class="bpicon-onedrive"
+								title="隐藏分布图"
+								style="
+									color: #ff9900;
+								"
+								onclick = '
+									if ( this.title == "隐藏分布图" ) {
+										LZR.temp.rs.setLayerVisble (0, false);
+										this.style.color = "#999999";
+										this.title = "显示分布图";
+									} else {
+										LZR.temp.rs.setLayerVisble (0, true);
+										this.style.color = "#ff9900";
+										this.title = "隐藏分布图";
+									}
+								'
+							></span>
+
+							<canvas
+								style="
+									width: 80px;
+									height: 20px;
+									background-color: #ff9900;
+								"
+							></canvas>
+
+							<hr>
+
+							<span id="regStatAnimationFrame1"
+								class="bpicon-spinner2"
+								title="1帧"
+								style="
+									color: #ff9900;
+									font-size: 38px;
+								"
+								onclick = '
+									regStatAnimationFrame1.style.color = "#ff9900";
+									regStatAnimationFrame1.style.fontSize = "38px";
+									regStatAnimationFrame3.style.color = "#999999";
+									regStatAnimationFrame3.style.fontSize = "32px";
+									regStatAnimationFrame6.style.color = "#999999";
+									regStatAnimationFrame6.style.fontSize = "32px";
+									LZR.temp.rs.setFrame (1);
+								'
+							></span>
+
+							<span id="regStatAnimationFrame3"
+								class="bpicon-spinner9"
+								title="3帧"
+								onclick = '
+									regStatAnimationFrame3.style.color = "#ff9900";
+									regStatAnimationFrame3.style.fontSize = "38px";
+									regStatAnimationFrame1.style.color = "#999999";
+									regStatAnimationFrame1.style.fontSize = "32px";
+									regStatAnimationFrame6.style.color = "#999999";
+									regStatAnimationFrame6.style.fontSize = "32px";
+									LZR.temp.rs.setFrame (3);
+								'
+							></span>
+
+							<span id="regStatAnimationFrame6"
+								class="bpicon-spinner10"
+								title="6帧"
+								onclick = '
+									regStatAnimationFrame6.style.color = "#ff9900";
+									regStatAnimationFrame6.style.fontSize = "38px";
+									regStatAnimationFrame3.style.color = "#999999";
+									regStatAnimationFrame3.style.fontSize = "32px";
+									regStatAnimationFrame1.style.color = "#999999";
+									regStatAnimationFrame1.style.fontSize = "32px";
+									LZR.temp.rs.setFrame (6);
+								'
+							></span>
+
+							<hr>
+
+							<span
+								class="bpicon-previous"
+								title="至第一帧"
+								onMouseDown = '
+									this.style.color = "#ffbb00";
+									if ( LZR.temp.rs.changeHeadTail(false) == 1 ) {
+										regStatAnimationButton.onclick();
+									}
+								'
+								onMouseUp = '
+									this.style.color = "#ff9900";
+								'
+								onMouseOut = '
+									this.style.color = "#999999";
+								'
+								onMouseOver= '
+									this.style.color = "#ff9900";
+								'
+							></span>
+
+							<span id="regStatAnimationButton"
+								class="bpicon-play2"
+								title="播放动画"
+								style="
+									color: #ff9900;
+									font-size: 38px;
+								"
+								onclick = '
+									if ( LZR.temp.rs.changeAnimation() == 1 ) {
+										this.className = "bpicon-pause";
+										this.title = "停止播放";
+									} else {
+										this.className = "bpicon-play2";
+										this.title = "播放动画";
+									}
+								'
+							></span>
+
+							<span
+								class="bpicon-next"
+								title="至最后一帧"
+								onMouseDown = '
+									this.style.color = "#ffbb00";
+									if ( LZR.temp.rs.changeHeadTail(true) == 1 ) {
+										regStatAnimationButton.onclick();
+									}
+								'
+								onMouseUp = '
+									this.style.color = "#ff9900";
+								'
+								onMouseOut = '
+									this.style.color = "#999999";
+								'
+								onMouseOver= '
+									this.style.color = "#ff9900";
+								'
+							></span>
+
+							<br>
+
+							<div style="
+								text-align: center;
+								margin-right: 15px;
+							">
+								<span
+									class="bpicon-backward"
+									title="减慢播放速度"
+									onMouseDown = '
+										this.style.color = "#ffbb00";
+										LZR.temp.rs.setSpeed(1);
+									'
+									onMouseUp = '
+										this.style.color = "#ff9900";
+									'
+									onMouseOut = '
+										this.style.color = "#999999";
+									'
+									onMouseOver= '
+										this.style.color = "#ff9900";
+									'
+								></span>
+
+								<span
+									class="bpicon-forward2"
+									title="加快播放速度"
+									onMouseDown = '
+										this.style.color = "#ffbb00";
+										LZR.temp.rs.setSpeed(-1);
+									'
+									onMouseUp = '
+										this.style.color = "#ff9900";
+									'
+									onMouseOut = '
+										this.style.color = "#999999";
+									'
+									onMouseOver= '
+										this.style.color = "#ff9900";
+									'
+								></span>
+							</div>
+						</div>
+
+					<!-- 鹰眼 -->
+					<div style="
+						position:absolute;
+						right: 0;
+						bottom:20;
+						width:200px;
+						height:200px;
+					">
+						<canvas id="regStatEys" style="
+							width:100%;
+							height:100%;
+						"/>
+					</div>
+
+					<!-- 右翻页 -->
+					<div style="
+						position:absolute;
+						right: 210px;
+						top:50%;
+						height: 90px;
+					">
+						<div
+							style="
+								position:relative;
+								width: 50px;
+								height: 50px;
+								padding: 20px;
+								font-size: 50px;
+								user-select:none;
+								top: -50%;
+								opacity: 0;	// 透明度
+							"
+							onMouseDown = '
+								this.style.color = "#ffbb00";
+								LZR.temp.rs.changePage (1);
+							'
+							onMouseUp = '
+								this.style.color = "#ff9900";
+							'
+							onMouseOver= '
+								this.style.opacity = 1;
+								this.style.color = "#ff9900";
+							'
+							onMouseOut = '
+								this.style.opacity = 0;
+							'
+							onselectstart = 'return false';
+						>
+							<span
+								class="bpicon-circle-right"
+								title="后一页"
+							></span>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+
+			<!-- 尾巴 -->
+			<div style="
+				font-family: 微软雅黑;
+				font-size : 25px;
+				position:absolute;
+				text-align: right;
+				width: 100%;
+				height:35px;
+				bottom:0;
+			">
+				技术支持：中科院大气所  。 制作：北京融昭普瑞科技有限公司 
+			</div>
+<!-- 内容结束处 -->
+
+
+		</div>
+	</body>
+</html> 

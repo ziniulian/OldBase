@@ -1,0 +1,91 @@
+﻿<html>
+	<head>
+		<script src="js\Web3D\threejs\three.min.js"></script>
+		<script src="js\Web3D\threejs\TrackballControls.js"></script>
+		<script src="js\Web3D\threejs\OBJLoader.js"></script>
+		<script src="js\\LZRutil\LZRutil.js"></script>
+		<script src="js\\LZRutil\MouseDropController.js"></script>
+		<script src="js\Web3D\OrthographicControl.js"></script>
+		<script src="js\Web3D\CoordinateChange.js"></script>
+		<script src="js\Web3D\Web3d.js"></script>
+
+		<script>
+			// 显示测试数据
+			var loger;
+
+			function log (memo) {
+				loger.innerText = memo;
+			}
+
+			function alog (memo) {
+				loger.innerText += memo;
+			}
+
+			// 初始化
+ 			function init() {
+				loger = document.getElementById('log');
+				
+ 				var d = new Web3d ({
+ 					// fov: 75,
+
+ 					// file: "../../../../../../../../../data/asm.obj",
+ 					// center: {x:0, y:50,z:0},
+ 					// cameraPosition: {x:0, y:50,z:200},
+ 					// zoom: 2,
+ 					// backColor: 0,
+
+
+ 					//file: "../../../../../../../../../data/whzt.obj",
+ 					// file: "../../../../../../../../../data/ff.json",
+ 					//file: "../../../../../../../../../data/ship/ship_main.js.txt",
+
+ 					file: "../../../../../../../../../data/port.obj",
+ 					center: {x:0, y:2,z:0},
+ 					cameraPosition: {x:0, y:2,z:10},
+ 					zoom: 50,
+
+ 					// file: "../../../../../../../../../data/book/bookHouse.json",
+ 					// file: "../../../../../../../../../data/book/book.json",
+ 					// cameraPosition: {x:0, y:0,z:6},
+ 					// zoom: 100,
+
+ 					// file: "../../../../../../../../../data/house/house.json",
+ 					// center: {x:0, y:1,z:0},
+ 					// cameraPosition: {x:0, y:1,z:10},
+ 					// zoom: 30,
+
+ 					//file: "../../../../../../../../../data/house/34ap.json",
+
+ 					// file: "../../../../../../../../../data/book01/book.json",
+ 					// cameraPosition: {x:0, y:2,z:0},
+ 					// zoom: 200,
+
+ 					// file: "../../../../../../../../../data/3DS/PJ/pj.json",
+ 					// cameraPosition: {x:0, y:0,z:10},
+ 					// zoom: 30,
+
+ 					// file: "../../../../../../../../../data/3DS/YLJ/ylj.json",
+ 					// center: {x:0, y:3,z:0},
+ 					// cameraPosition: {x:0, y:3,z:10},
+ 					// zoom: 30,
+
+ 					canvas: document.getElementById('mainCanvas')
+ 				});
+ 				//d.rotate();
+/*
+ 				var d2 = new Web3d ({
+ 					fov: 75,
+ 					file: "../../../../../../../../../data/port.obj",
+ 					canvas: document.getElementById('aCanvas')
+ 				});
+*/
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div style="float:left"><canvas id="mainCanvas" width="800px" height="600px" ></canvas></div>
+		<pre id="log"></pre>
+		<!-- <canvas id="aCanvas" width="400px" height="300px" ></canvas> -->
+	</body>
+</html>

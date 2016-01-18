@@ -1,0 +1,270 @@
+.body {
+	margin: 0;
+	padding: 0;
+}
+
+.map {
+	width: 100%;
+	height: 100%;
+}
+
+.my-widget {
+	visibility: inherit;
+}
+
+.my-widget .noselect {
+	/*文字不被选中*/
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	user-select:none;
+	cursor: pointer;
+}
+
+.my-widget .timeAxis {
+	position: absolute;
+	bottom: 20px;
+	left: 2%;
+	width: 96%;
+}
+
+.my-widget .left {
+	position: absolute;
+	top: 80px;
+	left: 46px;
+	width: 255px;
+	/*background-color: rgba(200, 200, 200, 0.5);*/
+}
+
+.my-widget .stations {
+	height: 550px;
+	width: 100%;
+	overflow: auto;
+	direction: rtl;
+	/*background-color: rgba(200, 0, 0, 0.3);*/
+}
+
+.my-widget .station {
+	direction: ltr;
+	margin: 10px 10px 0 0;
+	width: 220px;
+	height: 80px;
+	border-radius: 8px;
+	overflow: hidden;
+	box-shadow: 0 0 2px 1px #999;
+	background-color: rgba(220, 220, 220, 0.5);
+}
+
+.my-widget .station_hover {
+	background-color: #DDD;
+}
+
+.my-widget .station_selected {
+	box-shadow: 0 0 10px 4px #F91;
+}
+
+.my-widget .station .title {
+	font-family: 微软雅黑;
+	font-weight: bold; 
+	font-size: 18px;
+	padding: 10px 0 0 10px;
+	/*background-color: yellow;*/
+}
+
+.my-widget .color {
+	float: left;
+	width: 50px;
+	height: 30px;
+	line-height: 28px;
+	margin: 10px 12px 0 23px;
+	border: 1px solid #CCC;
+	border-radius: 6px;
+	font-size: 15px;
+	text-align: center;
+	font-family: 微软雅黑;
+	font-weight: bold; 
+	color: rgba(0, 0, 0, 0.2);
+	text-shadow:  1px 1px 1px #DDD; 
+	background-color: rgba(150, 150, 150, 0.3);
+}
+
+.my-widget .station .memoout {
+	float: left;
+	margin-top: 5px;
+}
+
+.my-widget .station .memo {
+	height: 20px;
+	line-height: 20px;
+	font-family: 微软雅黑;
+	font-weight: bold; 
+	font-size: 12px;
+	color: #666;
+}
+
+.my-widget .defaultPoint {
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	line-height: 80px;
+	font-family: 微软雅黑;
+	font-weight: bold;
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.2);
+	text-shadow:  1px 1px 1px #DDD; 
+	overflow: hidden;
+	border-radius: 8px;
+	background-color: rgba(180, 180, 180, 0.6);
+	box-shadow: 0 0 3px 1px #999;
+}
+
+.my-widget .defaultPoint_hover {
+	box-shadow: 0 0 7px 3px #333;
+}
+
+.my-widget .defaultPoint_selected {
+	box-shadow: 0 0 20px 8px #F91;
+}
+
+.my-widget .defaultBigPoint {
+	top: -15px;
+	left: -25px;
+	width: 50px;
+	height: 30px;
+	line-height: 28px;
+}
+
+.my-widget .fomLevel_1{
+	background-color: #00e400;
+}
+
+.my-widget .fomLevel_2{
+	background-color: #FFFF00;
+}
+
+.my-widget .fomLevel_3{
+	background-color: #FF7E00;
+}
+
+.my-widget .fomLevel_4{
+	background-color: #FF0000;
+}
+
+.my-widget .fomLevel_5{
+	background-color: #99004C;
+}
+
+.my-widget .fomLevel_6{
+	background-color: #7E0023;
+}
+
+.my-widget .date{
+	float: right;
+	margin-right: 10px;
+	width: 160px;
+	height: 30px;
+}
+
+.my-widget .tim{
+	float: right;
+	margin-right: 10px;
+	width: 70px;
+	height: 27px;
+	background-color: rgba(220, 220, 220, 0.5);
+}
+
+.my-widget .mod{
+	margin-top: 40px;
+	margin-left: 5px;
+	width: 240px;
+	height: 27px;
+}
+
+.my-widget .dojo{
+	width: 100%;
+	height: 100%;
+	font-family: 微软雅黑;
+	font-weight: bold;
+	font-size: 12px;
+	background-color: rgba(220, 220, 220, 0.5);
+}
+
+.my-widget .select {
+	font-family: 微软雅黑;
+	font-weight: bold;
+	font-size: 12px;
+	position: relative;
+	top: -2px;
+	left: -2px;
+	width: calc(100% + 24px);
+	height: 24px;
+	line-height: 24px;
+	background-color: rgba(220, 220, 220, 0);
+	color: #33A;
+}
+
+.my-widget .selectOut {
+	float: left;
+	width: 50px;
+	height: 20px;
+	overflow: hidden;
+}
+
+.my-widget .selectAll {
+	font-weight: normal;
+	font-style: oblique;
+	font-size: 11px;
+	color: #777;
+}
+
+.my-widget .selectOption {
+	font-style: normal;
+	font-size: 12px;
+	color: #777;
+}
+
+.my-widget .cityOut {
+	width: 110px;
+}
+
+.my-widget .order {
+	padding-left: 10px;
+	font-family: 微软雅黑;
+	font-weight: bold;
+	font-size: 12px;
+	text-align: center;
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;
+	color: #777;
+}
+
+.my-widget .selectBar {
+	margin: 10px 0 0 0;
+}
+
+
+
+/* ********************** Test *********************** */
+
+.my-widget .defaultTest {
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	line-height: 80px;
+	overflow: hidden;
+	border-radius: 8px;
+	background-color: #0F0;
+	box-shadow: 0 0 3px 1px #C70;
+	/*display: none;*/
+}
+.my-widget .defaultTest:hover {
+	box-shadow: 0 0 12px 6px #770;
+}

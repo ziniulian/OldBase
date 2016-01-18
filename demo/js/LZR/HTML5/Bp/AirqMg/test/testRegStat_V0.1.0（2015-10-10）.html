@@ -1,0 +1,136 @@
+<html>
+	<head>
+		<title>testRegStat</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../../../../../../data/icon/style.css">
+		<script src="../../../../LZR.js"></script>
+
+		<style type="text/css">
+			.map {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			.timeAxis {
+				position: absolute;
+				width: 96%;
+				bottom: 10px;
+				left: 0;
+				padding-left: 2%;
+			}
+		</style>
+
+		<script>
+			// 改用等经纬度投影，而非摩卡拖投影，可单机
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat.js"	// V0.1.0
+				]);
+
+				LZR.temp = {};
+
+				 // 创建等经纬度地图（WGS84）
+				var attribution = new ol.Attribution({
+					html: 'Copyright:&copy; 2013 ESRI, i-cubed, GeoEye'
+				});
+				var projection = ol.proj.get('EPSG:4326');
+				// The tile size supported by the ArcGIS tile service.
+				var tileSize = 512;	// ArcGIS公共服务等经纬度投影图参数
+				var urlTemplate = 'http://services.arcgisonline.com/arcgis/rest/services/' + 'ESRI_Imagery_World_2D/MapServer/tile/{z}/{y}/{x}';	// ArcGIS公共服务等经纬度投影图参数
+				// var tileSize = 256;	// 中山等经纬度投影图参数
+				// var urlTemplate = "http://map.zsgis.com/Tile/ArcGISREST/ZSTDTVECTORBLEND.gis/tile/{z}/{y}/{x}";	// 中山等经纬度投影图参数
+				LZR.temp.map = new ol.Map({
+					target: 'map',
+					layers: [
+						new ol.layer.Tile({
+							source: new ol.source.XYZ ({
+								attributions: [attribution],
+								maxZoom: 16,
+								projection: projection,
+								tileSize: tileSize,
+								tileUrlFunction: function(tileCoord) {
+									return urlTemplate.replace('{z}', (tileCoord[0] - 1).toString()).replace('{x}', tileCoord[1].toString()).replace('{y}', (-tileCoord[2] - 1).toString());	// ArcGIS公共服务等经纬度投影图参数
+									// return urlTemplate.replace('{z}', (tileCoord[0]).toString()).replace('{x}', tileCoord[1].toString()).replace('{y}', (-tileCoord[2] - 1).toString());	// 中山等经纬度投影图参数
+								},
+								wrapX: true
+							})
+						})
+					],
+					view: new ol.View({
+						center: [0, 0],
+						projection: "EPSG:4326",
+						center: [105, 37],
+						zoom: 5,
+						minZoom: 2
+					})
+				});
+
+				// 创建摩卡拖地图
+				// LZR.temp.map = new ol.Map({
+				// 	layers: [
+				// 		new ol.layer.Tile({
+				// 			source: new ol.source.OSM()
+				// 		})
+				// 	],
+				// 	target: "map",
+				// 	controls: ol.control.defaults().extend([
+				// 		new ol.control.ScaleLine()
+				// 	]),
+				// 	view: new ol.View({
+				// 		projection: "EPSG:3857",
+				// 		zoom: 6,
+				// 		center: ol.proj.fromLonLat([105, 37])
+				// 	})
+				// });
+
+				// 创建区域形势
+				LZR.temp.rs = new LZR.HTML5.Bp.AirqMg.RegStat({
+					olmap: LZR.temp.map,
+					// 本地数据接口
+					wsUrl: "ws://127.0.0.1:8989",
+					urlPre: "http://127.0.0.1:8085/data/RegImg/pic/figure/",
+					area: [93, 29,117, 44.4545],
+
+					layers: [
+						{
+							cls: "LZR.HTML5.Bp.AirqMg.RegStat.OlLayer",
+							name: "分布图",
+							num: "35",
+							alpha: 0.3
+						},
+						{
+							cls: "LZR.HTML5.Bp.AirqMg.RegStat.OlLayer",
+							name: "气象条件",
+							// visible: false,
+							num: "4W"
+						}
+					]
+				});
+
+				// 加载时间轴
+				var t = LZR.temp.rs.timeAxis;
+				t.div.className = "timeAxis";
+				map.appendChild(t.div);
+				t.init();
+
+				// 控制器没完成之前的临时测试参数
+				LZR.temp.rs.qry.setQry({
+					area: "d01",
+					mod: "NAQPMS",
+					tim: "2015082320",		// 本地数据
+					start: 4,
+					end: 172
+				});
+
+				// 刷新数据
+				LZR.temp.rs.flush();
+
+			}
+		</script>
+	</head>
+
+	<body style="margin:0" onload="init()">
+		<div id="map" class="map"></div>
+	</body>
+</html> 

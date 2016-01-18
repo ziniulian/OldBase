@@ -1,0 +1,113 @@
+<html>
+	<head>
+		<title>testScroll</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<link rel="stylesheet" href="../../../../../../data/icon/style.css">
+
+		<style type="text/css">
+			.s1 {
+				width: 500px;
+				height: 10px;
+				margin-top: 60px;
+				margin-left: 60px;
+				background-color:#0F0;
+			}
+			.b1 {
+				width: 30px;
+				height: 30px;
+				background-color:#F00;
+				opacity: 0.5;
+			}
+			.s2 {
+				width: 5px;
+				height: 50%;
+				margin-top: 60px;
+				margin-left: 60px;
+				background-color:#0F0;
+			}
+		</style>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Scroll.js" ]);
+
+				var s1 = new LZR.HTML5.Util.Scroll({
+					count: 100,
+					position: 0,
+					direction: 1,
+					padd: 0,
+					len: 700,
+					stripClass: "s1",
+					btnClass: "b1",
+					div: document.body
+				});
+				s1.init();
+				s1.ctrlEnable();
+				s1.onchange = function (p, c) {
+					console.log (p + " / " + c);
+				}
+
+				var s2 = new LZR.HTML5.Util.Scroll({
+					count: 100,
+					position: 0,
+					direction: 2,
+					padd: 50,
+					len: "100%",
+					stripClass: "s2",
+					btnClass: "b1"
+				});
+				document.body.appendChild(s2.div);
+				s2.init();
+				s2.ctrlEnable();
+				window.onresize = function() {
+					s2.init();
+				};
+
+				var s3 = new LZR.HTML5.Util.Scroll({
+					count: 100,
+					position: 0,
+					autoLen: 1,
+					autoMin: 20,
+					hidTooBig: true,
+					direction: 1,
+					padd: 0,
+					len: 700,
+					stripClass: "s1",
+					btnClass: "b1",
+					div: document.body
+				});
+				s3.init();
+				s3.ctrlEnable();
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+
+			<div
+				id = "dhd"
+				style = "
+					height: 10px;
+					width: 500px;
+					background-color:#F00;
+
+				"
+			>
+				<div
+					style = "
+						position: relative;
+						left: 55px;
+						top: -10px;
+
+						width: 30px;
+						height: 30px;
+						background-color:#F0F;
+					"
+					class = "bpicon-circle-left"
+				>
+				</div>
+			</div>
+	</body>
+</html>

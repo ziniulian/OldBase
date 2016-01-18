@@ -1,0 +1,2 @@
+LZR.HTML5.loadJs([LZR.HTML5.jsPath+"HTML5/Canvas/ThumbnailImg.js"]);LZR.HTML5.Bp.AirqMg.RegImg=function(){this.layers=[];this.tim=this.tbnUrl=""};LZR.HTML5.Bp.AirqMg.RegImg.prototype=LZR.createPrototype(LZR.HTML5.Canvas.ThumbnailImg.prototype);LZR.HTML5.Bp.AirqMg.RegImg.prototype.className="LZR.HTML5.Bp.AirqMg.RegImg";LZR.HTML5.Bp.AirqMg.RegImg.prototype.version="0.0.0";LZR.HTML5.Bp.AirqMg.RegImg.prototype.getLayers=function(){return this.layers};
+LZR.HTML5.Bp.AirqMg.RegImg.prototype.getInfo=function(){return{tbnUrl:this.tbnUrl,tim:this.tim}};

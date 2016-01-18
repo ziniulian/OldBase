@@ -1,0 +1,91 @@
+<html>
+	<head>
+		<title>testRegStat</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+			var rs;
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat.js"	// V0.0.1
+				]);
+
+				rs = new LZR.HTML5.Bp.AirqMg.RegStat({
+					condition: {
+						date: "2015/6/18",
+						tim: 0,
+						ttyp: 1,
+						area: 1,
+						mod: "NAQPMS",
+						fom: "PM25"
+					},
+					map: document.getElementById("map"),
+					tbn: document.getElementById("tbn")
+				});
+				rs.init();
+			}
+
+			// 透明度变更
+			function changeAlpha (obj, v, txt) {
+				if (v) {
+					txt.value -= v;
+				}
+				v = txt.value;
+
+				if (v < 0) {
+					v = 0;
+					txt.value = v;
+				}
+
+				if (v > 1) {
+					v = 1;
+					txt.value = v;
+				}
+
+				obj.alpha = v;
+			}
+
+			// 条件切换
+			function changeCont (ttyp, area) {
+				rs.clear();
+				if ( ttyp === true ) {
+					rs.condition.ttyp = 0;
+				} else if ( ttyp === false ) {
+					rs.condition.ttyp = 1;
+				}
+				if ( !isNaN(area) ) {
+					rs.condition.area = area;
+				}
+				rs.init();
+			}
+
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div style="float:left"><canvas id="tbn" width="160" height="866" /></div>
+		<div style="float:left"><canvas id="map" width="1112" height="866" >
+			<p>您的浏览器不支持 canvas 元素！</p>
+		</canvas></div>
+
+		<form autocomplete="off">
+			<br><input type="checkbox" checked onclick="rs.map.layers[1].visible = !rs.map.layers[1].visible;" /> 地图 ： 透明度：
+			<input type="button" value="-" onclick="changeAlpha(rs.map.layers[1], 0.1, map);"/>
+			<input type="text" size="10" id="map" value=0.5 onchange="changeAlpha(rs.map.layers[1], null, map);" />
+			<input type="button" value="+" onclick="changeAlpha(rs.map.layers[1], -0.1, map);"/><br>
+
+			<br><input type="checkbox" checked onclick="rs.map.layers[0].visible = !rs.map.layers[0].visible;" /> 分布图：透明度：
+			<input type="button" value="-" onclick="changeAlpha(rs.map.layers[0], 0.1, distribute);"/>
+			<input type="text" size="10" id="distribute" value=1 onchange="changeAlpha(rs.map.layers[0], null, distribute);" />
+			<input type="button" value="+" onclick="changeAlpha(rs.map.layers[0], -0.1, distribute);"/><br>
+
+			<br><input type="checkbox" onclick="changeCont(this.checked)" /> 日均<br>
+
+			<br><input type="radio" name="area" checked onclick="changeCont(null, 1);" /> 全国
+			<br><input type="radio" name="area" onclick="changeCont(null, 2);" /> 华东
+			<br><input type="radio" name="area" onclick="changeCont(null, 3);" /> 京津冀
+		</form>
+	</body>
+</html> 

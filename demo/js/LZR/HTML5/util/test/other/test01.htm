@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>测试 b、c 形参的空传递</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+
+			function AA (a, b, c, d) {
+				LZR.HTML5.log (
+					"a = " + a + "："  + LZR.HTML5.getClassName( a ) + "\n" +
+					"b = " + b + "："  + LZR.HTML5.getClassName( b ) + "\n" +
+					"c = " + c + "："  + LZR.HTML5.getClassName( c ) + "\n" +
+					"d = " + d + "："  + LZR.HTML5.getClassName( d ) + "\n"
+				);
+			}
+
+			function BB (a, b, c) {
+				AA ( a, b, c, " ----- call AA" );
+			}
+
+ 			function init() {
+ 				// 测试 b、c 形参的空传递
+				BB(" ----- 测试 b、c 形参的空传递", null);
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()"/>
+</html>

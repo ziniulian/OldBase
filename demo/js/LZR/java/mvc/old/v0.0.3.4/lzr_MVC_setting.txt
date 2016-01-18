@@ -1,0 +1,25 @@
+﻿
+# Bean的默认包名
+beanPack : lzr.java.mvc.test.bean.
+
+# 与数据库对接的日期格式
+timeFormat : yyyy-MM-dd kk:mm:ss.SSS
+
+# SQLConfig服务 默认的包名
+configPack : lzr.java.mvc.test.config.
+
+# SQLConfig服务 默认的类名
+configClass : lzr.java.mvc.test.config.SqlConfig
+
+# 数据库驱动
+#DbDriver : 
+
+# 数据库连接字
+#DbURL : 
+
+# 数据库用户名
+#DbUser : 
+
+# 数据库密码
+#DbPass : 
+

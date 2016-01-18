@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>testUtil_query</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/Util.js",
+					LZR.HTML5.jsPath + "util/expand/json2.js"
+				]);
+
+				var s = JSON.stringify ( LZR.HTML5.Util.query (
+					{
+						a: { a:1, b:1, c:3, d:4, e:5, f:6, g:7 },
+						b: { a:1, b:2, c:3, d:4, e:5, f:6 },
+						c: { a:1, b:2, c:3, d:4, e:5, f:6, g:7, h:8 },
+						d: { a:1, b:1, c:3, d:4, e:5, f:6 }
+					},
+					{
+						b:1,
+						g:null
+					}
+				) );
+				LZR.HTML5.alog (s);
+
+				var s = JSON.stringify ( LZR.HTML5.Util.query (
+					[
+						{ a:1, b:1, c:3, d:4, e:5, f:6, g:7 },
+						{ a:1, b:2, c:3, d:4, e:5, f:6 },
+						{ a:1, b:2, c:3, d:4, e:5, f:6, g:7, h:8 },
+						{ a:1, b:1, c:3, d:4, e:5, f:6 }
+					],
+					{
+						LZRorr: {
+							b:1,
+							h:8
+						},
+						b:2
+					}
+				) );
+				LZR.HTML5.alog (s);
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		
+	</body>
+</html>

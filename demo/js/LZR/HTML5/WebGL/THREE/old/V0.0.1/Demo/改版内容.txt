@@ -1,0 +1,15 @@
+﻿"C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-file-access-from-files
+
+
+V1.00：
+	1. 导入OBJ档案
+	2. 正交 及 透视投影显示
+	3. 旋转、平移、缩放控制
+
+V1.01：
+	1. 优化 this 指针调用方法
+	2. 导入 JSON 档案
+	3. 工具码改静态类形式
+	4. 改良正交投影的 旋转、平移、缩放控制
+
+

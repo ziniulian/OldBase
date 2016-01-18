@@ -1,0 +1,10 @@
+<web-app>
+	<servlet>
+		<servlet-name>bean</servlet-name>
+		<servlet-class>lzr.java.mvc.servlet.BeanSrv</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bean</servlet-name>
+		<url-pattern>/bean</url-pattern>
+	</servlet-mapping>
+</web-app>

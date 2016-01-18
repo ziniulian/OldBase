@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>testDate</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../LZR.js"></script>
+
+		<script>
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(2);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "util/Date.js"
+				]);
+
+				LZR.HTML5.log( LZR.Util.Date.getDate("2015-8-6 20:7:34") );
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+
+	</body>
+</html> 

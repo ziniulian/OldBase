@@ -1,0 +1,5 @@
+
+	cd D:\F1632393\Work\MVC\bin
+	jar cvf lzrMVC-0.0.3.3.jar lzr
+
+

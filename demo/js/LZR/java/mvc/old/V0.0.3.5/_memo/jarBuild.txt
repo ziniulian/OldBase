@@ -1,0 +1,13 @@
+﻿
+cd D:\F1632393\Work\MVC\bin
+
+# 普通jar封包
+jar cvf lzrMVC-0.0.3.3.jar lzr
+
+# 可执行自动生成 Bean文件的 jar包
+jar -cvmf manifest.txt lzrMVC-0.0.3.5.jar lzr
+
+# 自动生成 Bean文件的指令
+java -jar lzrMVC-0.0.3.4.jar mysql L_ com.foxconn.crm.sm_hr.bean sm_hr.sql
+java -jar lzrMVC-0.0.3.4.jar mysql L_ com.foxconn.crm.sm2.bean sm2.sql
+

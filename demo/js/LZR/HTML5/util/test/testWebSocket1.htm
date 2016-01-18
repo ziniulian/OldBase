@@ -1,0 +1,297 @@
+<html>
+	<head>
+		<title>testWebSocket</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<script>
+
+ 			function init(d, index, typ) {
+
+// console.log (index + " , " + d);
+
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "util/expand/json2.js"
+				]);
+
+				var i, img;
+				var wsServer = 'ws://192.168.1.211:8989'; //服务器地址
+				var websocket = new WebSocket(wsServer); //创建WebSocket对象
+
+				websocket.onopen = function (evt) {
+					//已经建立连接
+					// alert("onopen : ");
+/*
+					websocket.send('
+						{
+							"type":"picContent",
+							"picType":["90"],
+							"sort":0,
+							"90":{
+								"timesRange":["2015072108","2015072114"]
+							}
+						}
+					');
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["91"],
+						sort: 0,
+						"91": {
+							timesRange:["2015081000","2015081223"]
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["95"],
+						sort: 0,
+						"95": {
+							timesRange:["2015081000","2015081023"]
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["90"],
+						sort: 0,
+						"90": {
+							timesRange:["2015081000","2015081223"]
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["00"],
+						sort: 0,
+						"00": {
+							"modelType":["WRF"],
+							"domain":["d01"],
+							"times":"2015062320",
+							"periodStart":21,
+							"periodEnd":30
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["35"],
+						sort: 0,
+						"35": {
+							"modelType":["NAQPMS"],
+							"domain":[d],
+							"times":"2015061720",
+							"periodStart": 4,
+							"periodEnd": 171
+						}
+					}) );
+console.log (index + " : start");
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["35"],
+						sort: 0,
+						"35": {
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"times":"2015061720",
+							"periodStart": 4,
+							"periodEnd": 171
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["4X"],
+						sort: 0,
+						"4X": {
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"times":"2015082320",
+							"periodStart": 4,
+							"periodEnd": 171
+						}
+					}) );
+*/
+
+					// URL形式接口
+					websocket.send( JSON.stringify ({
+						type: "picURL",
+						picType: ["4V"],
+						sort: 0,
+						"4V": {
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"times":"2015082320",
+							"periodStart": 4,
+							"periodEnd": 171
+						}
+					}) );
+
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["3V"],
+						sort: 0,
+						"3V": {
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"timesRange":["2015062300","2015072122"]
+						}
+					}) );
+*/
+					// websocket.send( '{"35":{"modelType":["NAQPMS"],"domain":["d03"],"times":"2015061720","periodStart":4,"periodEnd":171},"type":"picContent","picType":["35"],"sort":0}' );
+
+					// websocket.send( '{"type":"picContent","picType":["4F"],"sort":0,"4F":{"modelType":["NAQPMS"],"domain":["d01"],"timesRange":["2015071123","2015071223"]}}');
+
+					// websocket.send( '{"type":"picContent","picType":["4F"],"sort":0,"4F":{"modelType":["NAQPMS"],"domain":["d01"],"timesRange":["2015071023","2015071223"]}}');
+
+					// websocket.send( '{"90":{"timesRange":["2015081000","2015081023"]},"type":"picContent","picType":["90"],"sort":0}' );
+
+					// websocket.send( '{"type":"picContent","picType":["47"],"sort":"0","47":{"modelType":["NAQPMS"],"domain":["d02"],"timesRange":["2015071000","2015071223"]}}');
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["C0"],
+						sort: 0,
+						"C0": {
+							"times":"2015081420",
+							"periodStart": 0,
+							"periodEnd": 250
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["C0"],
+						sort: 0,
+						"C0": {
+							"times": "2015081420",
+							"periodStart": 0,
+							"periodEnd": 24
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["9H"],
+						sort: 0,
+						"9H": {
+							timesRange:["2015081400","20150816s23"]
+						}
+					}) );
+*/
+/*
+					websocket.send( JSON.stringify ({
+						type: "picContent",
+						picType: ["07"],
+						sort: 0,
+						"07": {
+							"modelType":["WRF"],
+							"domain":["d01", "d02", "d03"],
+							"times":"2015062320",
+							"periodStart": 4,
+							"periodEnd": 171,
+							"stations": ["110000041", "110000244", "110000245", "110000247", "110000246"]
+						}
+					}) );
+console.log (index + " : start");
+*/
+/*
+					// 循环加载多类图时的参数设定
+					var jss = {
+						// type: "picContent",
+						type: "picURL",
+						picType: [typ],
+						sort: 0
+					}
+					jss[typ] = {
+						"modelType":["NAQPMS"],
+						"domain":d,
+						"times":"2015082320",
+						"periodStart": 4,
+						"periodEnd": 171
+					}
+// console.log (index + " , " + JSON.stringify (jss) );
+					websocket.send( JSON.stringify (jss) );
+console.log (index + " : start");
+*/
+					// alert(websocket.readyState);	//查看websocket当前状态
+// i = 0;
+				};
+
+				websocket.onclose = function (evt) {
+					//已经关闭连接
+					// alert("onclose : ");
+if (img) {
+	img.onload = function () {
+		var tt = new Date();
+		tt = tt.getHours() + ":" + tt.getMinutes() + ":" + tt.getSeconds() + "   " + tt.getMilliseconds();
+		console.log (index + " : close ---  " + tt);
+	}
+}
+				};
+
+				websocket.onmessage = function (evt) {
+					// alert(evt.data);
+					//收到服务器消息，使用evt.data提取
+					var data = JSON.parse(evt.data);
+					switch (data.state) {
+						case "0":
+							// alert(evt.data);
+							img = document.createElement("img");
+							// img.src = "data:image/jpeg;base64," + data.Byte64;
+							img.src = "http://192.168.1.101/imgServer/figure/figure/" + data.URL;
+// alert(img.width);
+i++;
+// console.log (index + " - " + i + " : " + data.name);
+							document.body.appendChild(img);
+							break;
+						case "5":
+							// alert(evt.data);
+							break;
+						default:
+							alert("state : " + data.state);
+					}
+				};
+
+				websocket.onerror = function (evt) {
+					//产生异常
+					// alert("onerror : ");
+				}; 
+			}
+
+		</script>
+	</head>
+
+	<body>
+		<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABGdBTUEAALGPC/xhBQAAAA5JREFUKFNjYBgFgzMEAAGaAAFUMoc2AAAAAElFTkSuQmCC">
+	</body>
+
+	<script type="text/javascript">
+var tt = new Date();
+tt = tt.getHours() + ":" + tt.getMinutes() + ":" + tt.getSeconds() + "   " + tt.getMilliseconds();
+console.log (tt);
+		init();
+/*
+		for (var i=0; i<20; i++) {
+			init('d0' + (i%3+1), i);
+		}
+*/
+/*
+		var tps = ["35", "4V", "4W", "4X", "4Y"];
+		for (var i=0; i<tps.length; i++) {
+			init (["d01"], i, tps[i]);
+		}
+*/
+	</script>
+</html>

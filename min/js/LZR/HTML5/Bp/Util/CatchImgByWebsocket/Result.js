@@ -1,0 +1,1 @@
+LZR.HTML5.loadJs([LZR.HTML5.jsPath+"HTML5/Bp/Util/CatchImgByWebsocket.js"]);LZR.HTML5.Bp.Util.CatchImgByWebsocket.Result=function(a){this.num=-1;this.ret=this.tim=null;a&&LZR.setObj(this,a)};LZR.HTML5.Bp.Util.CatchImgByWebsocket.Result.prototype.className="LZR.HTML5.Bp.Util.CatchImgByWebsocket.Result";LZR.HTML5.Bp.Util.CatchImgByWebsocket.Result.prototype.version="0.0.0";

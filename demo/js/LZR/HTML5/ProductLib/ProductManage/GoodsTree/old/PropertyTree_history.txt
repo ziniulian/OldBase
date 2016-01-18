@@ -1,0 +1,7 @@
+﻿V0.0.0：
+	1. 原版
+
+V0.0.1：
+	1. 修改所有 Object.create 为 createProperty（2015-1-3）
+
+

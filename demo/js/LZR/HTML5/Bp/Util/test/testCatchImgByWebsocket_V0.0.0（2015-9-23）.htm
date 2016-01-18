@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<title>testCatchImgByWebsocket</title>
+		<meta charset="utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				// V0.0.0版
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/Util/CatchImgByWebsocket/Forecast.js",
+					LZR.HTML5.jsPath + "HTML5/Bp/Util/CatchImgByWebsocket/Truth.js"
+				]);
+				var imgServer = "http://127.0.0.1:8085/data/RegImg/pic/figure/";
+				LZR.HTML5.Bp.Util.CatchImgByWebsocket.prototype.REULT_TYPE.url.pre = imgServer;
+				var Foc = LZR.HTML5.Bp.Util.CatchImgByWebsocket.Forecast;
+				var Tru = LZR.HTML5.Bp.Util.CatchImgByWebsocket.Truth;
+
+				var foc = new Foc({
+					num: "35",
+					area: "d01",
+					mod: "NAQPMS",
+					tim: "2015082320",
+					start: 5,
+					end: 6
+				});
+				foc.succeInit = function () {
+					foc.open();
+				};
+				foc.onClose = function (rs) {
+					for (var i=0; i<rs.length; i++) {
+						var img = document.createElement("img");
+						img.src = rs[i].result;
+						document.body.appendChild(img);
+					}
+
+					// V0.0.0版 重连测试失败
+					// foc.start = 20;
+					// foc.end = 23;
+					// foc.open();
+				};
+				foc.init("ws://127.0.0.1:8989");
+
+
+				var tru = new Tru({
+					num: "4F",
+					area: "d01",
+					mod: "NAQPMS",
+					start: "2015071100",
+					end: "2015071102"
+				});
+				tru.resultType = tru.REULT_TYPE.base64;
+				tru.succeInit = function () {
+					tru.open();
+				};
+				tru.onClose = function (rs) {
+					for (var i=0; i<rs.length; i++) {
+						var img = document.createElement("img");
+						img.src = rs[i].result;
+						document.body.appendChild(img);
+					}
+				};
+				tru.init("ws://127.0.0.1:8989");
+
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+	</body>
+</html>

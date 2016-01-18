@@ -1,0 +1,333 @@
+<html>
+	<head>
+		<title>testRegStat2</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../../../../../../data/icon/style.css">
+		<script src="../../../../LZR.js"></script>
+
+		<style type="text/css">
+			.noselect {
+				/*文字不被选中*/
+				-webkit-user-select:none;
+				-moz-user-select:none;
+				-ms-user-select:none;
+				user-select:none;
+			}
+			.map {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			.timeAxis {
+				position: absolute;
+				width: 96%;
+				bottom: 10px;
+				padding-left: 2%;
+			}
+			.windCanvasStyle {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				/*background-color: red;*/
+				/*opacity: 0.5;*/
+			}
+			.hover {
+				position: relative;
+				left: 45px;
+				width: calc(100% - 45px);
+				height: 150px;
+				/*background-color: rgba(120, 120, 120, 0.6);*/
+			}
+			.hover_img {
+				position: absolute;
+				width: 180px;
+				top: 0;
+				height: 85%;
+				background-size: contain;
+				background-position: center bottom;
+				background-repeat: no-repeat;
+				opacity: 0.6;
+			}
+			.hover_img:hover {
+				opacity: 1;
+			}
+			.hover_txt {
+				position: absolute;
+				bottom: 0;
+				width:100%;
+				font-family:'微软雅黑';
+				font-size: 15px;
+				text-align: center;
+				line-height: 20px;
+			}
+			.hover_v {
+				position: absolute;
+				width: 180px;
+				bottom: 0;
+				height: 15%;
+				background-image: url(../../../../../../../data/RegImg/v.png);
+				background-size: contain;
+				background-position: center bottom;
+				background-repeat: no-repeat;
+			}
+			.mark {
+				position: absolute;
+				top: 3px;
+				width: 6px;
+				height: 6px;
+				box-shadow: 0 0 2px 1px #FFF;
+				border-radius: 10px;
+				left: 250px;
+			}
+			.mark:hover {
+				box-shadow: 0 0 7px 4px #FFF;
+			}
+			.mark_title {
+				position: absolute;
+				width: 120px;
+				height: 18px;
+				top: -26px;
+				font-family:'微软雅黑';
+				font-size: 15px;
+				font-weight: bold;
+				padding-left: 30px;
+				padding-right: 15px;
+			}
+			.button {
+				position: absolute;
+				width: 10px;
+				height: 10px;
+				top: 10px;
+				left: 10px;
+				background-color: yellow;
+				border-radius: 10px;
+			}
+			.ctrlDiv {
+				position: absolute;
+				/*display: none;*/
+				left: 20px;
+				/*bottom: 20px;*/
+				/*right: 20px;*/
+				top: 20px;
+				/*background-color: red;*/
+				/*opacity: 0.2;*/
+			}
+			.out {
+				float: left;
+			}
+			.normal {
+				font-family: 微软雅黑;
+				font-weight: bold; 
+				font-size: 16px;
+				padding: 10px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				color: #999;
+				background-color: rgba(0,0,0,0.2);
+
+				/*鼠标样式*/
+				cursor: pointer;
+			}
+			.normal:hover {
+				color: #ccc;
+				background-color: rgba(0,0,0,0.5);
+			}
+			.selected {
+				color: #666;
+				font-weight: bold; 
+				background-color: rgba(255, 255, 0, 0.8);
+			}
+			.selected:hover {
+				color: #333;
+				background-color: rgba(255, 255, 0, 1);
+			}
+			.date {
+				height: 49px;
+			}
+		</style>
+
+		<script>
+			// 可单机
+
+			// 放置控件
+			function placeView (data) {
+				// 总控制按钮
+				var b = new LZR.HTML5.Util.Layout.BaseDiv({});
+				b.addClass ("button");
+				b.placeTo(document.body);
+				b.div.onclick = function () {
+					if (LZR.temp.ctrlDiv.div.style.display === "none") {
+						LZR.temp.ctrlDiv.div.style.display = "";
+					} else {
+						LZR.temp.ctrlDiv.div.style.display = "none";
+					}
+				}
+
+				// 放置控件的容器
+				var s, d;
+				d = new LZR.HTML5.Util.Layout.BaseDiv({});
+				d.addClass ("ctrlDiv");
+				d.placeTo (LZR.temp.map.getViewport());
+				LZR.temp.ctrlDiv = d;
+
+				// 放置污染物
+				data.fom.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.fom.view.addClass ("out");
+				d.addChild (data.fom.view);
+				for (s in data.fom.children) {
+					var f = data.fom.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.fom.view.addChild (f.bdo);
+				}
+
+				// 放置等高线
+				data.line.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.line.view.addClass ("out");
+				d.addChild (data.line.view);
+				for (s in data.line.children) {
+					var f = data.line.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.line.view.addChild (f.bdo);
+				}
+
+				// 放置风场
+				data.wind.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.wind.view.addClass ("out");
+				d.addChild (data.wind.view);
+				for (s in data.wind.children) {
+					var f = data.wind.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.wind.view.addChild (f.bdo);
+				}
+
+				// 放置模式
+				data.mod.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.mod.view.addClass ("out");
+				d.addChild (data.mod.view);
+				for (s in data.mod.children) {
+					var f = data.mod.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.mod.view.addChild (f.bdo);
+				}
+
+				// 放置区域
+				data.area.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.area.view.addClass ("out");
+				d.addChild (data.area.view);
+				for (s in data.area.children) {
+					var f = data.area.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.area.view.addChild (f.bdo);
+				}
+
+				// 放置时长
+				data.timeStep.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.timeStep.view.addClass ("out");
+				d.addChild (data.timeStep.view);
+				for (s in data.timeStep.children) {
+					var f = data.timeStep.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.timeStep.view.addChild (f.bdo);
+				}
+
+				// 放置产品时次
+				data.time.view = new LZR.HTML5.Util.Layout.BaseDiv({});
+				data.time.view.addClass ("out");
+				d.addChild (data.time.view);
+				for (s in data.time.children) {
+					var f = data.time.children[s].view;
+					f.data.cssNormal.set("normal noselect");
+					f.data.cssSelected.set("normal noselect selected");
+					data.time.view.addChild (f.bdo);
+				}
+
+				// 放置产品日期
+				data.date.view.className = "out normal date";
+				d.div.appendChild(data.date.view);
+
+				// LZR.temp.ctrlDiv.div.style.display = "none";
+			}
+
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat2.js"	// V0.1.2
+				]);
+
+				LZR.temp = {};
+
+				 // 创建等经纬度地图（WGS84）
+				var attribution = new ol.Attribution({
+					html: "Copyright:&copy; 2013 ESRI, i-cubed, GeoEye"
+				});
+				var projection = ol.proj.get('EPSG:4326');
+				var tileSize = 512;
+				var urlTemplate = 'http://services.arcgisonline.com/arcgis/rest/services/' + 'ESRI_Imagery_World_2D/MapServer/tile/{z}/{y}/{x}';
+				LZR.temp.map = new ol.Map({
+					target: 'map',
+					layers: [
+						new ol.layer.Tile({
+							source: new ol.source.XYZ ({
+								attributions: [attribution],
+								maxZoom: 16,
+								projection: projection,
+								tileSize: tileSize,
+								tileUrlFunction: function(tileCoord) {
+									return urlTemplate.replace('{z}', (tileCoord[0] - 1).toString()).replace('{x}', tileCoord[1].toString()).replace('{y}', (-tileCoord[2] - 1).toString());
+								},
+								wrapX: true
+							})
+						})
+					],
+					view: new ol.View({
+						projection: "EPSG:4326",
+						center: [105, 37],
+						zoom: 5,
+						minZoom: 2
+					})
+				});
+
+				LZR.temp.data = new LZR.HTML5.Bp.AirqMg.RegStat2.ViewData();
+				LZR.temp.data.timeAxis.view = timeAxis;
+				LZR.temp.data.wind.children.Lagrange.windUrl = "http://127.0.0.1:8088/server/windServer";
+				LZR.temp.data.wind.children.Lagrange.isLLC = true;
+				LZR.temp.data.qry.wsUrl = "ws://127.0.0.1:8989";
+				LZR.temp.data.qry.urlPre = "http://127.0.0.1:8089/picService?type=0&path=";
+				LZR.temp.data.cur.fom.visible.set(true);
+				LZR.temp.data.cur.line.visible.set(true);
+				LZR.temp.data.cur.wind.visible.set(true);
+
+				LZR.temp.rs = new LZR.HTML5.Bp.AirqMg.RegStat2({
+					olmap: LZR.temp.map,
+					data: LZR.temp.data
+				});
+				LZR.temp.data.qry.ctrl.backImg = "../../../../../../../data/RegImg/back.png";
+				LZR.temp.data.qry.ctrl.backJson = "../../../../../../../data/RegImg/back.json";
+// console.log (LZR.temp.data);
+
+				LZR.temp.data.timeAxis.ctrl.init();
+				placeView (LZR.temp.data);
+
+				LZR.temp.rs.flush();
+				// LZR.temp.data.fom.children.O3.visible.set(true);
+
+// for (var s in LZR.temp.data.fom.children.AQI.visible.event.change.funs) {
+// 	console.log (s);
+// }
+			}
+		</script>
+	</head>
+
+	<body style="margin:0; overflow:hidden;" onload="init()">
+		<div id="map" class="map"></div>
+		<div id="timeAxis" class="timeAxis noselect"></div>
+	</body>
+</html> 

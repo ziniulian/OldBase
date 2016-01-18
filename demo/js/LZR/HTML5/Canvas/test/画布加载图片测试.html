@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<title>画布加载图片测试</title>
+		<script src="../../../LZR.js"></script>
+
+		<script>
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/Util.js",
+					LZR.HTML5.jsPath + "HTML5/Canvas/Layer.js"
+				]);
+
+				 var canvas =document.getElementById("canvas");
+				 var context2D =canvas.getContext("2d");
+				 var pic = new Image();
+				 pic.onload=function(){
+					// context2D.drawImage(pic,10, 10, 800, 800, 0, 0, 400, 400);
+					context2D.drawImage(pic,0, 0);
+					alert(0);
+
+					// // context2D.setTransform(2, 0, 0, 2, 0, 0);  // x、y 同时缩放两倍
+					// context2D.setTransform(1, 0, 0, 1, 468, 263);  // 平移
+					// // context2D.setTransform(2, 0, 0, 2, 468, 263);  // 平移 + 缩放
+					// context2D.drawImage(pic,0, 0);
+					// // context2D.setTransform(1, 0, 0, 1, 0, 0);  // 还原
+					// alert(1);
+
+					// context2D.fillStyle = "rgba(255,0,0,0.3)";
+					// // context2D.globalAlpha = 0.5;
+					// // context2D.globalCompositeOperation="lighter";
+					// // context2D.globalCompositeOperation="xor";
+					// // context2D.globalCompositeOperation="copy";
+					// context2D.globalCompositeOperation="source-over";
+					// context2D.fillRect(50,50, 100, 100);
+					// alert(2);
+
+					// // canvas.width = 600;
+					// // context2D.clearRect (50,50, 100, 100);
+					// context2D.clearRect (0,0,600,400);
+					// alert(3);
+
+					// transform 对 ImageData 无作用。
+					context2D.setTransform(1, 0, 0, 1, 0, 0);
+					var imgd = context2D.getImageData(50, 50, 100, 100);
+					context2D.fillStyle = "rgba(255,255,0,0.4)";
+					context2D.fillRect(50, 50, 100, 100);
+					alert(4);
+
+					context2D.putImageData(imgd, 100, 100, 50, 50, 50, 50);
+					alert(5);
+
+					context2D.putImageData(imgd, 0, 0, 0, 0, 50, 50);
+					alert(6);
+
+					context2D.putImageData(imgd, 100, 0, 50, 0, 50, 50);
+					alert(7);
+
+					context2D.putImageData(imgd, 0, 100, 0, 50, 50, 50);
+					alert(8);
+
+					context2D.fillStyle = "rgba(255,0,0,0.6)";
+					context2D.setTransform(2, 0, 0, 2, 0, 0);
+					context2D.fillRect(150, 150, 50, 50);
+					alert(9);
+
+					context2D.putImageData(imgd, 200, 200);
+					alert(10);
+
+					context2D.fillRect(200, 200, 100, 100);
+					alert(11);
+
+					for (var s in imgd) {
+						alert(s);
+					}
+
+
+					// // 测试类型：
+					// // var l = new LZR.HTML5.Canvas.Layer({name:"testType", obj:pic});
+					// var l = new LZR.HTML5.Canvas.Layer({name:"testType", obj:canvas});
+					// // var l = new LZR.HTML5.Canvas.Layer(context2D.getImageData(30,30,100,100));
+					// alert("Layer.getType = " + l.getType());
+
+					// // 测试添加对象
+					// var a = {};
+					// alert (a.t);
+					// a["t"] = 5;
+					// alert (a.t);
+
+					// // 测试数组删除
+					// var aa = [];
+					// aa.push(1);
+					// aa.push(2);
+					// aa.push(3);
+					// alert(aa[1]);
+					// alert(aa[2]);
+					// delete aa[1];
+					// alert("-------" + aa.length);
+					// alert(aa[1]);
+					// alert(aa[2]);
+					// aa[1] = 2;
+					// alert(aa[1]);
+					// alert(aa[2]);
+					// aa.splice(1,1);
+					// alert("-------" + aa.length);
+					// alert(aa[0]);
+					// alert(aa[1]);
+					// alert(aa[2]);
+
+				}
+				pic.src ="../../../../../../data/canvas.png";
+
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<canvas id="canvas" width="1500"height="850" style="background-color:yellow">
+			<p>Your browserdoes not support the canvas element!</p>
+		</canvas>
+	</body>
+</html>  

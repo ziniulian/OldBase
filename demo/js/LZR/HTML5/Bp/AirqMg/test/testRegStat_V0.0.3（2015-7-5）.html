@@ -1,0 +1,310 @@
+<html>
+	<head>
+		<title>testRegStat</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/Event.js",
+					LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat.js"	// V0.0.3
+				]);
+
+				LZR.temp = {};
+				LZR.temp.rs = new LZR.HTML5.Bp.AirqMg.RegStat({
+					condition: {
+						timName: "20时",	// 产品时次名
+						_tim: "20",		// 产品查询时次
+						tim: 0,			// 产品初始时次
+						ttypName: "小时",	// 日均/小时 名
+						ttyp: 1,			// 日均/小时值	（小时:1, 日均:0）
+						areaName: "全国",	// 区域名
+						area: 1,		// 区域		（全国:1, 华东:2, 京津冀:3）
+						mod: "NAQPMS",	// 模式
+						fomName: "PM2.5",	// 污染物名
+						fom:"PM25",		// 污染物
+					},
+
+					title: document.getElementById("regStatTitle"),
+					map: document.getElementById("regStatMap"),
+					tbn: document.getElementById("regStatTbn"),
+					eys: document.getElementById("regStatEys")
+				});
+				LZR.temp.rs.loadCompass (LZR.temp.rs.path + "compass1.png");
+				LZR.temp.rs.loadLegend (LZR.temp.rs.path + "legendRS.png");
+				LZR.temp.rs.setDate ("2015-6-17");
+				LZR.temp.rs.init();
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+
+		<!-- 左边窗体 -->
+		<div style="
+			width:280;
+			height:100%
+		">
+
+
+<!-- Widget 开始处 -->
+			<br>
+			<span>产品时间：</span>
+			<input id="regStatDate" type="text"
+				onchange = '
+					var v = this.value;
+					LZR.temp.rs.setDate (v, true);
+				'
+				class="cityAndStaDt" required="true" value="2015-6-17"
+				data-dojo-type="dijit/form/DateTextBox"
+				data-dojo-props="constraints:{datePattern: 'yyyy-MM-dd'}" />
+			<br><br>
+
+			<span>预报时次：</span>
+			<select id="regStatTim"
+				onchange = '
+					var n = this.options[this.selectedIndex].text;
+					var v = this.value;
+					LZR.temp.rs.setTim (n, v, true);
+				'
+				data-dojo-type="dijit/form/Select">
+				<option value="20" selected>20时</option>
+			</select><br><br>
+
+			<span>预报模式：</span>
+			<select id="regStatMod"
+				onchange = '
+					var v = this.value;
+					LZR.temp.rs.setMod (v, true);
+				'
+				data-dojo-type="dijit/form/Select">
+				<option value="NAQPMS" selected>NAQPMS</option>
+				<option value="CMAQ" >CMAQ</option>
+				<option value="CAMx" >CAMx</option>
+				<option value="WRF-Chem" >WRF-Chem</option>
+			</select><br><br>
+			<pre id = "LZR_LOG" />
+<!-- Widget 结束处 -->
+
+
+		</div>
+
+		<!-- 右边窗体 -->
+		<div style="
+			position:absolute;
+			left: 280;
+			right:0;
+			top:0;
+			bottom:0;
+		">
+
+
+<!-- 内容开始处 -->
+			<!-- 标题 -->
+			<div id="regStatTitle" style="
+				font-family: 微软雅黑;
+				font-size : 40px;
+				text-align: center;
+				height:60px;
+				overflow:hidden;
+			">
+				区域形势
+			</div>
+
+			<!-- 内容 -->
+			<div style="
+				position:absolute;
+				left: 0;
+				right:0;
+				top:60px;
+				bottom:35px;
+			">
+
+				<!-- 缩略图 -->
+				<div style="
+					position:absolute;
+					left: 0;
+					top:0;
+					width:177px;
+					height:100%;
+				">
+					<canvas id="regStatTbn" style="
+						width:100%;
+						height:100%;
+					"/>
+				</div>
+
+				<!-- 地图 -->
+				<div style="
+					margin-left: 190px;
+					margin-right: 270px;
+					height:100%;
+				">
+					<canvas id="regStatMap" style="
+						width:100%;
+						height:100%;
+					"/>
+						<p>您的浏览器不支持 canvas 元素！</p>
+					</canvas>
+				</div>
+
+				<!-- 查询条件 -->
+				<div style="
+					position:absolute;
+					right: 0;
+					top:0;
+					width: 250px;
+					height:100%;
+				">
+					<form autocomplete="off">
+						污染物：
+						<select id="regStatFom"
+							onchange = '
+								var n = this.options[this.selectedIndex].text;
+								var v = this.value;
+								LZR.temp.rs.setFom (n, v, true);
+							'
+							data-dojo-type="dijit/form/Select">
+							<option value="PM25" selected>PM2.5</option>
+							<option value="PM10" >PM10</option>
+							<option value="SO2" >SO2</option>
+							<option value="NO2" >NO2</option>
+							<option value="CO" >CO</option>
+							<option value="O3" >O3</option>
+							<option value="AQI" >AQI</option>
+						</select><br>
+
+						<br>类型：
+						<div style="
+							margin-left:38px;
+						">
+							<input type="radio" name="regStatTtyp"
+								onclick = '
+									LZR.temp.rs.setTtyp ("小时", 1, true);
+								'
+								data-dojo-type="dijit/form/RadioButton" checked/> 小时<br>
+							<input type="radio" name="regStatTtyp"
+								onclick = '
+									LZR.temp.rs.setTtyp ("日均", 0, true);
+								'
+								data-dojo-type="dijit/form/RadioButton" /> 日均
+						</div>
+
+						<br> 区域： 
+						<div style="
+							margin-left:38px;
+						">
+							<input type="radio" name="regStatArea"
+								onclick = '
+									LZR.temp.rs.setArea ("全国", 1, true);
+								'
+								data-dojo-type="dijit/form/RadioButton" checked/> 全国<br>
+							<input type="radio" name="regStatArea"
+								onclick = '
+									LZR.temp.rs.setArea ("华东", 2, true);
+								'
+								data-dojo-type="dijit/form/RadioButton" /> 华东<br>
+							<input type="radio" name="regStatArea"
+								onclick = '
+									LZR.temp.rs.setArea ("京津冀", 3, true);
+								'
+								data-dojo-type="dijit/form/RadioButton" /> 京津冀
+						</div>
+
+						<br><hr>
+
+						<br> 图层：
+						<div style="
+							margin-left:38px;
+						">
+							<input type="checkbox" id="regCompassVisible"
+								onclick = '
+									LZR.temp.rs.setCompassVisble (this.checked);
+								'
+								data-dojo-type="dijit/form/CheckBox" checked/> 指北针<br>
+							<input type="checkbox" id="regLegendVisible"
+								onclick = '
+									LZR.temp.rs.setLegendVisble (this.checked);
+								'
+								data-dojo-type="dijit/form/CheckBox" checked/> 图例<br>
+							<input type="checkbox" id="regStatMapVisible"
+								onclick = '
+									LZR.temp.rs.setLayerVisble (1, this.checked);
+								'
+								data-dojo-type="dijit/form/CheckBox" checked/> 地图<br>
+							<input type="checkbox" id="regStatTbnVisible"
+								onclick = '
+									LZR.temp.rs.setLayerVisble (0, this.checked);
+								'
+								data-dojo-type="dijit/form/CheckBox" checked/> 分布图
+						</div>
+
+						<br> 动画： 
+						<div style="
+							margin-left:38px;
+						">
+							<input type="radio" name="regStatAnimation"
+								onclick = '
+									LZR.temp.rs.setFrame (1);
+								'
+								data-dojo-type="dijit/form/RadioButton" checked/> 1帧<br>
+							<input type="radio" name="regStatAnimation"
+								onclick = '
+									LZR.temp.rs.setFrame (3);
+								'
+								data-dojo-type="dijit/form/RadioButton" /> 3帧<br>
+							<input type="radio" name="regStatAnimation"
+								onclick = '
+									LZR.temp.rs.setFrame (6);
+								'
+								data-dojo-type="dijit/form/RadioButton" /> 6帧<br>
+							<a id="regStatAnimationButton"
+								onclick = '
+									if ( LZR.temp.rs.changeAnimation() == 1 ) {
+										this.innerText = "停止播放";
+									} else {
+										this.innerText = "播放动画";
+									}
+								'
+								href=#>播放动画</a>
+						</div>
+					</form>
+
+					<!-- 鹰眼 -->
+					<div style="
+						position:absolute;
+						right: 0;
+						bottom:0;
+						width:100%;
+						height:200px;
+						// background-color:yellow;
+					">
+						<canvas id="regStatEys" style="
+							width:100%;
+							height:100%;
+						"/>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- 尾巴 -->
+			<div style="
+				font-family: 微软雅黑;
+				font-size : 25px;
+				position:absolute;
+				text-align: right;
+				width: 100%;
+				height:35px;
+				bottom:0;
+			">
+				技术支持：中科院大气所  。 制作：北京融昭普瑞科技有限公司 
+			</div>
+<!-- 内容结束处 -->
+
+
+		</div>
+	</body>
+</html> 

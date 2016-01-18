@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>UUU</title>
+<script>
+	function UU() {
+		this.cc;
+	}
+
+	function test() {
+		var u = new UU();
+		var d = document.getElementById("mydiv");
+		u.cc = function () {
+			alert ("HELLLO");
+		}
+		d.onclick = u.cc;
+	}
+</script>
+</head>
+
+<body onload="test();">
+<div id=mydiv style="background:#F00; color:#FFF">
+	<div>Hello</div>
+	<div style="background:#FF0; color:#000; margin:0 0 0 20px; display:non">Hello</div>
+	<div>...</div>
+</div>
+</body>
+
+</html>

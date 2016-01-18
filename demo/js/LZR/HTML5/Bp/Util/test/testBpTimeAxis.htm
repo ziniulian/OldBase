@@ -1,0 +1,126 @@
+<html>
+	<head>
+		<title>testBpTimeAxis</title>
+		<meta charset="utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/Util/BpTimeAxis.js"
+				]);
+
+				var h168 = new LZR.HTML5.Bp.Util.BpTimeAxis ({
+					div: H168,		// 容器
+					// data: ,		// 时间刻度数据
+					count: 7,			// 时间刻度数量
+					style: 1,		// 风格（0：压线（含最大时间）；1：压中（不含最大时间））
+					timeLong: 168,	// 时间长度
+					timeStep: 3600,	// 时间间隔（秒）
+					// startTime: ,	// 起始时间
+					// allShow: ,	// 鼠标移开时是否继续显示当前提示
+					// playStep: ,	// 时间轴播放跨度
+					playSpeed: 50,	// 时间轴播放速度（毫秒）
+					// playMod: ,	// 播放模式（0：循环播放；1：自动停止）
+					// hidPlay: ,	// 是否隐藏播放按钮
+				});
+				h168.onchange = function (time) {
+					console.log ("h168 : " + time);
+				}
+				h168.init();
+
+				var d7 = new LZR.HTML5.Bp.Util.BpTimeAxis ({
+					div: D7,		// 容器
+					data: ["初一", "初二", "初三", "初四", "初五", "初六", "初七"],		// 时间刻度数据
+					// count: 7,			// 时间刻度数量
+					style: 1,		// 风格（0：压线（含最大时间）；1：压中（不含最大时间））
+					timeLong: 7,	// 时间长度
+					timeStep: 24 * 3600,	// 时间间隔（秒）
+					// startTime: ,	// 起始时间
+					allShow: true,	// 鼠标移开时是否继续显示当前提示
+					// playStep: ,	// 时间轴播放跨度
+					playSpeed: 200,	// 时间轴播放速度（毫秒）
+					// playMod: ,	// 播放模式（0：循环播放；1：自动停止）
+					// hidPlay: ,	// 是否隐藏播放按钮
+					noDrop: 0
+				});
+				d7.getCurrentTitleContent = function (t) {
+					return (t.getMonth()+1) + "/" + t.getDate();
+				};
+				d7.onchange = function (time) {
+					console.log ("d7 : " + time);
+				};
+				d7.init(2);
+				alert(0);
+				d7.setPosition (3);
+/*
+				// 自定义动画播放
+				var playing = false;
+				var contiue = function () {
+					if (playing) {
+						clearTimeout(playing);
+						playing = setTimeout (function () {
+							d7.next();
+						}, 500);
+					}
+				};
+				d7.onchange = function (time) {
+					console.log (playing + " --- " + time);
+					contiue();
+				};
+				d7.beforePlay = function () {
+					playing = true;
+					d7.next();
+					return false;
+				};
+				d7.autoStop = function () {
+					clearTimeout(playing);
+					playing = false;
+				};
+*/
+				alert(d7.getCurrentTime());
+				d7.setter("count", 4);
+				d7.setter("data", ["14", "25", "37", "99"]);
+				d7.setter("startTime", "2015-5-5");
+				alert(d7.getCurrentTime());
+				d7.setter("timeLong", 4);
+				d7.setter("timeStep", 3600);	// 时间间隔（秒）
+
+
+				d7.getCurrentTitleContent = function (t) {
+					return (t.getHours() + ":" + t.getMinutes());
+					// return (t.getMonth()+1) + "/" + t.getDate();
+				};
+				d7.flushCurrentTime();	// 刷新当前提示框
+
+				d7.setter("hidTitle", true);	// 隐藏提示框
+				alert(d7.getCurrentTime());
+				d7.setter("hidTitle", false);	// 隐藏提示框
+				// d7.setter("style", 0);
+				// alert(d7.getCurrentTime());
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+			<div
+				id = "H168"
+				style = "
+					width: 80%;
+					height: 50px;
+					margin: 80px;
+					background-color:#FF0;
+				"
+			></div>
+			<div
+				id = "D7"
+				style = "
+					width: 80%;
+					height: 50px;
+					margin: 80px;
+					background-color:#0FF;
+				"
+			></div>
+	</body>
+</html>

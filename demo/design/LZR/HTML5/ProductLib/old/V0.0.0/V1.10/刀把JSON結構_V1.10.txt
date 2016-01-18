@@ -1,0 +1,380 @@
+﻿
+product:
+{
+	supplierID:0,
+	brand:"昊志",
+	name:"刀把",
+	child:{
+		name:"適用主軸",
+		member:[
+			{
+				name:"BT30",
+				child:{
+					name:"加持方式",
+					member:[
+						{
+							name:"筒夾式",
+							child:{
+								name:"規格型號",
+								member:[
+									{
+										name:"BT30-GDC12A-90GZX19-113",
+										basePro:[
+											{key:"價格",value:"", },
+											{key:"材質",value:"", },
+											{key:"硬度",value:"", },
+											{key:"同軸度",value:"≦5μm", },
+											{key:"重複裝夾精度",value:"≦7μm", },
+											{key:"刀把錐柄貼合度",value:"≧80%", },
+											{key:"動平衡",value:"≦G2.5", },
+											{key:"振動量",value:"0.6mm/s", },
+											{key:"夾持力",value:"", },
+											{key:"防銹性",value:"鹽霧試驗4H", },
+											{key:"備註",value:"", },
+										],
+										use:[
+											{key:"夾持範圍",value:"", },
+											{key:"使用設備",value:[
+												{key:"設備名稱/型號",value:"", },
+												{key:"機台設置參數",value:[
+													{key:"轉速",value:"", },
+													{key:"進給",value:"", },
+													{key:"切削量",value:"", },
+													{key:"切削量",value:"", },
+												], },
+											], },
+											{key:"性能指標",value:[
+												{key:"加工精度",value:"", },
+												{key:"面粗度",value:"", },
+												{key:"加工效率",value:"", },
+											], },
+										],
+										performance:[
+											{key:"同軸度",value:"", },
+											{key:"重複裝夾精度",value:"", },
+											{key:"刀把錐柄貼合度",value:"", },
+											{key:"動平衡",value:"", },
+											{key:"振動量",value:"", },
+											{key:"夾持力",value:"", },
+											{key:"防銹性",value:"", },
+											{key:"備註",value:"", },
+										],
+										struct:[
+											{
+												rawID:1,
+												pro:[
+													{key:"材料",value:"20CrMnTi", },
+													{key:"硬度",value:"HRC56~59", },
+												], 
+											},
+											{
+												rawID:2,
+												pro:[
+													{key:"材料",value:"440", },
+													{key:"硬度",value:"HRC562~54", },
+												], 
+											},
+											{
+												rawID:3,
+												pro:[
+													{key:"材料",value:"440B", },
+													{key:"硬度",value:"HRC42.5~46", },
+												], 
+											},
+											{
+												rawID:4,
+												pro:[
+													{key:"材料",value:"20CrMnTi", },
+													{key:"硬度",value:"HRC46~52", },
+												], 
+											},
+											{
+												rawID:5,
+												pro:[
+													{key:"材料",value:"鎳", },
+													{key:"硬度",value:"", },
+												], 
+											},
+											{
+												rawID:6,
+												pro:[
+													{key:"材料",value:"", },
+													{key:"防銹效果",value:"", },
+												], 
+											},
+										],
+										statistic:{
+											sum:{/*value:0.0, unit:"", */},
+											costSum:{/*value:0.0, unit:"", */},
+											otherPro:[
+												{key:"備註",value:"", },
+											],
+										},
+										rawCost:[
+											{
+												rawID:1,
+												otherPro:[
+													{key:"材質",value:"20CrMnTi", },
+												],
+												consumption:{/*value:0.0, unit:"", */},
+												loss:{/*value:0.0, unit:"", */},
+												uPrice:{/*value:0.0, unit:"", */},
+												tPrice:{/*value:0.0, unit:"", */},
+											},
+											{
+												rawID:2,
+												otherPro:[
+													{key:"材質",value:"440C", },
+												],
+												consumption:{/*value:0.0, unit:"", */},
+												loss:{/*value:0.0, unit:"", */},
+												uPrice:{/*value:0.0, unit:"", */},
+												tPrice:{/*value:0.0, unit:"", */},
+											},
+											{
+												rawID:3,
+												otherPro:[
+													{key:"材質",value:"440B", },
+												],
+												consumption:{/*value:0.0, unit:"", */},
+												loss:{/*value:0.0, unit:"", */},
+												uPrice:{/*value:0.0, unit:"", */},
+												tPrice:{/*value:0.0, unit:"", */},
+											},
+											{
+												rawID:4,
+												otherPro:[
+													{key:"材質",value:"20CrMnTi", },
+												],
+												consumption:{/*value:0.0, unit:"", */},
+												loss:{/*value:0.0, unit:"", */},
+												uPrice:{/*value:0.0, unit:"", */},
+												tPrice:{/*value:0.0, unit:"", */},
+											},
+											{
+												rawID:5,
+												consumption:{/*value:0.0, unit:"", */},
+												loss:{/*value:0.0, unit:"", */},
+												uPrice:{/*value:0.0, unit:"", */},
+												tPrice:{/*value:0.0, unit:"", */},
+											},
+										],
+										child:{
+											name:"部件",
+											member:[
+												{
+													name:"刀把本體",
+													topRawID:[
+														7,
+													],
+													proc:[
+														{
+															num:1,
+															name:"刀把本體加工",
+															child:{
+																name:"加工步驟",
+																member:[
+																	{
+																		num:1,
+																		name:"下料",
+																		parameter:{
+																			target:{/*value:0.0, unit:"", */},
+																			setValue:{/*value:0.0, unit:"", */},
+																		},
+																		manpower:{
+																			perManp:{/*value:0.0, unit:"", */},
+																			totalManp:{/*value:0.0, unit:"", */},
+																		},
+																		craft:{
+																			yield:{/*value:0.0, unit:"", */},
+																			cycle:{/*value:0.0, unit:"", */},
+																			capacity:{/*value:0.0, unit:"", */},
+																		},
+																		procCost:{
+																			procCT:{/*value:0.0, unit:"", */},
+																			workRate:{/*value:0.0, unit:"", */},
+																			pcsCost:{/*value:0.0, unit:"", */},
+																		},
+																		busiCost:{
+																			transport:{/*value:0.0, unit:"", */},
+																			manage:{/*value:0.0, unit:"", */},
+																			tax:{/*value:0.0, unit:"", */},
+																		},
+																		otherCost:{
+																			testFee:{/*value:0.0, unit:"", */},
+																		},
+																		otherPro:[
+																			{key:"步驟說明",value:"材料：20CrMnTi，下料規格：Φ50*（130.3） 單件", },
+																			{key:"備註",value:"", },
+																		],
+																	},
+																	{
+																		num:2,
+																		name:"粗車甲頭",
+																	},
+																	{
+																		num:3,
+																		name:"精車甲頭",
+																		rawConsump:[
+																			{
+																				rawID:7,
+																				demand:{/*value:0.0, unit:"", */},
+																			},
+																		],
+																	},
+																],
+															},
+														},
+													],
+													otherPro:[
+														{key:"材質",value:"20CrMnTi", },
+														{key:"規格尺寸",value:"Φ50*（130.3）", },
+													],
+												},
+												{
+													name:"螺帽",
+												},
+												{
+													name:"筒夾",
+												},
+												{
+													name:"拉釘",
+												},
+												{
+													name:"鋁套",
+												},
+												{
+													name:"表面處理",
+												},
+											],
+										},
+									},
+								],
+							},
+						},
+						{
+							name:"油壓式",
+						},
+						{
+							name:"熱縮式",
+						},
+					],
+				},
+			},
+		],
+	},
+}
+
+
+
+
+
+rawMaterial:
+{
+	ID:1,
+	productID:undefined,
+	category:"部件",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"刀把本體",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:2,
+	productID:undefined,
+	category:"部件",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"螺帽",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:3,
+	productID:undefined,
+	category:"部件",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"筒夾",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:4,
+	productID:undefined,
+	category:"部件",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"拉釘",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:5,
+	productID:undefined,
+	category:"部件",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"鋁套",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:6,
+	productID:undefined,
+	category:"部件",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"表面處理",
+	type:"",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:undefined,
+}
+{
+	ID:7,
+	productID:undefined,
+	category:"設備",	// 設備、輔助治工具、耗材、包材、部件、原材料
+	name:"杭州友佳",
+	type:"FTC-350",
+	spec:"",
+	brand:"",
+	provenance:"",
+	price:{value:0.0, unit:""},
+	supplierID:1,
+}
+
+
+supplier:
+{
+	ID:0,
+	name:"",
+	contact:"",
+	phone:"",
+	supplierLegal:{
+		comType:"",
+		regCapital:"",
+		emplTotal:"",
+		supAddr:"",
+		supNature:"",
+		legaler:"",
+		busiScope:"",
+	},
+}
+{
+	ID:1,
+	name:"",
+	contact:"",
+	phone:"",
+}

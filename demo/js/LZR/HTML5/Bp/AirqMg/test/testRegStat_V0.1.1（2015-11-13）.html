@@ -1,0 +1,360 @@
+<html>
+	<head>
+		<title>testRegStat</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../../../../../../data/icon/style.css">
+		<script src="../../../../LZR.js"></script>
+
+		<style type="text/css">
+			.map {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			.timeAxis {
+				position: absolute;
+				width: 96%;
+				bottom: 10px;
+				padding-left: 2%;
+			}
+			.windCanvasStyle {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				/*background-color: red;*/
+				/*opacity: 0.5;*/
+			}
+			.hover {
+				position: relative;
+				left: 45px;
+				width: calc(100% - 45px);
+				height: 150px;
+				/*background-color: rgba(120, 120, 120, 0.6);*/
+			}
+			.hover_img {
+				position: absolute;
+				width: 180px;
+				top: 0;
+				height: 85%;
+				background-size: contain;
+				background-position: center bottom;
+				background-repeat: no-repeat;
+				opacity: 0.6;
+			}
+			.hover_img:hover {
+				opacity: 1;
+			}
+			.hover_txt {
+				position: absolute;
+				bottom: 0;
+				width:100%;
+				font-family:'微软雅黑';
+				font-size: 15px;
+				text-align: center;
+				line-height: 20px;
+			}
+			.hover_v {
+				position: absolute;
+				width: 180px;
+				bottom: 0;
+				height: 15%;
+				background-image: url(../../../../../../../data/RegImg/v.png);
+				background-size: contain;
+				background-position: center bottom;
+				background-repeat: no-repeat;
+			}
+			.mark {
+				position: absolute;
+				top: 3px;
+				width: 6px;
+				height: 6px;
+				box-shadow: 0 0 2px 1px #FFF;
+				border-radius: 10px;
+				left: 250px;
+			}
+			.mark:hover {
+				box-shadow: 0 0 7px 4px #FFF;
+			}
+			.mark_title {
+				position: absolute;
+				width: 120px;
+				height: 18px;
+				top: -26px;
+				font-family:'微软雅黑';
+				font-size: 15px;
+				font-weight: bold;
+				padding-left: 30px;
+				padding-right: 15px;
+			}
+		</style>
+
+		<script>
+			// 可单机
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat.js"	// V0.1.1
+				]);
+
+				LZR.temp = {};
+
+				 // 创建等经纬度地图（WGS84）
+				var attribution = new ol.Attribution({
+					html: "Copyright:&copy; 2013 ESRI, i-cubed, GeoEye"
+				});
+				var projection = ol.proj.get('EPSG:4326');
+				// The tile size supported by the ArcGIS tile service.
+				var tileSize = 512;	// ArcGIS公共服务等经纬度投影图参数
+				var urlTemplate = 'http://services.arcgisonline.com/arcgis/rest/services/' + 'ESRI_Imagery_World_2D/MapServer/tile/{z}/{y}/{x}';	// ArcGIS公共服务等经纬度投影图参数
+				// var tileSize = 256;	// 中山等经纬度投影图参数
+				// var urlTemplate = "http://map.zsgis.com/Tile/ArcGISREST/ZSTDTVECTORBLEND.gis/tile/{z}/{y}/{x}";	// 中山等经纬度投影图参数
+				// urlTemplate = "";
+				LZR.temp.map = new ol.Map({
+					target: 'map',
+					layers: [
+						new ol.layer.Tile({
+							source: new ol.source.XYZ ({
+								attributions: [attribution],
+								maxZoom: 16,
+								projection: projection,
+								tileSize: tileSize,
+								tileUrlFunction: function(tileCoord) {
+									return urlTemplate.replace('{z}', (tileCoord[0] - 1).toString()).replace('{x}', tileCoord[1].toString()).replace('{y}', (-tileCoord[2] - 1).toString());	// ArcGIS公共服务等经纬度投影图参数
+									// return urlTemplate.replace('{z}', (tileCoord[0]).toString()).replace('{x}', tileCoord[1].toString()).replace('{y}', (-tileCoord[2] - 1).toString());	// 中山等经纬度投影图参数
+								},
+								wrapX: true
+							})
+						})
+					],
+					view: new ol.View({
+						projection: "EPSG:4326",
+						center: [105, 37],
+						zoom: 5,
+						minZoom: 2
+					})
+				});
+
+				// 创建摩卡拖地图
+				// LZR.temp.map = new ol.Map({
+				// 	layers: [
+				// 		new ol.layer.Tile({
+				// 			source: new ol.source.OSM()
+				// 		})
+				// 	],
+				// 	target: "map",
+				// 	controls: ol.control.defaults().extend([
+				// 		new ol.control.ScaleLine()
+				// 	]),
+				// 	view: new ol.View({
+				// 		projection: "EPSG:3857",
+				// 		zoom: 6,
+				// 		center: ol.proj.fromLonLat([105, 37])
+				// 	})
+				// });
+
+				// 创建区域形势
+				LZR.temp.rs = new LZR.HTML5.Bp.AirqMg.RegStat({
+					olmap: LZR.temp.map,
+
+					// 本地接口
+					wsUrl: "ws://127.0.0.1:8989",
+					urlPre: "http://127.0.0.1:8085/data/RegImg/pic/figure/",
+					area: [47.02134865, -16.45396135,164.58891465, 60.37036195],	// JSON数据
+					// area: [93, 29,117, 44.4545],		// 图片数据
+
+					layers: [
+						{
+							cls: "LZR.HTML5.Bp.AirqMg.RegStat.OlLayer",
+							name: "分布图",
+							// visible: false,
+							num: "35",
+							alpha: 0.3
+						},
+/*
+						// 2015082320 图片等温线叠加
+						{
+							cls: "LZR.HTML5.Bp.AirqMg.RegStat.OlLayer",
+							name: "气象条件",
+							// visible: false,
+							num: "4W",
+							alpha: 0.8
+						},
+*/
+
+						{
+							cls: "LZR.HTML5.Bp.AirqMg.RegStat.OlGeoJsonLayer",
+							name: "气象条件",
+							// visible: false,
+							num: "4W",
+							alpha: 0.5
+						},
+						{
+							cls: "LZR.HTML5.Bp.AirqMg.RegStat.WindLayer",
+							name: "风场",
+							windCanvasStyle: "windCanvasStyle",
+							windUrl: "http://127.0.0.1:8088/server/windServer",	// 本地接口
+							isLLC: true,
+							column: 40,
+							row: 30,
+							pad: 20,
+							// visible: false,
+							alpha: 1
+						}
+
+					],
+
+					// 播放间隔
+					playStep: 20
+				});
+
+				// 加载时间轴
+				var t = LZR.temp.rs.timeAxis;
+				// t.div.className = "timeAxis";
+				// map.appendChild(t.div);
+				t.init();
+
+				// 控制器没完成之前的临时测试参数
+				LZR.temp.rs.qry.setQry({
+					area: "d01",
+					mod: "NAQPMS",
+					tim: "2015070220",		// JSON数据
+					// tim: "2015082320",		// 图片数据
+					start: 4,
+					end: 172
+				});
+
+				// 生成时间轴上的污染物浓度标记
+				LZR.temp.rs.markCre ({
+					markClass: "mark",	// 标记的样式
+					titleClass: "mark_title",	// 标记提示的样式
+					name: "内蒙古",	// 站点或城市名称
+					id: "001",		// 站点或城市ID
+					data: [
+						{
+							time: "2015-7-3 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "red"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-3 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MIN",	// 最大最小类型
+							color: "yellow"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-4 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "blue"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-4 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MIN",	// 最大最小类型
+							color: "green"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-5 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MIN",	// 最大最小类型
+							color: "green"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-5 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "yellow"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-6 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MIN",	// 最大最小类型
+							color: "red"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-6 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "green"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-7 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "green"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-7 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MIN",	// 最大最小类型
+							color: "blue"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-8 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "green"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-8 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "yellow"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-9 8:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MIN",	// 最大最小类型
+							color: "blue"	// 污染级别颜色
+						},
+						{
+							time: "2015-7-9 20:00:00",	// 时间
+							value: 150,	// 浓度值
+							aqi: 80,	// AQI值
+							level: 1,	// 污染物级别
+							mmtyp: "MAX",	// 最大最小类型
+							color: "green"	// 污染级别颜色
+						}
+					]
+				});
+
+				// 刷新数据
+				LZR.temp.rs.flush();
+
+			}
+		</script>
+	</head>
+
+	<body style="margin:0; overflow:hidden;" onload="init()">
+		<div id="map" class="map"></div>
+		<div id="timeAxis" class="timeAxis"></div>
+	</body>
+</html> 

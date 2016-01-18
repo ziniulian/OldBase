@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>UUU</title>
+<script>
+
+function TT(tobj, div) {
+	this.tobj = tobj;
+	this.div = div;
+}
+
+TT.prototype.cr = function (obj) {
+	var htm = "";
+	for (var i=0; i<obj.length; i++) {
+		htm += "<p name='name'>" + obj[i].name + "</p>";
+		if (obj[i].child) {
+			htm += this.cr(obj[i].child);
+		}
+	}
+	return htm;
+}
+
+function test () {
+	var o = [
+			{name:"A", child:[{name:"A1"},{name:"A2"}]},
+			{name:"B"},
+			{name:"C", child:[{name:"C1"},{name:"C2"},{name:"C3"}]},
+		];
+	var t = new TT(o, document.getElementById("mydiv"));
+	t.div.innerHTML = t.cr(t.tobj);
+}
+
+</script>
+</head>
+
+<body onclick="test();">
+<div id=mydiv>Hello</div>
+</body>
+
+</html>

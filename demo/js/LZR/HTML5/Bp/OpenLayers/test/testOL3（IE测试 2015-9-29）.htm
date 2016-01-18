@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>testOL3 风场测试</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="../../../expand/ol3/ol.css" type="text/css">
+		<script src="../../../expand/ol3/ol.js"></script>
+		<script src="../../../../LZR.js"></script>
+		<style>
+			.map {
+				height: 800px;
+				width: 1000px;
+			}
+			.zoom {
+				height: 200px;
+				width: 200px;
+				top: 50px;
+				left: 50px;
+			}
+		</style>
+	</head>
+
+	<body>
+	<div id="map" class="map"></div>
+	<div id="zoom"></div>
+	<script>
+	LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+	LZR.HTML5.loadJs([
+		LZR.HTML5.jsPath + "util/Graphics.js"
+	]);
+	var gp = new LZR.Util.Graphics();
+
+	var view = new ol.View({
+		zoom: 8,
+		center: ol.proj.fromLonLat([116, 39]),
+	});
+
+	var map = new ol.Map({
+		layers: [
+			new ol.layer.Tile({
+				source: new ol.source.OSM()
+			})
+		],
+		target: 'map',
+		view: view
+	});
+
+	// 风场数据 http://192.168.1.203/bpycserver/api/Grd/getWind?model=naqpms&isAverage=true&pTime=2015-01-07%2000&cTime=2015-01-07%2000&prediction=1&zone=3&lonmin=20.727891995250743&latmin=-3.0720782624722704&lonmax=189.47789201869608&latmax=57.611510785258666&step=20
+	var data = {
+		a1: {	// 左上角经纬度
+			lon: 114,
+			lat: 40,
+		},
+		a2: {	// 右下角经纬度
+			lon: 118,
+			lat: 38
+		}
+	}
+
+	map.on('postcompose', function(evt) {
+		var ctx = evt.context;
+		var r = map.getView().getResolution();
+		var s = data.windSize/r;
+
+		// 计算经纬度对应的画布坐标
+		data.p1 = map.getPixelFromCoordinate( ol.proj.fromLonLat ([data.a1.lon, data.a1.lat]) );	// 左上角的画布坐标
+		data.p2 = map.getPixelFromCoordinate( ol.proj.fromLonLat ([data.a2.lon, data.a2.lat]) );	// 右下角的画布坐标
+		var x = data.p1[0];
+		var y = data.p1[1];
+
+LZR.HTML5.log(data.a1.lon + " , " + data.a1.lat + " = " + x + " , " + y);
+		// 画范围
+		ctx.beginPath();
+		ctx.moveTo(x, y);
+		ctx.lineTo(data.p2[0], y);
+		ctx.lineTo(data.p2[0], data.p2[1]);
+		ctx.lineTo(x, data.p2[1]);
+		ctx.closePath();
+		ctx.stroke();
+
+	});
+
+	</script>
+	</body>
+</html>

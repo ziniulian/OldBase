@@ -1,0 +1,294 @@
+<html>
+	<head>
+		<title>testBaseTimeAxis</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+
+		<style type="text/css">
+			.play {
+				display: inline-block;
+				width: 45px;
+				height: 45px;
+				background-image: url(../../../css/img/LHBU_BpTimeAxis_play.png);
+			}
+			.pause {
+				background-image: url(../../../css/img/LHBU_BpTimeAxis_pause.png);
+			}
+			.tb {
+				position: relative;
+				text-align: center;
+				top: -5px;
+				font-family: 微软雅黑;
+				font-size: 13px;
+				font-weight: bold;
+				color: #A60300;
+				cursor: pointer;
+				border-color: #A60300;
+			}
+			.tbf {
+				display: inline-block;
+				border-style: solid;
+				border-width: 0 0 0 1px;
+			}
+			.tbo {
+				/*color: #777;*/
+			}
+			.tbd {
+				/*color: #F91;*/
+			}
+			.bs {
+				display: inline-block;
+				vertical-align:top;
+				position: relative;
+				top: 5px;
+				left: 15px;
+				width: 80%;
+				width: -webkit-calc(100% - 60px);
+				width: -moz-calc(100% - 60px);
+				width: -o-calc(100% - 60px);
+				width: -calc(100% - 60px);
+				height: 12px;
+				background-color: rgba(150, 150, 150, 0.5);
+				border-radius: 5px;
+			}
+			.cs {
+				width: 0;
+				height: 12px;
+				background-color: #A60300;
+				opacity: 1;
+				border-radius: 5px;
+			}
+
+/*
+			.ct {
+				width: 60px;
+				height: 60px;
+				font-family: "微软雅黑";
+				font-size: 13px;
+				text-align: center;
+				line-height: 50px;
+				top: -60px;
+				padding-left: 2px;
+				z-index: 2;
+				background-image: url(data/q1.jpg);
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+*/
+
+			.ct {
+				width: 45px;
+				height: 25px;
+				font-family: "微软雅黑";
+				color: black;
+				font-size: 13px;
+				text-align: center;
+				line-height: 18px;
+				top: -25px;
+				z-index: 2;
+				background-image: url(../../../css/img/LHBU_BpTimeAxis_ct.png);
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+
+/*
+			.mt {
+				width: 40px;
+				height: 15px;
+				padding-right: 40px;
+				font-family: "微软雅黑";
+				font-size: 10px;
+				text-align: center;
+				line-height: 15px;
+				top: -13px;
+				z-index: 1;
+			}
+*/
+/*
+			.mt {
+				width: 45px;
+				height: 45px;
+				font-family: "微软雅黑";
+				font-size: 10px;
+				text-align: center;
+				line-height: 55px;
+				top: 5px;
+				z-index: 1;
+				margin-left: 10px;
+				background-repeat: no-repeat;
+				background-image: url(data/q20.png);
+				background-size: contain;
+			}
+*/
+/*
+			.mt {
+				width: 60px;
+				height: 60px;
+				font-family: "微软雅黑";
+				font-size: 15px;
+				text-align: center;
+				line-height: 48px;
+				top: -65px;
+				z-index: 1;
+				margin-left: 10px;
+				background-repeat: no-repeat;
+				background-image: url(data/q2.png);
+				background-size: contain;
+			}
+*/
+/*
+			.mt {
+				width: 40px;
+				height: 15px;
+				font-family: "微软雅黑";
+				font-size: 10px;
+				text-align: center;
+				line-height: 15px;
+				top: 5px;
+				z-index: 1;
+				border-width: 1px;
+				border-style: solid;
+				border-color: #000;
+				border-radius: 3px;
+			}
+*/
+/*
+			.mt {
+				width: 40px;
+				height: 20px;
+				font-family: "微软雅黑";
+				font-size: 10px;
+				color: #6C0;
+				text-align: center;
+				line-height: 15px;
+				top: -32px;
+				z-index: 3;
+				background-repeat: no-repeat;
+				background-image: url(data/down.png);
+				background-size: 15px;
+				background-position: center 8px;
+				background-repeat: no-repeat;
+			}
+*/
+/*
+			.mt {
+				width: 40px;
+				height: 20px;
+				padding-top: 10px;
+				font-family: "微软雅黑";
+				font-size: 10px;
+				color: #6C0;
+				text-align: center;
+				line-height: 15px;
+				top: -5px;
+				z-index: 3;
+				background-repeat: no-repeat;
+				background-image: url(data/up.png);
+				background-size: 15px;
+				background-position: center 0px;
+				background-repeat: no-repeat;
+			}
+*/
+
+			.mt {
+				width: 45px;
+				height: 25px;
+				font-family: "微软雅黑";
+				color: white;
+				font-size: 13px;
+				text-align: center;
+				line-height: 18px;
+				top: -38px;
+				z-index: 1;
+				background-image: url(../../../css/img/LHBU_BpTimeAxis_mt.png);
+				background-repeat: no-repeat;
+				background-size: contain;
+			}
+
+		</style>
+
+		<script>
+			var play, t;
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/TimeAxisBurst.js"
+				]);
+
+				play = new LZR.HTML5.Util.Select ({
+					data: {
+						title: "播放动画",
+						checked: false,
+					},
+					type: 0,
+					downClass: "pause",		// 鼠标按下样式
+					defaultClass: "play"
+				});
+				play.onDown = function(d) {
+					if (d.checked) {
+						t.play();
+					} else {
+						t.pause();
+					}
+				};
+				dhd.appendChild(play.div);
+
+				t = new LZR.HTML5.Util.BaseTimeAxis({
+					currentTitleClass: "ct",	// 当前提示样式
+					mouseTitleClass: "mt",	// 鼠标提示样式
+					backStripClass: "bs",		// 时间条背景样式
+					coverStripClass: "cs",		// 时间条覆盖样式
+
+					// startTime: "2015-8-13 0:0:0",	// 起始时间
+					timeLong: 168,	// 时间长度
+					timeStep: 3600,	// 时间间隔（秒）
+
+					allShow: false,	// 鼠标移开时是否继续显示当前提示
+					titleOver: -18,	// 提示重叠增量
+
+					playStep: 1,	// 时间轴播放跨度
+					playSpeed: 200,	// 时间轴播放速度（毫秒）
+					playMod: 1,	// 播放模式（0：循环播放；1：自动停止）
+
+					div: dhd
+				});
+				t.autoStop = function () {
+					play.setChecked (false);
+				}
+				t.init();
+
+				var tb = new LZR.HTML5.Util.TimeAxisBurst ({
+					bta: t,
+					count: 7,
+					// data: ["dd", "bb", "tt"],
+					outClass: "tb",
+					defaultClass: "tbf",
+					overClass: "tbo",
+					downClass: "tbd",
+					offsetW: 1,
+					noBorder: true
+				});
+				tb.init();
+
+				// 自适应屏幕
+				LZR.HTML5.Util.Event.addEvent (window, "resize", function() {
+					t.init();
+					tb.init();
+				}, false);
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+			<div
+				id = "dhd"
+				style = "
+					width: 80%;
+					height: 50px;
+					margin: 80px;
+					<!-- background-color:#FF0; -->
+				"
+			>
+			</div>
+	</body>
+</html>

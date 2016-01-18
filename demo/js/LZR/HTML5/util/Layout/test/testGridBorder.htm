@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<title>testGridBorder</title>
+		<meta charset="utf-8" />
+		<script src="../../../../LZR.js"></script>
+
+		<style type="text/css">
+			.LHUL_GridBorder_Title {
+				width: 100%;
+				height: 10%;
+				background-color: #069DD5;
+			}
+			.LHUL_GridBorder_Pack {
+				width: 100%;
+				height: 85%;
+				background-color: white;
+			}
+			.LHUL_GridBorder_Footer {
+				width: 100%;
+				height: 5%;
+				background-color: #069DD5;
+			}
+			.LHUL_GridBorder_Div {
+				width: 500px;
+				height: 500px;
+				overflow: hidden;
+				box-shadow: 0 0 20px #777;
+				border-radius: 5px;
+			}
+			.d {
+				width: 800px;
+				height: 800px;
+			}
+		</style>
+
+		<script type="text/javascript">
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Layout/GridBorder.js" ]);
+
+				var gb = new LZR.HTML5.Util.Layout.GridBorder ({
+					img: {
+						url: "../../../../../../../data/canvas.png",
+						// url: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAApSURBVBiVY7x///5/BjSgqKjIiC7GhC6ACwygQgxHMzAwMGDz4FDwDAD5/wevjSk4mwAAAABJRU5ErkJggg==",
+						left: 100,
+						top: 50,
+						width: 100,
+						height: 100,
+						div: document.getElementById("gb")
+					},
+					// titleClass: "t",		// 标题样式
+					// packClass: "p",		// 容器样式
+					// footerClass: "f",		// 页脚样式
+					divClass: "LHUL_GridBorder_Div d"
+				});
+			}
+		</script>
+	</head>
+
+	<body onload="init();">
+		<div
+			id = "gb"
+		></div>
+	</body>
+</html>

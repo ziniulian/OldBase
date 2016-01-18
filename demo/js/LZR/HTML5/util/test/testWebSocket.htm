@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>testWebSocket</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<script>
+
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "util/expand/json2.js"
+				]);
+
+				var wsServer = 'ws://localhost:8989'; //服务器地址
+				var websocket = new WebSocket(wsServer); //创建WebSocket对象
+
+				websocket.onopen = function (evt) {
+					//已经建立连接
+					alert("onopen : ");
+					websocket.send('{"type":"getPic","count":2}');//向服务器发送消息
+					alert(websocket.readyState);//查看websocket当前状态
+				};
+
+				websocket.onclose = function (evt) {
+					//已经关闭连接
+					alert("onclose : ");
+				};
+
+				websocket.onmessage = function (evt) {
+					//收到服务器消息，使用evt.data提取
+					alert("onmessage : " + evt.data);
+
+					// websocket.send('{"type":"getPic","count":5}');//向服务器发送消息
+
+					// var img = document.createElement("img");
+					// document.body.appendChild(img);
+					// var data = JSON.parse(evt.data)
+					// img.src = "data:image/jpeg;base64," + data.Base64;
+				};
+
+				websocket.onerror = function (evt) {
+					//产生异常
+					alert("onerror : ");
+				}; 
+			}
+
+		</script>
+	</head>
+
+	<body onload="init();"></body>
+</html>

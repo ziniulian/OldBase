@@ -1,0 +1,40 @@
+<html>
+	<head>
+		<title>testAjax</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<script>
+			var aj;
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/util/Ajax.js" ]);
+
+				// 同步GET
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 同步GET：" );
+				LZR.HTML5.alog ( aj.get ( 'http://127.0.0.1:8081/MVC/bean?opt={method:"qry"}&obj={className:"lzr.java.mvc.bean.TestOracleBean", name:"小二车車"}' ));
+				LZR.HTML5.alog ( "end ---------- 同步GET" );
+
+				// 同步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 同步POST：" );
+				LZR.HTML5.alog ( aj.post ( "http://127.0.0.1:8081/MVC/bean", {opt:{method:"qry"}, obj:{className:"lzr.java.mvc.bean.TestOracleBean", name:"小二车車"}}) );
+				LZR.HTML5.alog ( "end ---------- 同步POST" );
+
+				// 同步GET
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 同步GET：" );
+				LZR.HTML5.alog ( aj.get ( 'http://127.0.0.1:8081/MVC/con?opt={con:"TEST_ORACLE_QRYSQL_BEAN"}&obj=["1993-1-3 11:5:38.10", "%25的測%25", "2018-1-3 11:5:38.10"]' ));
+				LZR.HTML5.alog ( "end ---------- 同步GET" );
+
+				// 同步POST
+				aj = new LZR.HTML5.Util.Ajax ();
+				LZR.HTML5.alog ( "\nStart ---------- 同步POST：" );
+				LZR.HTML5.alog ( aj.post ( "http://127.0.0.1:8081/MVC/con", {opt:{con:"TEST_ORACLE_QRYSQL_BEAN"}, obj:["1993-1-3 11:5:38.10", "%25的測%25", "2018-1-3 11:5:38.10"]}) );
+				LZR.HTML5.alog ( "end ---------- 同步POST" );
+			}
+		</script>
+	</head>
+
+	<body onload="init(); //testSyn();"></body>
+</html>

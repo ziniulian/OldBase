@@ -1,0 +1,104 @@
+/*播放按钮样式*/
+.LHU_BpTimeAxis_play {
+	display: inline-block;
+	width: 35px;
+	height: 35px;
+	background-image: url(@LZR_CssPath/img/LHBU_BpTimeAxis_play.png);
+	background-size: cover;
+}
+
+/*暂停按钮样式*/
+.LHU_BpTimeAxis_pause {
+	background-image: url(@LZR_CssPath/img/LHBU_BpTimeAxis_pause.png);
+}
+
+/*时间条背景样式*/
+.LHU_BpTimeAxis_bs {
+	display: inline-block;
+	vertical-align:top;
+	position: relative;
+	top: 5px;
+	left: 10px;
+	width: 80%;
+	width: -webkit-calc(100% - 45px);
+	width: -moz-calc(100% - 45px);
+	width: -o-calc(100% - 45px);
+	width: calc(100% - 45px);
+	height: 12px;
+	background-color: rgba(150, 150, 150, 0.5);
+	border-radius: 5px;
+}
+
+/*时间条覆盖样式*/
+.LHU_BpTimeAxis_cs {
+	width: 0;
+	height: 12px;
+	background-color: #A60300;
+	opacity: 1;
+	border-radius: 5px;
+}
+
+/*当前提示框样式*/
+.LHU_BpTimeAxis_ct {
+	width: 45px;
+	height: 25px;
+	font-family: "微软雅黑";
+	color: black;
+	font-size: 13px;
+	text-align: center;
+	line-height: 18px;
+	top: -25px;
+	z-index: 2;
+	background-image: url(@LZR_CssPath/img/LHBU_BpTimeAxis_ct.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/*鼠标提示框样式*/
+.LHU_BpTimeAxis_mt {
+	width: 45px;
+	height: 25px;
+	font-family: "微软雅黑";
+	color: white;
+	font-size: 13px;
+	text-align: center;
+	line-height: 18px;
+	top: -38px;
+	z-index: 1;
+	background-image: url(@LZR_CssPath/img/LHBU_BpTimeAxis_mt.png);
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+/*滚动条的按钮样式*/
+.LHU_BpTimeAxis_sb {
+	width: 0;
+}
+
+/*时间刻度外框样式*/
+.LHU_BpTimeAxis_tb {
+	position: relative;
+	text-align: center;
+	top: -6px;
+	font-family: 微软雅黑;
+	font-size: 13px;
+	font-weight: bold;
+	color: #A60300;
+	cursor: pointer;
+	border-color: #A60300;
+}
+
+/*单个时间刻度默认样式*/
+.LHU_BpTimeAxis_tbf {
+	display: inline-block;
+	border-style: solid;
+	border-width: 0 0 0 1px;
+}
+
+/*单个时间刻度鼠标经过样式*/
+.LHU_BpTimeAxis_tbo {
+}
+
+/*单个时间刻度鼠标按下样式*/
+.LHU_BpTimeAxis_tbd {
+}
