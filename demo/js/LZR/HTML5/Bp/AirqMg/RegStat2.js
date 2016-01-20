@@ -248,13 +248,23 @@ LZR.HTML5.Bp.AirqMg.RegStat2.prototype.initViewByWind = function (obj) {
 			// 全部图层都刷新完毕时的回调函数
 			LZR.HTML5.Bp.AirqMg.RegStat2.prototype.allLayersFlushed = function () {
 				var ys = this.layersMgr.layers;
+				var setAlpha = function (y, v) {
+					y.alpha.set(v);
+				};
+
 				for (var i=0; i<ys.length; i++) {
 					var y = ys[i];
 					switch (y.className) {
-						// 区域形势的OpenLayers GeoJson图层
-						case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
 						// 区域形势基于OpenLayers的风场图层
 						case "LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer":
+							// 风场闪动效果
+							if (y.visible.val) {
+								var ap = y.alpha.val;
+								y.alpha.set(0);
+								setTimeout( LZR.bind (this, setAlpha, y, ap), 200 );
+							}
+						// 区域形势的OpenLayers GeoJson图层
+						case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
 							y.autoFlush = true;
 							y.data = y.newData;
 							y.draw();
@@ -526,10 +536,10 @@ LZR.HTML5.Bp.AirqMg.RegStat2.prototype.initViewByTimeAxis = function (obj) {
 								y.timeId.set(p);
 							}
 							break;
-						// 区域形势的OpenLayers GeoJson图层
-						case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
 						// 区域形势基于OpenLayers的风场图层
 						case "LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer":
+						// 区域形势的OpenLayers GeoJson图层
+						case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
 							y.autoFlush = false;
 							y.timeId.set(p);
 							break;

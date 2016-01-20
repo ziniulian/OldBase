@@ -31,6 +31,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -47,6 +49,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -63,6 +67,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -79,6 +85,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -95,6 +103,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -111,6 +121,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -127,6 +139,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -143,6 +157,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		}
@@ -168,6 +184,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -184,6 +202,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		},
@@ -200,6 +220,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				enable: new vc(true),
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		}
@@ -228,6 +250,20 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 				color: "yellow",
 				dataProjection: "EPSG:4326",
 				mapProjection: "EPSG:4326",
+				defaultLegend: "",
+				hoverLegend: "",
+			view: null,
+			ctrl: null
+		},
+		"Euler": {
+			id: "Euler",
+			parent: this.wind,
+			root: this,
+				html: "欧拉风场",
+				visible: new vc(false),
+				alpha: new vc(0.8),
+				defaultLegend: "",
+				hoverLegend: "",
 			view: null,
 			ctrl: null
 		}
@@ -425,7 +461,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 			hoverTime: 800,
 			timeLong: new vc(7),	// 时间长度（以天计）
 			playing: false,
-			playWaitTime: new vc(20),	// 动画播放间停顿时间（以毫秒计）
+			playWaitTime: new vc(200),	// 动画播放间停顿时间（以毫秒计）
 		view: null,
 		ctrl: null
 	};
