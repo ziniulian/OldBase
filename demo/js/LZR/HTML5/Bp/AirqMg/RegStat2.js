@@ -261,7 +261,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.prototype.initViewByWind = function (obj) {
 							if (y.visible.val) {
 								var ap = y.alpha.val;
 								y.alpha.set(0);
-								setTimeout( LZR.bind (this, setAlpha, y, ap), 200 );
+								setTimeout( LZR.bind (this, setAlpha, y, ap), 50 );
 							}
 						// 区域形势的OpenLayers GeoJson图层
 						case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
