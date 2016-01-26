@@ -641,7 +641,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.getEndByInterface = function () 
 
 // 获取时间轴需要的开始时间
 LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.getStartTimeByTimeAxis = function () {
-	return new Date(this.date.content.val + " 0:0").valueOf() + 24*3600*1000;
+	return LZR.Util.Date.getDate(this.date.content.val + " 00:00:00").valueOf() + 24*3600*1000;
 };
 
 // 调整时长
