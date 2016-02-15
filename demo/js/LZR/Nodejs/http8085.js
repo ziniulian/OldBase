@@ -6,7 +6,7 @@
 
 function loadStaticFile(uri, response) {
 	var filename = path.join(process.cwd(), uri);
-	path.exists (filename, function (exists) {
+	fs.exists (filename, function (exists) {
 // console.log(exists + " : " + filename);
 		if (!exists) {
 			response.writeHeader (404, {"Content-Type":"text/plain;charset=utf-8"});
