@@ -4,6 +4,7 @@
 		<script src="../../../LZR.js"></script>
 
 		<script>
+			// 图层可兼容 ImgData 对象的测试，存在ImgData对象无法缩放、无法滤镜的问题
 			var lm = {};
 			var i=0;
 			function init() {
@@ -17,10 +18,41 @@
 				var pic = new Image();
 				pic.onload = function() {
 					lm.addLayer (new LZR.HTML5.Canvas.Layer({name:"test", obj:pic}));
+
+					var y = new LZR.HTML5.Canvas.Layer({name:"test"});
+					var w = 150;
+					var h = 100;
+					var d = lm.ctx.createImageData (w, h);
+					for (var i=0; i<w; i++) {
+						for (var j=0; j<h; j++) {
+							var n = (i*w + j) * 4;
+							if (j<10) {
+								d.data[n] = 255;
+								d.data[n+1] = 0;
+								d.data[n+2] = 0;
+								d.data[n+3] = 255;
+							} else if (j<20) {
+								d.data[n] = 0;
+								d.data[n+1] = 255;
+								d.data[n+2] = 0;
+								d.data[n+3] = 255;
+							} else if (j<30) {
+								d.data[n] = 0;
+								d.data[n+1] = 0;
+								d.data[n+2] = 255;
+								d.data[n+3] = 255;
+							} else {
+								d.data[n+3] = 0;
+							}
+						}
+					}
+					y.obj = d;
+					lm.addLayer (y);
 					lm.ctrlEnable ();
 					ctrl();
 				}
 				pic.src ="../../../../../../data/canvas.png";
+
 			}
 
 			function ctrl() {

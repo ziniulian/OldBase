@@ -11,10 +11,10 @@ LZR.Util.Graphics.prototype.calcTransform  = function (a, sx, sy, dx, dy) {
 	/*
 		参数说明：
 			a: 旋转角度（弧度）
-			dx: x方向偏移量
-			dy: y方向偏移量
 			sx: x方向缩放比例
 			sy: y方向缩放比例
+			dx: x方向偏移量
+			dy: y方向偏移量
 		返回值：
 			[0], [2], [4]
 			[1], [3], [5]

@@ -19,8 +19,9 @@ function loadStaticFile(uri, response) {
 					response.write((err + "\n"), "utf-8");
 					response.end();
 				} else {
-					// response.writeHeader (200, {"Content-Type":"text/html;charset=utf-8"});
-					// response.writeHeader (200, {"Content-Type":"x-world/x-vrml"});
+					// response.writeHeader (200, {"Content-Type":"text/html;charset=utf-8"});	// 普通文字 或 HTML
+					// response.writeHeader (200, {"Content-Type":"x-world/x-vrml"});		// vrml 3D模型
+					// response.writeHeader (200, {"Content-Type":"image/jpeg"});			// 图片
 					// response.writeHeader (200);
 					response.writeHeader (200, {
 						"Access-Control-Allow-Origin": "*",		// HTML5 允许跨域访问的范围，* 代表允许任何网域访问

@@ -1,0 +1,64 @@
+<html>
+	<head>
+		<title>画笔功能测试</title>
+		<meta charset="utf-8">
+		<script src="../../../LZR.js"></script>
+
+		<script>
+			// 画笔功能测试（V0.0.0版，管理器控制与画笔控制需来回切换，不太方便）
+			var lm = {};
+			var y = {};
+			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/Canvas/LayerManager.js",
+					LZR.HTML5.jsPath + "HTML5/Canvas/PenLayer.js"
+				]);
+				lm = new LZR.HTML5.Canvas.LayerManager( document.getElementById("canvas") );
+				lm.init();
+				y = new LZR.HTML5.Canvas.PenLayer({
+					cav: canvas_pen,
+					layerMgr: lm
+				});
+				y.init();
+
+				var pic = new Image();
+				pic.onload = function() {
+					lm.addLayer (new LZR.HTML5.Canvas.Layer({name:"test", obj:pic}));
+					lm.addLayer (y);
+					lm.ctrlEnable ();
+					// y.ctrlEnable ();		// 启动画笔的管理器控制
+					y.penEnable ();		// 启动画笔的画图控制
+					ctrl();
+				}
+				pic.src ="../../../../../../data/canvas.png";
+
+			}
+
+			function ctrl() {
+				requestAnimationFrame(ctrl);
+				lm.ctrlUpdate();
+				y.ctrlUpdate();		// 画笔控制的刷新
+				lm.flush();
+			}
+
+		</script>
+	</head>
+
+	<body style="
+		padding: 0;
+		margin: 0;
+	" onload="init()">
+		<canvas id="canvas" width="600"height="400" style="background-color:yellow">
+			<p>Your browserdoes not support the canvas element!</p>
+		</canvas>
+		<canvas id="canvas_pen" width="600"height="400" style="
+			width: 600px;
+			height: 400px;
+			position: absolute;
+			top: 0;
+			left: 0;
+			/*background-color:#DDD*/
+		"></canvas>
+	</body>
+</html>  
