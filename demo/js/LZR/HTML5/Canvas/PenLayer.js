@@ -43,15 +43,19 @@ LZR.HTML5.Canvas.PenLayer.prototype.init = function () {
 // 绘图
 LZR.HTML5.Canvas.PenLayer.prototype.draw = function (ctx, sx, sy, sw, sh, dx, dy, dw, dh) {
 	if (dw) {
-		this.cav.width = this.layerMgr.s.w;
-		this.cav.height = this.layerMgr.s.h;
-		this._super.draw.call(this, this.ctx, sx, sy, sw, sh, 0, 0);
+		dw = this.layerMgr.s.scale();
+		this.cav.width = dw * this.layerMgr.canvas.width;
+		this.cav.height = dw * this.layerMgr.canvas.height;
+		sx += this.layerMgr.offset.left * (1 - dw);
+		sy += this.layerMgr.offset.top * (1 - dw);
+// console.log (dw + " , " + sx + " , " + sy + " , " + this.cav.width + " , " + this.cav.height);
+		this._super.draw.call(this, this.ctx, sx, sy, this.cav.width, this.cav.height, 0, 0);
 	}
 };
 
 // 清空画布
 LZR.HTML5.Canvas.PenLayer.prototype.clear = function () {
-	this.obj = this.ctx.createImageData (this.layerMgr.max.w, this.layerMgr.max.h);
+	this.obj = this.ctx.createImageData (this.layerMgr.max.w + this.layerMgr.offset.left + this.layerMgr.offset.right , this.layerMgr.max.h + this.layerMgr.offset.top + this.layerMgr.offset.bottom);
 };
 
 // 启动图层管理器的鼠标响应功能
@@ -71,26 +75,26 @@ LZR.HTML5.Canvas.PenLayer.prototype.ctrlDisable = function () {
 // 更新鼠标事件
 LZR.HTML5.Canvas.PenLayer.prototype.ctrlUpdate = function() {
 	var x, y;
+	var mgs = this.layerMgr.s.scale();
 	// 图层管理器的控制器（画笔控制器未启动时）
 	if (this.ctrl.state === this.ctrl.STATE.LEFT) {
 		// 平移
-		x = (this.ctrl.leftStart.x - this.ctrl.leftEnd.x) * this.layerMgr.s.scale();
-		y = (this.ctrl.leftStart.y - this.ctrl.leftEnd.y) * this.layerMgr.s.scale();
+		x = (this.ctrl.leftStart.x - this.ctrl.leftEnd.x) * mgs;
+		y = (this.ctrl.leftStart.y - this.ctrl.leftEnd.y) * mgs;
 		this.ctrl.leftStart = LZR.HTML5.Util.clone(this.ctrl.leftEnd);
 		this.layerMgr.pan(x, y);
 	} else if ( this.ctrl.state === this.ctrl.STATE.RIGHT) {
 		// 画笔
-		var sx = (this.ctrl.rightStart.x - this.constant.d.left) * this.layerMgr.s.scale();
-		var sy = (this.ctrl.rightStart.y - this.constant.d.top) * this.layerMgr.s.scale();
-		var ex = (this.ctrl.rightEnd.x - this.constant.d.left) * this.layerMgr.s.scale();
-		var ey = (this.ctrl.rightEnd.y - this.constant.d.top) * this.layerMgr.s.scale();
+		var sx = (this.ctrl.rightStart.x - this.constant.d.left) * mgs;
+		var sy = (this.ctrl.rightStart.y - this.constant.d.top) * mgs;
+		var ex = (this.ctrl.rightEnd.x - this.constant.d.left) * mgs;
+		var ey = (this.ctrl.rightEnd.y - this.constant.d.top) * mgs;
 		this.ctrl.rightStart = LZR.HTML5.Util.clone(this.ctrl.rightEnd);
 // console.log (sx + " , " + sy + " , " + ex + " , " + ey);
-// console.log ((sx + this.layerMgr.s.left) + " , " + (sy + this.layerMgr.s.top) + " , " + (ex + this.layerMgr.s.left) + " , " + (ey + this.layerMgr.s.top));
 
 		// 画点：
-		// x = Math.floor( ex + this.layerMgr.s.left );
-		// y = Math.floor( ey + this.layerMgr.s.top );
+		// x = Math.floor( ex + this.layerMgr.s.left + this.layerMgr.offset.left * (1 - mgs) );
+		// y = Math.floor( ey + this.layerMgr.s.top + this.layerMgr.offset.top * (1 - mgs) );
 		// this.point(x, y);
 
 		// 画线：
@@ -100,8 +104,8 @@ LZR.HTML5.Canvas.PenLayer.prototype.ctrlUpdate = function() {
 		// 缩放
 		var s = -this.ctrl.wheelValue;
 		this.ctrl.wheelValue = 0;
-		x = (this.ctrl.currentPage.x - this.constant.d.left) * this.layerMgr.s.scale();
-		y = (this.ctrl.currentPage.y - this.constant.d.top) * this.layerMgr.s.scale();
+		x = (this.ctrl.currentPage.x - this.constant.d.left - this.layerMgr.offset.left) * mgs;
+		y = (this.ctrl.currentPage.y - this.constant.d.top - this.layerMgr.offset.top) * mgs;
 		this.layerMgr.zoom (s, x, y);
 	}
 };
@@ -123,10 +127,11 @@ LZR.HTML5.Canvas.PenLayer.prototype.point = function (x, y) {
 // 画线
 LZR.HTML5.Canvas.PenLayer.prototype.line = function (sx, sy, ex, ey) {
 	var a, i, x, y;
-	sx = Math.floor( sx + this.layerMgr.s.left );
-	sy = Math.floor( sy + this.layerMgr.s.top );
-	ex = Math.floor( ex + this.layerMgr.s.left );
-	ey = Math.floor( ey + this.layerMgr.s.top );
+	var mgs = this.layerMgr.s.scale();
+	sx = Math.floor( sx + this.layerMgr.s.left + this.layerMgr.offset.left * (1 - mgs) );
+	sy = Math.floor( sy + this.layerMgr.s.top + this.layerMgr.offset.top * (1 - mgs) );
+	ex = Math.floor( ex + this.layerMgr.s.left + this.layerMgr.offset.left * (1 - mgs) );
+	ey = Math.floor( ey + this.layerMgr.s.top + this.layerMgr.offset.top * (1 - mgs) );
 	x = ex - sx;
 	y = ey - sy;
 	a = x / y;
@@ -171,8 +176,9 @@ LZR.HTML5.Canvas.PenLayer.prototype.lineByCtx = function (sx, sy, ex, ey) {
 		if (d.width === this.obj.width && d.height === this.obj.height) {
 			this.obj = d;
 		} else {
-			var n = Math.floor(this.layerMgr.s.left) + Math.floor(this.layerMgr.s.top) * this.obj.width;		// 谷歌浏览器取整方案
-			// var n = Math.ceil(this.layerMgr.s.left) + Math.ceil(this.layerMgr.s.top) * this.obj.width;		// IE浏览器取整方案
+			var mgs = this.layerMgr.s.scale();
+			var n = Math.floor(this.layerMgr.s.left + this.layerMgr.offset.left * (1 - mgs)) + Math.floor(this.layerMgr.s.top + this.layerMgr.offset.top * (1 - mgs)) * this.obj.width;		// 谷歌浏览器取整方案
+			// var n = Math.ceil(this.layerMgr.s.left + this.layerMgr.offset.left * (1 - mgs)) + Math.ceil(this.layerMgr.s.top + this.layerMgr.offset.top * (1 - mgs)) * this.obj.width;		// IE浏览器取整方案
 			n *= 4;
 			var m = 0;
 			var k = (this.obj.width - d.width) * 4;
