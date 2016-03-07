@@ -171,7 +171,8 @@ LZR.HTML5.Bp.AirqMg.RegStat2.Query.prototype.creWindSQL = function () {
 				break;
 		}
 	}
-	for (var i = this.foc.start; i<this.foc.end; i+=step) {
+	// for (var i = this.foc.start; i<this.foc.end; i+=step) {
+	for (var i = 0; i<(this.foc.end - this.foc.start); i+=step) {
 		var t = new Date(pt+i*3600*1000);
 		var ts = url + "&cTime=";
 		ts += t.getFullYear();

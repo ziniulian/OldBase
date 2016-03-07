@@ -1,0 +1,7 @@
+# Windows:
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# 忽略图片接口日志:
+data/RegImg/interface/log

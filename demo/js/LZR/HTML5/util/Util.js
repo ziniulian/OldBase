@@ -21,11 +21,17 @@ LZR.HTML5.Util = {
 
 	// 阻止默认事件的执行
 	stopDefault: function(e) {
-		if ( e && e.preventDefault ) {
+		e = e || window.event;
+  
+		if(e.preventDefault){
 			e.preventDefault();
-		} else {
-			// IE 浏览器
-			window.event.returnValue = false;
+		}
+
+		if (e.stopPropagation){
+			e.stopPropagation();
+		}else{
+			e.returnValue = false; // 解决IE8右键弹出
+			e.cancelBubble = true;
 		}
 	},
 

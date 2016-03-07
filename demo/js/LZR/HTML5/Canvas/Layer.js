@@ -2,6 +2,9 @@
 
 // ----------- 图层 ------------
 
+LZR.HTML5.loadJs([
+	LZR.HTML5.jsPath + "util/Graphics.js"
+]);
 LZR.HTML5.Canvas.Layer = function (obj) {
 	/*
 		参数说明：
@@ -22,7 +25,7 @@ LZR.HTML5.Canvas.Layer = function (obj) {
 	if (obj && obj.obj) {
 		this.obj = obj.obj;
 	} else {
-		this.obj = obj;
+		this.obj = null;
 	}
 
 	// 透明度（0到1之间的小数）
@@ -31,9 +34,10 @@ LZR.HTML5.Canvas.Layer = function (obj) {
 	// 是否可见（布尔值）
 	this.visible = true;
 
+	// this.gp = new LZR.Util.Graphics();
 };
 LZR.HTML5.Canvas.Layer.prototype.className = "LZR.HTML5.Canvas.Layer";
-LZR.HTML5.Canvas.Layer.prototype.version = "0.0.1";
+LZR.HTML5.Canvas.Layer.prototype.version = "0.0.2";
 
 // 获取类型值
 LZR.HTML5.Canvas.Layer.prototype.getType = function () {
@@ -51,32 +55,32 @@ LZR.HTML5.Canvas.Layer.prototype.getType = function () {
 // 绘图
 LZR.HTML5.Canvas.Layer.prototype.draw = function (ctx, sx, sy, sw, sh, dx, dy, dw, dh) {
 	if (this.visible && this.obj) {
-		ctx.globalAlpha = this.alpha;
-		if (isNaN(sw)) {
-			ctx.drawImage (this.obj, sx, sy);
-		} else if (isNaN(dx)) {
-			ctx.drawImage (this.obj, sx, sy, sw, sh);
-		} else {
-			this.draw2canvas (ctx, this.obj, sx, sy, sw, sh, dx, dy, dw, dh);
+		switch (this.getType()) {
+			case 0:	// HTMLImageElement：DOM 的 Image 对象
+				ctx.globalAlpha = this.alpha;
+				// var p = this.gp.calcTransform(0, dw/sw, dh/sh, 0, 0);
+				// ctx.save();
+				// ctx.setTransform(p[0], p[1], p[2], p[3], p[4], p[5]);
+				// ctx.drawImage (this.obj, sx, sy, sw, sh, dx, dy, sw, sh);
+				// ctx.restore();
+				if (isNaN(sw)) {
+					ctx.drawImage (this.obj, sx, sy);
+				} else if (isNaN(dx)) {
+					ctx.drawImage (this.obj, sx, sy, sw, sh);
+				} else {
+					this.draw2canvas (ctx, this.obj, sx, sy, sw, sh, dx, dy, dw, dh);
+				}
+				break;
+			case 1:	// ImageData：HTML5画布的内部图片数据
+				// 暂无法实现缩放
+				ctx.putImageData (this.obj, dx-sx, dy-sy, sx, sy, sw, sh);
+				break;
 		}
 	}
 };
 
 // 在画布上局部画图
 LZR.HTML5.Canvas.Layer.prototype.draw2canvas = function (ctx, obj, sx, sy, sw, sh, dx, dy, dw, dh) {
-
-/** 待兼容 ImageData 对象时，再使用判断语句
-			switch (typ) {
-				case 0:	// HTMLImageElement：DOM 的 Image 对象
-					this.ctx.drawImage (y.obj, this.sx, this.sy, this.sw, this.sh, 0, 0, this.canvas.width, this.canvas.height);
-					break;
-				case 1:	// ImageData：HTML5画布的内部图片数据
-					// 暂不能对 ImageData 进行缩放。
-					// this.ctx.putImageData (y.obj, -this.sx, -this.sy, this.sx, this.sy, this.sw, this.sh);
-					break;
-			}
-*/
-
 	if (sx > obj.width || dx > ctx.canvas.width || sy > obj.height || dy > ctx.canvas.height) {
 		return;
 	}

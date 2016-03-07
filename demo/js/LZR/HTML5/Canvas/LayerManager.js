@@ -66,11 +66,16 @@ LZR.HTML5.Canvas.LayerManager.prototype.version = "0.0.3";
 
 // 初始化
 LZR.HTML5.Canvas.LayerManager.prototype.init = function () {
-	this.s.rrByParent();	// 显示区域适应最大区域
-
 	this.constant.d = LZR.HTML5.Util.getDomPositionForDocument(this.canvas);	// 画布位置
 	this.constant.w= this.canvas.width - this.offset.left - this.offset.right;		// 绘图部分的宽
 	this.constant.h = this.canvas.height - this.offset.top - this.offset.bottom;		// 绘图部分的高
+	this.s.reset ({
+		left: this.max.left,
+		top: this.max.top,
+		width: this.constant.w,
+		height: this.constant.h
+	});
+	this.s.rrByParent();	// 显示区域适应最大区域
 
 	if (this.ctrl.state === this.ctrl.STATE.UNABLE) {
 		this.ctrl.noMid = true;
@@ -168,8 +173,8 @@ LZR.HTML5.Canvas.LayerManager.prototype.ctrlUpdate = function() {
 		// 缩放
 		var s = -this.ctrl.wheelValue;
 		this.ctrl.wheelValue = 0;
-		x = (this.ctrl.currentPage.x - this.constant.d.left) * this.s.scale();
-		y = (this.ctrl.currentPage.y - this.constant.d.top) * this.s.scale();
+		x = (this.ctrl.currentPage.x - this.constant.d.left - this.offset.left) * this.s.scale();
+		y = (this.ctrl.currentPage.y - this.constant.d.top - this.offset.top) * this.s.scale();
 		this.zoom (s, x, y);
 	}
 };
@@ -199,12 +204,6 @@ LZR.HTML5.Canvas.LayerManager.prototype.changeIndex = function (index1, index2) 
 LZR.HTML5.Canvas.LayerManager.prototype.resize = function () {
 	// LZR.HTML5.log(this.canvas.clientWidth);
 	LZR.HTML5.Util.mateWidth (this.canvas);
-	this.s.reset ({
-		left: this.max.left,
-		top: this.max.top,
-		width: this.canvas.width,
-		height: this.canvas.height
-	});
 	this.init();
 };
 
