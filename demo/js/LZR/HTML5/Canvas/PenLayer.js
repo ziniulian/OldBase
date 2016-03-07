@@ -18,6 +18,9 @@ LZR.HTML5.Canvas.PenLayer = function (obj) {
 	// 图层管理器
 	this.layerMgr = obj.layerMgr;
 
+	// 颜色
+	this.color = [255, 0, 0, 255];
+
 	// 控制器
 	this.ctrl = new LZR.HTML5.Util.MouseDropController(this.cav);
 	this.ctrl.noMid = true;
@@ -98,8 +101,8 @@ LZR.HTML5.Canvas.PenLayer.prototype.ctrlUpdate = function() {
 		// this.point(x, y);
 
 		// 画线：
-		this.lineByCtx(sx, sy, ex, ey);
-		// this.line(sx, sy, ex, ey);
+		// this.lineByCtx(sx, sy, ex, ey);
+		this.line(sx, sy, ex, ey);
 	} else if ( this.ctrl.wheelValue !== 0) {
 		// 缩放
 		var s = -this.ctrl.wheelValue;
@@ -119,8 +122,10 @@ LZR.HTML5.Canvas.PenLayer.prototype.resize = function () {
 LZR.HTML5.Canvas.PenLayer.prototype.point = function (x, y) {
 	if (x>=0 && x <= this.obj.width) {
 		var i = (y * this.obj.width + x) * 4;
-		this.obj.data[i] = 255;
-		this.obj.data[i+3] = 255;
+		this.obj.data[i] = this.color[0];
+		this.obj.data[i+1] = this.color[1];
+		this.obj.data[i+2] = this.color[2];
+		this.obj.data[i+3] = this.color[3];
 	}
 };
 
