@@ -322,6 +322,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.loadMaps = function (url)
 	if (!url) {
 		url = this.path;
 	}
+	// url += "D" + this.condition.area + ".png";
 	url += "back.gif";
 	this.maps.add(url, this.condition.area);
 };
