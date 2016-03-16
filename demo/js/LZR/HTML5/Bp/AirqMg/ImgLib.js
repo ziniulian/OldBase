@@ -110,7 +110,7 @@ LZR.HTML5.Bp.AirqMg.ImgLib.prototype.init = function () {
 
 	this.pic = document.createElement("img");	// 缓冲图片
 	this.pic.onload = LZR.bind(this, function () {
-		this.map.addLayer (new LZR.HTML5.Canvas.Layer(this.pic), "图片");
+		this.map.addLayer (new LZR.HTML5.Canvas.Layer({obj: this.pic}), "图片");
 		this.map.init();
 		this.tbn.init();
 		this.initMap();
