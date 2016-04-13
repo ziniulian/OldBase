@@ -148,6 +148,10 @@ LZR.HTML5.Bp.AirqMg.ImgLib.prototype.ctrl = function (v, start) {
 			}
 			break;
 		case 1:		// 启动
+			// 画笔功能
+			if (this.pen) {
+				this.pen.ctrlUpdate();
+			}
 			this.map.ctrlUpdate();
 			this.tbn.ctrlUpdate();
 			this.map.flush();
