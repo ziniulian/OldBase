@@ -20,7 +20,7 @@
 					//已经建立连接
 					alert("onopen : ");
 
-					// URL形式接口
+					// URL形式接口 抓取pm2.5预报区域形势图
 					websocket.send( JSON.stringify ({
 						type: "picURL",
 						picType: ["35"],
@@ -33,6 +33,20 @@
 							"periodEnd": 5
 						}
 					}) );
+/*
+					// base64形式接口 抓取pm2.5同化分布图
+					websocket.send( JSON.stringify ({
+						"type":"picContent",
+						"sort":0,
+						"picType":["4F"],
+						"4F":{
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"timesRange":["2016041200","2016041323"]
+						}
+					}) );
+*/
+					
 				};
 
 				websocket.onclose = function (evt) {

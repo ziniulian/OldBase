@@ -58,7 +58,9 @@ LZR.HTML5.Bp.AirqMg.ImgLib = function (obj) {
 
 	// 图片
 	this.tbns = new LZR.HTML5.Canvas.ImgLoader( LZR.bind (this, this.onTbns) );
-	// this.tbns.onCount = function (c) { console.log (c); };
+	this.tbns.onCount = LZR.bind(this, function (c, d) {
+		this.fillLayers(d.count);
+	});
 
 	// 是否可循环控制（0：请求停止；1：启动；2：真正停止）
 	this.ctrlEnable = 1;
@@ -234,14 +236,22 @@ LZR.HTML5.Bp.AirqMg.ImgLib.prototype.initMap = function (p) {
 	this.map.resetMax (0, 0, p.width, p.height);
 
 	if (this.mapLimitCenter) {
-		this.map.resetMax (0, 0, p.width, p.height);
-		this.map.max.rrByParent (this.map.s);
-		this.map.s.w *= this.map.max.baseW / this.map.max.w;
-		this.map.s.reHeight();
-		this.map.max.w = this.map.max.baseW;
-		this.map.max.reHeight();
-		this.map.s.alineInParent ("center", this.map.max);
+		this.hdMapLimitCenter(p);
 	}
+};
+
+// 图片居中
+LZR.HTML5.Bp.AirqMg.ImgLib.prototype.hdMapLimitCenter = function (p) {
+	if (!p) {
+		p = this.map.layers[0].obj;
+	}
+	this.map.resetMax (0, 0, p.width, p.height);
+	this.map.max.rrByParent (this.map.s);
+	this.map.s.w *= this.map.max.baseW / this.map.max.w;
+	this.map.s.reHeight();
+	this.map.max.w = this.map.max.baseW;
+	this.map.max.reHeight();
+	this.map.s.alineInParent ("center", this.map.max);
 };
 
 // 缩略图初始化
@@ -256,34 +266,45 @@ LZR.HTML5.Bp.AirqMg.ImgLib.prototype.initTbn = function (count) {
 	this.createScroll();
 };
 
+// 填充图层
+LZR.HTML5.Bp.AirqMg.ImgLib.prototype.fillLayers = function (count) {
+	var i , r;
+	for (i=0; i<count; i++) {
+		r = new LZR.HTML5.Bp.AirqMg.RegImg();
+		r.tim = "";
+		r.layers.push( new LZR.HTML5.Canvas.Layer({name: i, obj:this.pic}) );
+		this.tbn.imgs.push( r );
+	}
+	this.tbn.count = count;
+	this.tbn.calculateMax();
+	this.createScroll();
+	// this.tbn.index = 0;
+	// this.tbn.aline (0, true);
+};
+
 // 分布图加载回调内容
 LZR.HTML5.Bp.AirqMg.ImgLib.prototype.onTbns = function (index, img, data) {
-// console.log("onTbns : " + index);
-	var r = new LZR.HTML5.Bp.AirqMg.RegImg();
-
 	// 获取时间
-	r.tim = "";
+	var tim = "";
 	for (var i=0; i<data.picTime.length; i++) {
-		r.tim += data.picTime[i];
+		tim += data.picTime[i];
 		switch (i) {
 			case 3:
 			case 5:
-				r.tim += "-";
+				tim += "-";
 				break;
 			case 7:
-				r.tim += " ";
+				tim += " ";
 				break;
 		}
 	}
-	r.tim += "时";
+	tim += "时";
 
-	r.layers.push( new LZR.HTML5.Canvas.Layer({name: data.name, obj:img}) );
-	this.tbn.imgs.push( r );
-
-	// 动态调整缩略图大小
-	this.tbn.count ++;
-	this.tbn.calculateMax();
-	this.createScroll();
+	var ms = this.tbn.imgs[index];
+	if (ms) {
+		ms.tim = tim;
+		ms.layers[0].obj = img;
+	}
 
 	if (index === 0) {
 		this.initMap (img);
