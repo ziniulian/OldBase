@@ -40,6 +40,7 @@ LZR.HTML5.Canvas.PenLayer.prototype.version = "0.0.1";
 
 // 画布放下之后的初始化项目
 LZR.HTML5.Canvas.PenLayer.prototype.init = function () {
+	this.clear();
 	this.constant.d = LZR.HTML5.Util.getDomPositionForDocument(this.cav);	// 画布位置
 };
 
@@ -120,7 +121,7 @@ LZR.HTML5.Canvas.PenLayer.prototype.resize = function () {
 
 // 画点
 LZR.HTML5.Canvas.PenLayer.prototype.point = function (x, y) {
-	if (x>=0 && x <= this.obj.width) {
+	if (x>=0 && x < this.obj.width) {
 		var i = (y * this.obj.width + x) * 4;
 		this.obj.data[i] = this.color[0];
 		this.obj.data[i+1] = this.color[1];

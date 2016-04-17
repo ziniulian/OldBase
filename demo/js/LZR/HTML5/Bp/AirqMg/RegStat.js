@@ -252,7 +252,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.initTbn = function () {
 		this.tbn.count = Math.ceil((24 - this.condition.tim) / this.hourStep);
 		this.tbn.count += Math.floor(24 * (this.dayNum - 1) / this.hourStep);
 		this.tbn.ctx.font=this.tbnFont[1].font;
-		this.tbn.wheelScale = 10;
+		this.tbn.wheelScale = 3;
 		this.tbn.wheelStyle = 2;
 		this.tbn.draw = LZR.bind (this, function (tb, i, x, y, w, h) {
 			tb.ctx.fillText( tb.imgs[i].tim, (x+this.tbnFont[1].left) , (y + h + this.tbnFont[1].bottom));
