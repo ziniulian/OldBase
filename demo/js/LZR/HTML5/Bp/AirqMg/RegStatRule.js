@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStatRule.js" ]);
 
-// ----------- 区域形势的比例尺 ------------
+// ----------- 的比例尺 ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "util/Geography/ScaleRule.js",
@@ -9,7 +9,7 @@ LZR.HTML5.loadJs([
 LZR.HTML5.Bp.AirqMg.RegStatRule = function (obj) {
 	/*
 		参数说明：
-			rs:	// 区域形势
+			rs:	// 
 			latt:	// 上边纬度
 			latb:	// 下边纬度
 			lonl:	// 左边经度
@@ -19,7 +19,7 @@ LZR.HTML5.Bp.AirqMg.RegStatRule = function (obj) {
 			dlon:	// 经度段数
 			dlat:	// 纬度段数
 	*/
-	// 区域形势
+	// 
 	this.rs = obj.rs;
 	this.min = obj.min;
 	this.max = obj.max;

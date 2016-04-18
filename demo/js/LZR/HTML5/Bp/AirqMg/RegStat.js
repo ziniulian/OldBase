@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat.js" ]);
 
-// ----------- 区域形势 ------------
+// ----------- ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "util/Date.js",
@@ -197,7 +197,7 @@ LZR.HTML5.Bp.AirqMg.RegStat = function (obj) {
 	// 各图层的图片下载器
 	this.layersLoader = [];
 
-	// 分布图图片—— 0
+	// 图片—— 0
 	var ayid = 0;
 	this.layersLoader[ayid] = new LZR.HTML5.Canvas.ImgLoader( LZR.bind (this, this.onLayersLoad, ayid) );
 	this.layersLoader[ayid].finished = LZR.bind (this, function () {
@@ -358,7 +358,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.onMaps = function (index, img) {
 		// 启动控制
 		this.ctrlStart();
 
-		// 加载分布图
+		// 加载
 		this.loadLayers(0);
 
 		// 回调
@@ -428,7 +428,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.createImg = function (index, d) {
 	return r;
 };
 
-// 加载分布图
+// 加载
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.loadLayers = function (id) {
 	var typ, mod;
 	var d = {
@@ -439,7 +439,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.loadLayers = function (id) {
 	this.layersLoader[id].closeWebSocket();
 
 	switch (id) {
-		case 0:	// 分布图
+		case 0:	// 
 			typ = this.condition.fom[this.condition.ttyp];
 			mod = this.condition.mod;
 			this.createTbnQry (d, typ, mod);
@@ -455,7 +455,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.loadLayers = function (id) {
 	this.layersLoader[id].addByWebSocket (this.wsInfo, d);
 };
 
-// 生成分布图查询条件
+// 生成查询条件
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.createTbnQry = function (qry, typ, mod) {
 	return this.createWeatherQry (qry, typ, mod);
 };
@@ -473,7 +473,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.createWeatherQry = function (qry, typ, mod
 	return qry;
 };
 
-// 分布图加载回调内容
+// 加载回调内容
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.onLayersLoad = function (id, index, img) {
 	var ms = this.tbn.imgs[index];
 	if (ms) {
@@ -498,7 +498,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.changeTitle = function () {
 				this.condition.fomName +
 				this.condition.areaName +
 				// this.condition.ttypName +
-				"区域形势 <sub>（产品时间：" +
+				"区域 形势<sub>（产品时间：" +
 				this.condition.dateName + " " +
 				this.condition.timName +
 				"）</sub >";
@@ -1001,7 +1001,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.isBusyInLayersLoader = function (index) {
 // 地图加载完时的接口
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.mapFinished = function () {};
 
-// 分布图加载完时的接口
+// 加载完时的接口
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.tbnFinished = function () {};
 
 // 其它图层加载完时的接口

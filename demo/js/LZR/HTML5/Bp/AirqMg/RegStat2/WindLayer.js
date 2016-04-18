@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat2/WindLayer.js" ]);
 
-// ----------- 区域形势基于OpenLayers的风场图层 ------------
+// ----------- 基于OpenLayers的风场图层 ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "util/Layer.js",

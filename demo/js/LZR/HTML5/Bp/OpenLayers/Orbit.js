@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/OpenLayers/Orbit.js" ]);
 
-// ----------- 轨迹图 ------------
+// ----------- ------------
 
 if (! window.ol) {
 	LZR.HTML5.loadJs([

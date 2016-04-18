@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat2/OlGeoJsonLayer.js" ]);
 
-// ----------- 区域形势的OpenLayers GeoJson图层 ------------
+// ----------- OpenLayers GeoJson图层 ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "HTML5/util/Ajax.js",
@@ -24,7 +24,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer = function (obj) {
 	// 新数据
 	this.newData = null;
 
-	// 对应的区域形势主数据
+	// 对应的主数据
 	this.dataParent = null;
 
 	// 刷新计数器

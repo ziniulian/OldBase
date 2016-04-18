@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegImg.js" ]);
 
-// ----------- 区域形势图片 ------------
+// -----------  ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "HTML5/Canvas/ThumbnailImg.js"

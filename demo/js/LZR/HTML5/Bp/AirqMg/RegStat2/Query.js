@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat2/Query.js" ]);
 
-// ----------- 区域形式查询条件 ------------
+// ----------- 查询条件 ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "util/Date.js",
@@ -63,14 +63,14 @@ LZR.HTML5.Bp.AirqMg.RegStat2.Query.prototype.qry = function () {
 	var y = this.layers[this.index];
 	if (y) {
 		switch (y.className) {
-			// 区域形势的OpenLayers图片图层
+			// OpenLayers图片图层
 			case "LZR.HTML5.Bp.AirqMg.RegStat2.OlLayer":
-			// 区域形势的OpenLayers GeoJson图层
+			// OpenLayers GeoJson图层
 			case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
 				this.foc.num = y.num.val;
 				this.foc.open();
 				break;
-			// 区域形势基于OpenLayers的风场图层
+			// 基于OpenLayers的风场图层
 			case "LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer":
 				// 获取风场图层各时间所需的URL参数
 				this.handleClose (this.creWindSQL(y));
@@ -205,11 +205,11 @@ LZR.HTML5.Bp.AirqMg.RegStat2.Query.prototype.handleClose = function (rs) {
 
 	var r;
 	switch (y.className) {
-		// 区域形势的OpenLayers图片图层
+		// OpenLayers图片图层
 		case "LZR.HTML5.Bp.AirqMg.RegStat2.OlLayer":
 			r = this.createBack (this.backImg, rs);
 			break;
-		// 区域形势的OpenLayers GeoJson图层
+		// OpenLayers GeoJson图层
 		case "LZR.HTML5.Bp.AirqMg.RegStat2.OlGeoJsonLayer":
 			r = this.createBack (this.backJson, rs);
 			break;

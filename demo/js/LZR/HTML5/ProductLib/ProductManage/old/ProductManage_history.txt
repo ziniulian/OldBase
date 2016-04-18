@@ -1,3 +1,0 @@
-﻿V0.0.0
-	1. 修改 delete 方法为 LZR.HTML5.Util.del
-
