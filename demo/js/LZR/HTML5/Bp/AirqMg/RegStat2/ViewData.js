@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat2/ViewData.js" ]);
 
-// ----------- 区域形势的界面数据 ------------
+// ----------- 界面数据 ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/RegStat2.js"

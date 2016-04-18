@@ -1,6 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/Bp/AirqMg/AssimilationDistribution.js" ]);
 
-// ----------- 同化分布 ------------
+// -----------  ------------
 
 LZR.HTML5.loadJs([
 	LZR.HTML5.jsPath + "util/Date.js",
@@ -187,7 +187,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution = function (obj) {
 	// 各图层的图片下载器
 	this.layersLoader = [];
 
-	// 分布图图片—— 0
+	// 图片—— 0
 	var ayid = 0;
 	this.layersLoader[ayid] = new LZR.HTML5.Canvas.ImgLoader( LZR.bind (this, this.onLayersLoad, ayid) );
 	this.layersLoader[ayid].finished = LZR.bind (this, function () {
@@ -339,7 +339,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.onMaps = function (index,
 		// 启动控制
 		this.ctrlStart();
 
-		// 加载分布图
+		// 加载
 		this.loadLayers(0);
 
 		// 回调
@@ -429,7 +429,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.createImg = function (i, 
 	return r;
 };
 
-// 加载分布图
+// 加载
 LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.loadLayers = function (id) {
 	var typ, mod;
 	var d = {
@@ -440,7 +440,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.loadLayers = function (id
 	this.layersLoader[id].closeWebSocket();
 
 	switch (id) {
-		case 0:	// 分布图
+		case 0:	// 
 			typ = this.condition.fom[this.condition.ttyp];
 			mod = this.condition.mod;
 			this.createTbnQry (d, typ, mod);
@@ -456,7 +456,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.loadLayers = function (id
 	this.layersLoader[id].addByWebSocket (this.wsInfo, d);
 };
 
-// 生成分布图查询条件
+// 生成查询条件
 LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.createTbnQry = function (qry, typ, mod) {
 	// qry.sort = 1;
 	qry.picType = [typ];
@@ -503,7 +503,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.createWeatherQry = functi
 	return qry;
 };
 
-// 分布图加载回调内容
+// 加载回调内容
 LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.onLayersLoad = function (id, index, img) {
 	var ms = this.tbn.imgs[index];
 	if (ms) {
@@ -526,7 +526,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.changeTitle = function ()
 	this.title.innerHTML =	this.tbn.imgs[this.tbn.index].tim + " " +
 				this.condition.fomName +
 				this.condition.areaName +
-				"区域同化分布图";
+				"区域同化 分布图";
 };
 
 // 播放动画
@@ -1022,7 +1022,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.isBusyInLayersLoader = fu
 // 地图加载完时的接口
 LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.mapFinished = function () {};
 
-// 分布图加载完时的接口
+// 加载完时的接口
 LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.tbnFinished = function () {};
 
 // 其它图层加载完时的接口
