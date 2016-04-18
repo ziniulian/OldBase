@@ -121,8 +121,9 @@ LZR.HTML5.Canvas.ImgLoader.prototype.addByWebSocket = function (wsInfo, data, cb
 		var data = JSON.parse(evt.data);
 		switch (data.state) {
 			case "0":
-// console.log (this.wsId);
-				this.add(wsInfo.pre + data[wsInfo.fld], this.wsId, cb, data);
+				var url = data[wsInfo.fld].replace(/\\/g, "/");
+// console.log (this.wsId + " : " + url);
+				this.add(wsInfo.pre + url, this.wsId, cb, data);
 				this.wsId ++;
 				break;
 			case "5":

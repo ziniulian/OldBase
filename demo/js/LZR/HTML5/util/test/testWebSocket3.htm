@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<title>testWebSocket3</title>
+		<meta charset="utf-8" />
+		<script src="../../../LZR.js"></script>
+		<script>
+
+ 			function init(d, index, typ) {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "util/expand/json2.js"
+				]);
+
+				var i, img;
+				var wsServer = 'ws://192.168.1.130:8901'; //服务器地址
+				var httpServer = 'http://192.168.1.130:8001/picService?type=0&path='; //服务器地址
+				var websocket = new WebSocket(wsServer); //创建WebSocket对象
+
+				websocket.onopen = function (evt) {
+					//已经建立连接
+					alert("onopen : ");
+
+					// URL形式接口 抓取pm2.5预报区域形势图
+					websocket.send( JSON.stringify ({
+						type: "picURL",
+						picType: ["35"],
+						sort: 0,
+						"35": {
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"times":"2015070220",
+							"periodStart": 4,
+							"periodEnd": 5
+						}
+					}) );
+/*
+					// base64形式接口 抓取pm2.5同化分布图
+					websocket.send( JSON.stringify ({
+						"type":"picContent",
+						"sort":0,
+						"picType":["4F"],
+						"4F":{
+							"modelType":["NAQPMS"],
+							"domain":["d01"],
+							"timesRange":["2016041200","2016041323"]
+						}
+					}) );
+*/
+					
+				};
+
+				websocket.onclose = function (evt) {
+					//已经关闭连接
+					alert("onclose : ");
+				};
+
+				websocket.onmessage = function (evt) {
+					// alert(evt.data);
+					//收到服务器消息，使用evt.data提取
+					var data = JSON.parse(evt.data);
+					switch (data.state) {
+						case "0":
+							img = document.createElement("img");
+							// img.src = "data:image/jpeg;base64," + data.Byte64;
+							img.src = httpServer + data.URL;
+							document.body.appendChild(img);
+							break;
+						case "5":
+							alert(evt.data);
+							break;
+						default:
+							alert("state : " + data.state);
+					}
+				};
+
+				websocket.onerror = function (evt) {
+					//产生异常
+					alert("onerror : ");
+				}; 
+			}
+
+		</script>
+	</head>
+
+	<body>
+		
+	</body>
+
+	<script type="text/javascript">
+		init();
+	</script>
+</html>

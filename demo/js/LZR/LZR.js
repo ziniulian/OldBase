@@ -85,9 +85,7 @@ var LZR = {
 		// 树形图关联控件（未完成）
 		ProductLib: null,
 
-		// 融昭普瑞项目
 		Bp:{
-			// 空气质量预报预警管理系统
 			AirqMg:{
 				Data:{}
 			},

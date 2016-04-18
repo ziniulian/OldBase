@@ -195,7 +195,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 	}
 };
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.className = "LZR.HTML5.Bp.OpenLayers.Orbit";
-LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.3";
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.4";
 
 // 初始化随机颜色
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initColor = function (objColor) {
@@ -244,8 +244,24 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.init = function () {
 		this.layer.on("postcompose", LZR.bind (this, function(evt) {
 			if (this.ctx === null) {
 				// 创建内容提示区
-				this.ctx = evt.context;
-				this.canvas = this.ctx.canvas;
+				// this.ctx = evt.context;
+				// this.canvas = this.ctx.canvas;
+
+				this.canvas = document.createElement("canvas");
+				this.map.getViewport().appendChild(this.canvas);
+				this.canvas.style.width = "100%";
+				this.canvas.style.height = "100%";
+				this.canvas.style.position = "absolute";
+				this.canvas.style.top = "0";
+				this.canvas.style.left = "0";
+				this.canvas.width = this.canvas.clientWidth;
+				this.canvas.height = this.canvas.clientHeight;
+				LZR.HTML5.Util.Event.addEvent (window, "resize", LZR.bind(this, function () {
+					this.canvas.width = this.canvas.clientWidth;
+					this.canvas.height = this.canvas.clientHeight;
+				}), false);
+				this.ctx = this.canvas.getContext("2d");
+
 				var s = this.title.style;
 				s.visibility = "hidden";
 				s.position = "relative";
@@ -257,7 +273,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.init = function () {
 				this.titleObi = -1;	// DIV所在的轨迹
 				this.titleNdi = -1;	// DIV所在的节点
 			}
-			if (this.flush (evt.context)) {
+			if (this.flush (this.ctx)) {
 				this.map.render();
 			}
 		}));
@@ -268,14 +284,15 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.init = function () {
 
 // 刷新画布
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
+	ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	var r = this.map.getView().getResolution();
 	this.calcNodeWidth(r);
 	this.orbitOverIndex = -1;
 	this.nodeOverIndex = -1;
-	var doRender = false;
+	var doRender = -1;
 	for (var i=0; i<this.data.length; i++) {
 		if (this.data[i].visible) {
-			doRender = true;
+			doRender = i;
 			var nodes = this.data[i].nodes;
 			this.calcData (nodes, r);
 
@@ -316,9 +333,9 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 		}
 	}
 
-	if (doRender) {
+	if (doRender !== -1) {
 		// 画原点动画
-		this.drawSource (ctx);
+		this.drawSource (ctx, doRender);
 
 		// 隐藏DIV
 		if (this.titleNdi !== -1 && this.nodeOverIndex === -1) {
@@ -326,9 +343,10 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 			this.titleNdi = -1;
 			this.title.style.visibility = "hidden";
 		}
+		return true;
+	} else {
+		return false;
 	}
-
-	return doRender;
 };
 
 // 整理轨迹数据
@@ -510,8 +528,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawOrbit = function (nodes, ctx, index)
 };
 
 // 画原点动画
-LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawSource = function (ctx) {
-	var x, y, r, nodes = this.data[0].nodes;
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawSource = function (ctx, doRender) {
+	var x, y, r, nodes = this.data[doRender].nodes;
 	switch (this.showNode) {
 		case 2:
 			r = nodes.length - 1;

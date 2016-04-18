@@ -94,6 +94,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution = function (obj) {
 	};
 	this.map.ctrl.leftCursor = "move";
 	this.map.autoFlush = LZR.HTML5.Util.bind (this, this.mapAutoFlush);
+	this.showMap = false;	// 显示底图
 /*
 	// 鹰眼
 	LZR.HTML5.Util.mateWidth (obj.eys);
@@ -322,7 +323,7 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.loadMaps = function (url)
 	if (!url) {
 		url = this.path;
 	}
-	url += "back.gif";
+	url += "D" + this.condition.area + ".png";
 	this.maps.add(url, this.condition.area);
 };
 
@@ -368,8 +369,8 @@ LZR.HTML5.Bp.AirqMg.AssimilationDistribution.prototype.fillLayers = function (im
 			ay.visible = false;
 			r.layers.push(ay);
 		}
-		// r.layers[1].obj = img;
-		// r.layers[1].visible = true;
+		r.layers[1].obj = img;
+		r.layers[1].visible = this.showMap;
 		r.layers[0].visible = true;
 		this.tbn.imgs.push( r );
 	}
