@@ -34,6 +34,8 @@ LZR.HTML5.Bp.AirqMg.ImgLib = function (obj) {
 	obj.map.style.cursor = "crosshair";
 	this.map = new LZR.HTML5.Canvas.LayerManager (obj.map);
 	this.map.ctrl.leftCursor = "move";
+	this.map.autoMove = false;
+	this.map.autoZoom = false;
 
 	// 缩略图
 	LZR.HTML5.Util.mateWidth (obj.tbn);

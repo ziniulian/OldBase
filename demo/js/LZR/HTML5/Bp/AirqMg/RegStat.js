@@ -68,20 +68,6 @@ LZR.HTML5.Bp.AirqMg.RegStat = function (obj) {
 	LZR.HTML5.Util.mateWidth (obj.map);
 	obj.map.style.cursor = "crosshair";
 	this.map = new LZR.HTML5.Canvas.LayerManager (obj.map);
-	this.map.max.reset({
-		// width: 1112,
-		// height: 866
-
-		// 火狐缩放未解决的临时处理办法：将图片割去一个像素的边。
-		top: 1,
-		left: 1,
-		width: 1438,
-		height: 1118
-	});
-	this.map.s.top = 1;
-	this.map.s.left = 1;
-	this.map.s.w = this.map.max.w;
-	this.map.s.reHeight();
 	this.map.min.reset({
 		width: 100,
 		height: 100
@@ -191,6 +177,17 @@ LZR.HTML5.Bp.AirqMg.RegStat = function (obj) {
 		dlat: 8
 	};
 
+	// 地图初始范围
+	this.mapArea = null;
+/*
+	// 范围举例
+	this.mapArea = {
+		top: 0,
+		left: 0,
+		width: 100
+	};
+*/
+
 	// 时效起始时间
 	this.periodStart = 4;
 
@@ -209,16 +206,18 @@ LZR.HTML5.Bp.AirqMg.RegStat = function (obj) {
 	this.createLayersLoader ();
 
 	// webSocket 连接信息
-	// this.wsInfo = {	// Base64 方式
-	// 	url: "ws://192.168.1.211:8989",	// Websocket 服务路径
-	// 	typ: "picContent",	// 马远接口的typ值
-	// 	pre: "data:image/jpeg;base64,",	// 图片路径前缀
-	// 	fld: "Byte64"		// 马远接口的图片路径值
-	// };
-	this.wsInfo = {		// URL 方式
+/*
+	this.wsInfo = {	// Base64 方式
 		url: "ws://192.168.1.211:8989",	// Websocket 服务路径
+		typ: "picContent",	// 马远接口的typ值
+		pre: "data:image/jpeg;base64,",	// 图片路径前缀
+		fld: "Byte64"		// 马远接口的图片路径值
+	};
+*/
+	this.wsInfo = {		// URL 方式
+		url: "ws://192.168.1.130:8901",	// Websocket 服务路径
 		typ: "picURL",		// 马远接口的typ值
-		pre: "http://192.168.1.101/imgServer/figure/figure/",	// 图片路径前缀
+		pre: "http://192.168.1.101/imgServer/picService?type=1&path=",	// 图片路径前缀
 		fld: "URL"		// 马远接口的图片路径值
 	};
 
@@ -226,7 +225,7 @@ LZR.HTML5.Bp.AirqMg.RegStat = function (obj) {
 	LZR.HTML5.Util.Event.addEvent (window, "resize", LZR.bind(this, this.resize), false);
 };
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.className = "LZR.HTML5.Bp.AirqMg.RegStat";
-LZR.HTML5.Bp.AirqMg.RegStat.prototype.version = "0.0.7";
+LZR.HTML5.Bp.AirqMg.RegStat.prototype.version = "0.0.8";
 
 // 初始化
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.init = function () {
@@ -348,21 +347,78 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.loadMaps = function (url) {
 
 // 地图底图加载后回调内容
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.onMaps = function (index, img) {
-		// 防止图层重复加载而清空元素
-		this.map.layers = [];
-		this.tbn.imgs = [];
+	// 初始图片范围
+	this.hdMapArea (img, true);
 
-		// 填充图层
-		this.fillLayers(img);
+	// 防止图层重复加载而清空元素
+	this.map.layers = [];
+	this.tbn.imgs = [];
 
-		// 启动控制
-		this.ctrlStart();
+	// 填充图层
+	this.fillLayers(img);
 
-		// 加载
-		this.loadLayers(0);
+	// 启动控制
+	this.ctrlStart();
 
-		// 回调
-		this.mapFinished();
+	// 加载
+	this.loadLayers(0);
+
+	// 回调
+	this.mapFinished();
+};
+
+// 图片居中
+LZR.HTML5.Bp.AirqMg.RegStat.prototype.hdMapLimitCenter = function (p) {
+	if (!p) {
+		p = this.map.layers[1].obj;
+	}
+	this.map.resetMax (0, 0, p.width, p.height);
+	this.map.max.rrByParent (this.map.s);
+	this.map.s.w *= this.map.max.baseW / this.map.max.w;
+	this.map.s.reHeight();
+	this.map.max.w = this.map.max.baseW;
+	this.map.max.reHeight();
+	this.map.s.alineInParent ("center", this.map.max);
+};
+
+// 初始图片范围
+LZR.HTML5.Bp.AirqMg.RegStat.prototype.hdMapArea = function (p, initMap) {
+	if (initMap && p) {
+		this.map.resetMax (0, 0, p.width, p.height);
+		this.map.s.top = 0;
+		this.map.s.left = 0;
+		this.map.s.w = this.map.max.w;
+		this.map.s.reHeight();
+	}
+	if (this.mapArea) {
+		if (this.mapArea === "center") {
+			this.hdMapLimitCenter(p);
+		} else {
+			this.map.s.top = this.mapArea.top;
+			this.map.s.left = this.mapArea.left;
+			this.map.s.w = this.mapArea.width;
+			this.map.s.reHeight();
+		}
+	}
+};
+
+// 原比例显示图片
+LZR.HTML5.Bp.AirqMg.RegStat.prototype.oneScale = function () {
+
+	if (this.map.s.left<0 || this.map.s.left > this.map.max.w) {
+		this.map.s.left = 0;
+	}
+	if (this.map.s.top<0 || this.map.s.top > this.map.max.h) {
+		this.map.s.top = 0;
+	}
+
+	this.map.s.w = this.map.canvas.width;
+	this.map.s.reHeight();
+/*
+	if (this.map.s.left<0 || this.map.s.left > this.map.max.baseW) {
+		this.map.s.alineInParent ("center", this.map.max);
+	}
+*/
 };
 
 // 生成图层下载器
