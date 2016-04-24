@@ -385,10 +385,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.hdMapLimitCenter = function (p) {
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.hdMapArea = function (p, initMap) {
 	if (initMap && p) {
 		this.map.resetMax (0, 0, p.width, p.height);
-		this.map.s.top = 0;
-		this.map.s.left = 0;
-		this.map.s.w = this.map.max.w;
-		this.map.s.reHeight();
+		this.eys.resetEdge (0, 0, p.width, p.height);
 	}
 	if (this.mapArea) {
 		if (this.mapArea === "center") {

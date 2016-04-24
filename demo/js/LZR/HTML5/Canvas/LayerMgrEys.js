@@ -53,7 +53,7 @@ LZR.HTML5.Canvas.LayerMgrEys = function (obj) {
 	this.constant = {};
 };
 LZR.HTML5.Canvas.LayerMgrEys.prototype.className = "LZR.HTML5.Canvas.LayerMgrEys";
-LZR.HTML5.Canvas.LayerMgrEys.prototype.version = "0.0.0";
+LZR.HTML5.Canvas.LayerMgrEys.prototype.version = "0.0.1";
 
 // 初始化
 LZR.HTML5.Canvas.LayerMgrEys.prototype.init = function () {
@@ -74,7 +74,7 @@ LZR.HTML5.Canvas.LayerMgrEys.prototype.init = function () {
 // 刷新画布
 LZR.HTML5.Canvas.LayerMgrEys.prototype.flush = function () {
 	// 清空画布
-	// this.ctx.clearRect (0, 0, this.canvas.width, this.canvas.height);
+	this.ctx.clearRect (0, 0, this.canvas.width, this.canvas.height);
 
 	// // 还原坐标变换
 	// this.ctx.setTransform(1, 0, 0, 1, 0, 0);
@@ -166,3 +166,15 @@ LZR.HTML5.Canvas.LayerMgrEys.prototype.resize = function () {
 	this.init();
 };
 
+// 重设显示范围
+LZR.HTML5.Canvas.LayerMgrEys.prototype.resetEdge = function (top, left, width, height) {
+	this.lmEdge.reset({
+		top: top,
+		left: left,
+		width: width,
+		height: height
+	});
+	this.lmEdge.rrByParent();
+	this.lmEdge.alineInParent("center");
+	this.constant.scale = this.lmEdge.scale();
+};
