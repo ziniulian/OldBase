@@ -1,0 +1,28 @@
+<html>
+	<head>
+		<title>testWeb3d</title>
+		<script src="../../../../LZR.js"></script>
+
+		<script>
+			// 初始化
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/WebBox.js" ]);
+
+				var d2 = new LZR.HTML5.WebGL.Three.WebBox ({
+					fov: 75,
+					minCtrlDistance: 10,
+					maxCtrlDistance: 20,
+					file: "data/port.obj",
+					cameraPosition: {x:0, y:10,z:15},
+					canvas: document.getElementById('aCanvas')
+				});
+
+ 			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<canvas id="aCanvas" width="800px" height="600px" ></canvas>
+	</body>
+</html>

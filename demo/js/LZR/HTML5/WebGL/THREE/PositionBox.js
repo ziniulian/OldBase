@@ -50,22 +50,16 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.className = "LZR.HTML5.WebGL.Three.P
 LZR.HTML5.WebGL.Three.PositionBox.prototype.version = "0.0.1";
 
 // 初始化
-LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (length) {
-	if (length > this.origin.max) {
-		length = this.origin.max;
-	} else if (!length || length < this.origin.min) {
-		length = this.origin.min;
-	}
-
+LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
 	var geo = new THREE.Geometry();
-	var x0 = this.origin.x - length;
-	var x1 = this.origin.x + length;
-	var y0 = this.origin.y - length;
-	var y1 = this.origin.y + length;
-	geo.vertices.push(new THREE.Vector3(x0, y0, length));
-	geo.vertices.push(new THREE.Vector3(x1, y0, length));
-	geo.vertices.push(new THREE.Vector3(x0, y1, length));
-	geo.vertices.push(new THREE.Vector3(x1, y1, length));
+	var x0 = this.origin.x - w;
+	var x1 = this.origin.x + w;
+	var y0 = this.origin.y - h;
+	var y1 = this.origin.y + h;
+	geo.vertices.push(new THREE.Vector3(x0, y0, z));
+	geo.vertices.push(new THREE.Vector3(x1, y0, z));
+	geo.vertices.push(new THREE.Vector3(x0, y1, z));
+	geo.vertices.push(new THREE.Vector3(x1, y1, z));
 	geo.vertices.push(new THREE.Vector3(x0, y0, 0));
 	geo.vertices.push(new THREE.Vector3(x1, y0, 0));
 	geo.vertices.push(new THREE.Vector3(x0, y1, 0));

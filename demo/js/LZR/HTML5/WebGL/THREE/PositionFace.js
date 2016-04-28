@@ -1,8 +1,6 @@
 // LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/PositionFace.js" ]);
 
 LZR.HTML5.loadJs([
-	LZR.HTML5.jsPath + "util/expand/json2.js",
-	LZR.HTML5.jsPath + "HTML5/expand/threejs/three.js",
 	LZR.HTML5.jsPath + "util/Geography/Longitude.js",
 	LZR.HTML5.jsPath + "util/Geography/Latitude.js"
 ]);
@@ -33,7 +31,12 @@ LZR.HTML5.WebGL.Three.PositionFace = function (obj) {
 	this.distance = obj.distance;
 	this.imgs = obj.imgs;
 
-	this.imgUrl = obj.imgUrl;
+	if (obj.imgUrl) {
+		this.imgUrl = obj.imgUrl;
+	} else {
+		this.imgUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";		// 透明图片
+		// this.imgUrl = "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";		// 黑图片
+	}
 
 	this.init();
 
