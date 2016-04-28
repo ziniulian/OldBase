@@ -248,7 +248,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.init = function () {
 				// this.canvas = this.ctx.canvas;
 
 				this.canvas = document.createElement("canvas");
-				this.map.getViewport().appendChild(this.canvas);
+				var port = this.map.getViewport();
+				port.insertBefore(this.canvas, port.childNodes[1]);
 				this.canvas.style.width = "100%";
 				this.canvas.style.height = "100%";
 				this.canvas.style.position = "absolute";
