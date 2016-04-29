@@ -50,7 +50,7 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.className = "LZR.HTML5.WebGL.Three.P
 LZR.HTML5.WebGL.Three.PositionBox.prototype.version = "0.0.1";
 
 // 初始化
-LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
+LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z, a) {
 	var geo = new THREE.Geometry();
 	var x0 = this.origin.x - w;
 	var x1 = this.origin.x + w;
@@ -76,7 +76,7 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
 		axis: "z",
 		direction: 1,
 		imgs: [0, 1, 2],
-		alpha: 0.4,
+		alpha: a,
 
 		imgUrl: this.imgUrl.top
 	});
@@ -86,12 +86,12 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
 		id: 1,
 		name: "东面",
 		origin: this.origin,
-		// movs: [5,7,1,3],
-		movs: [7,5,3,1],	// 贴图反向
+		movs: [5,7,1,3],
+		// movs: [7,5,3,1],	// 贴图反向
 		axis: "x",
 		direction: 1,
 		imgs: [0, 5, 7],
-		alpha: 0.4,
+		alpha: a,
 
 		imgUrl: this.imgUrl.east
 	});
@@ -105,7 +105,7 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
 		axis: "y",
 		direction: -1,
 		imgs: [0, 4, 5],
-		alpha: 0.4,
+		alpha: a,
 
 		imgUrl: this.imgUrl.south
 	});
@@ -115,11 +115,12 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
 		id: 3,
 		name: "西面",
 		origin: this.origin,
-		movs: [6,4,2,0],
+		// movs: [6,4,2,0],
+		movs: [4,6,0,2],	// 贴图反向
 		axis: "x",
 		direction: -1,
 		imgs: [0, 6, 4],
-		alpha: 0.4,
+		alpha: a,
 
 		imgUrl: this.imgUrl.west
 	});
@@ -134,7 +135,7 @@ LZR.HTML5.WebGL.Three.PositionBox.prototype.init = function (w, h, z) {
 		axis: "y",
 		direction: 1,
 		imgs: [0, 7, 6],
-		alpha: 0.4,
+		alpha: a,
 
 		imgUrl: this.imgUrl.north
 	});

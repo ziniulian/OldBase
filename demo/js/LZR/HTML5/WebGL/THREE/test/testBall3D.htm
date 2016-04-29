@@ -1,15 +1,15 @@
 <html>
 	<head>
-		<title>testWeb3d</title>
+		<title>testBall3D</title>
 		<script src="../../../../LZR.js"></script>
 
 		<script>
 			// 初始化
  			function init() {
 				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
-				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/WebBox.js" ]);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/Ball3D.js" ]);
 
-				var d2 = new LZR.HTML5.WebGL.Three.WebBox ({
+				var d2 = new LZR.HTML5.WebGL.Three.Ball3D ({
 					fov: 75,
 					minCtrlDistance: 10,
 					maxCtrlDistance: 20,

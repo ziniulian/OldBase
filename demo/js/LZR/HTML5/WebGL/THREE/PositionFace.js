@@ -51,11 +51,10 @@ LZR.HTML5.WebGL.Three.PositionFace = function (obj) {
 	});
 };
 LZR.HTML5.WebGL.Three.PositionFace.prototype.className = "LZR.HTML5.WebGL.Three.PositionFace";
-LZR.HTML5.WebGL.Three.PositionFace.prototype.version = "0.0.1";
+LZR.HTML5.WebGL.Three.PositionFace.prototype.version = "0.0.2";
 
 // 初始化
 LZR.HTML5.WebGL.Three.PositionFace.prototype.init = function () {
-
 	var fc = new THREE.Face3(this.movs[0], this.movs[1], this.movs[2]);
 	fc.materialIndex = this.id;
 	this.origin.geo.faces.push(fc);
@@ -97,57 +96,9 @@ LZR.HTML5.WebGL.Three.PositionFace.prototype.setDistance = function (distance) {
 
 // 刷新图片
 LZR.HTML5.WebGL.Three.PositionFace.prototype.flush = function () {
-	/**
-		图片参数说明：
-			lng1：第一点经度
-			lat1：第一点纬度
-			lng2：第二点经度
-			lat2：第二点纬度
-			hight：高度
-			time：时间
-			type：类型。"top"（顶面）、"side"（侧面）
-	*/
-	// var obj = {};
-
-	// // 计算所需的图片参数
-	// var v0 = this.origin;
-	// var vs = v0.geo.vertices;
-	// var p = vs [ this.imgs[1] ];
-	// obj.lat1 = v0.lat.clone();
-	// obj.lat1.add( v0.scale* (p.y - v0.y) );
-	// obj.lng1 = v0.lng.clone();
-	// obj.lng1.add(obj.lat1, v0.scale* (p.x - v0.x) );
-	// p = vs [ this.imgs[2] ];
-	// obj.lat2 = v0.lat.clone();
-	// obj.lat2.add( v0.scale* (p.y - v0.y) );
-	// obj.lng2 = v0.lng.clone();
-	// obj.lng2.add(obj.lat2, v0.scale* (p.x - v0.x) );
-	// p = vs [ this.imgs[0] ];
-	// obj.hight = v0.scale* (p.z - v0.z);
-	// obj.time = v0.time;
-
-	// if (this.id === 0) {
-	// 	obj.type = "top";
-	// } else {
-	// 	obj.type = "side";
-	// }
-
-	// var r = THREE.ImageUtils.loadTexture ( "data/" + parseInt ( Math.random()*10+1 ) + ".jpg" );
-	// var r = THREE.ImageUtils.loadTexture (LZR.HTML5.upPath (7) + "data/融昭普瑞DemoImg/" + parseInt(Math.random()*10+1, 10) + ".jpg");
 	var r = THREE.ImageUtils.loadTexture (this.imgUrl);
 	if (this.material) {
 		this.material.map = r;
-
-		// // 数据测试
-		// LZR.HTML5.log ("");
-		// LZR.HTML5.alog (this.name);
-		// LZR.HTML5.alog (obj.lng1.getCoordinateForm().print());
-		// LZR.HTML5.alog (obj.lat1.getCoordinateForm().print());
-		// LZR.HTML5.alog (obj.lng2.getCoordinateForm().print());
-		// LZR.HTML5.alog (obj.lat2.getCoordinateForm().print());
-		// LZR.HTML5.alog (obj.hight);
-		// LZR.HTML5.alog (obj.time);
-		// LZR.HTML5.alog (obj.type);
 	}
 	return r;
 };
@@ -163,4 +114,9 @@ LZR.HTML5.WebGL.Three.PositionFace.prototype.setAlpha = function (alpha) {
 	this.material.opacity = alpha;
 
 	return alpha;
+};
+
+// 获取透明度
+LZR.HTML5.WebGL.Three.PositionFace.prototype.getAlpha = function (alpha) {
+	return this.material.opacity;
 };

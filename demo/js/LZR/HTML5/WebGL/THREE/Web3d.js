@@ -37,7 +37,8 @@ LZR.HTML5.WebGL.Three.Web3d = function (obj) {
 	this.renderer = null;
 
 	// 背景色
-	this.backColor = obj.backColor ? obj.backColor : 0xcccccc;
+	this.backColor = isNaN(obj.backColor) ? 0xcccccc : obj.backColor;
+	// this.backColor = obj.backColor ? obj.backColor : 0xcccccc;
 
 	// 照相机近点
 	this.near = 0.01;

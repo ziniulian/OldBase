@@ -1,6 +1,6 @@
-// LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/WebBox.js" ]);
+// LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/Ball3D.js" ]);
 
-// ---------------- 显示 3D -----------------------
+// ---------------- 3D球控制场景 -----------------------
 if (!window.THREE) {
 	LZR.HTML5.loadJs([
 		LZR.HTML5.jsPath + "HTML5/expand/threejs/three.min.js",
@@ -9,10 +9,9 @@ if (!window.THREE) {
 	]);
 }
 LZR.HTML5.loadJs([
-	LZR.HTML5.jsPath + "HTML5/util/Util.js",
-	LZR.HTML5.jsPath + "HTML5/WebGL/THREE/PositionBox.js"
+	LZR.HTML5.jsPath + "HTML5/util/Util.js"
 ]);
-LZR.HTML5.WebGL.Three.WebBox = function (obj) {
+LZR.HTML5.WebGL.Three.Ball3D = function (obj) {
 /*
 	参数说明：
 	{
@@ -41,7 +40,7 @@ LZR.HTML5.WebGL.Three.WebBox = function (obj) {
 	this.renderer = null;
 
 	// 背景色
-	this.backColor = obj.backColor ? obj.backColor : 0xcccccc;
+	this.backColor = isNaN(obj.backColor) ? 0xcccccc : obj.backColor;
 
 	// 照相机近点
 	this.near = 0.01;
@@ -78,11 +77,11 @@ LZR.HTML5.WebGL.Three.WebBox = function (obj) {
 
 	this.init(obj);
 };
-LZR.HTML5.WebGL.Three.WebBox.prototype.className = "LZR.HTML5.WebGL.Three.WebBox";
-LZR.HTML5.WebGL.Three.WebBox.prototype.version = "0.0.1";
+LZR.HTML5.WebGL.Three.Ball3D.prototype.className = "LZR.HTML5.WebGL.Three.Ball3D";
+LZR.HTML5.WebGL.Three.Ball3D.prototype.version = "0.0.2";
 
 // 初始化
-LZR.HTML5.WebGL.Three.WebBox.prototype.init = function(obj) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.init = function(obj) {
 	// 生成描绘器
 	this.createRanderer(obj);
 
@@ -140,7 +139,7 @@ LZR.HTML5.WebGL.Three.WebBox.prototype.init = function(obj) {
 };
 
 // 生成描绘器
-LZR.HTML5.WebGL.Three.WebBox.prototype.createRanderer = function(obj) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.createRanderer = function(obj) {
 	if (obj.canvas) {
 		this.canvas = obj.canvas;
 		this.width = this.canvas.width;
@@ -159,7 +158,7 @@ LZR.HTML5.WebGL.Three.WebBox.prototype.createRanderer = function(obj) {
 };
 
 // 加载3D档案
-LZR.HTML5.WebGL.Three.WebBox.prototype.load3D = function(url) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.load3D = function(url) {
 	switch (LZR.HTML5.Util.getFileExtension(url)) {
 		case "obj":
 			this.loadObj(url);
@@ -171,20 +170,20 @@ LZR.HTML5.WebGL.Three.WebBox.prototype.load3D = function(url) {
 };
 
 // 加入实体
-LZR.HTML5.WebGL.Three.WebBox.prototype.appendMesh = function(name, mesh) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.appendMesh = function(name, mesh) {
 	this.meshs[name] = mesh;
 	this.mod.add(mesh);
 	this.flush();
 };
 
 // 删除实体
-LZR.HTML5.WebGL.Three.WebBox.prototype.removeMesh = function(name) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.removeMesh = function(name) {
 	this.mod.remove(this.meshs[name]);
 	this.flush();
 };
 
 // 加载JSON档案
-LZR.HTML5.WebGL.Three.WebBox.prototype.loadJson = function(url) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.loadJson = function(url) {
 	var loader = new THREE.JSONLoader();
 	loader.load(url, LZR.HTML5.Util.bind (this, function(geometry, materials ) {
 			// geometry = new THREE.CubeGeometry(100,100,100);
@@ -205,7 +204,7 @@ LZR.HTML5.WebGL.Three.WebBox.prototype.loadJson = function(url) {
 };
 
 // 加载OBJ档案
-LZR.HTML5.WebGL.Three.WebBox.prototype.loadObj = function(url) {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.loadObj = function(url) {
 	var loader = new THREE.OBJLoader();
 	loader.load(url, LZR.HTML5.Util.bind (this, function(obj) {
 		// 双面渲染
@@ -222,7 +221,7 @@ LZR.HTML5.WebGL.Three.WebBox.prototype.loadObj = function(url) {
 };
 
 // 实体旋转动画
-LZR.HTML5.WebGL.Three.WebBox.prototype.rotate = function() {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.rotate = function() {
 	this.rotateId = setInterval ( LZR.HTML5,Util.bind (this, function(){
 		this.mod.rotation.y += 0.01;
 		if (this.mod.rotation.y > Math.PI * 2) {
@@ -233,18 +232,18 @@ LZR.HTML5.WebGL.Three.WebBox.prototype.rotate = function() {
 };
 
 // 停止实体旋转动画
-LZR.HTML5.WebGL.Three.WebBox.prototype.stopRotate = function() {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.stopRotate = function() {
 	clearInterval(this.rotateId);
 };
 
 // 控制实体
-LZR.HTML5.WebGL.Three.WebBox.prototype.control = function() {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.control = function() {
 	requestAnimationFrame( LZR.HTML5.Util.bind ( this, this.control ) );
 	this.controls.update();
 	this.flush();
 };
 
 // 刷新画布
-LZR.HTML5.WebGL.Three.WebBox.prototype.flush = function() {
+LZR.HTML5.WebGL.Three.Ball3D.prototype.flush = function() {
 	this.renderer.render(this.scene, this.camera);
 };
