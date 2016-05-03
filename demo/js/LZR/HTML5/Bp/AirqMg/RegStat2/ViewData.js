@@ -627,7 +627,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData = function (obj) {
 	}
 };
 LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.className = "LZR.HTML5.Bp.AirqMg.RegStat2.ViewData";
-LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.version = "0.0.2";
+LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.version = "0.0.3";
 
 // 获取马远接口格式的产品时间
 LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.getTimByInterface = function () {
@@ -649,3 +649,38 @@ LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.setTimeLongByTimeAxis = function
 	this.timeAxis.timeLong.set (this.cur.mod.timeLong[this.cur.area.id]);
 };
 
+// 配置区域
+LZR.HTML5.Bp.AirqMg.RegStat2.ViewData.prototype.setAreaChild = function (obj) {
+	var vc = LZR.Util.ValCtrl;
+	var r = {};
+	var b = true;
+	var s;
+	for (s in obj) {
+		r[s] = {};
+		r[s].id = s;
+		r[s].parent = this.area;
+		r[s].root = this;
+		r[s].enable = new vc(true);
+		r[s].view = null;
+		r[s].ctrl = null;
+		r[s].num = s;
+
+		r[s].html = obj[s].html;
+		r[s].range = obj[s].range;
+
+		if (b && obj[s].selected) {
+			r[s].selected = new vc(true);
+			this.cur.area = r[s];
+			b = false;
+		} else {
+			r[s].selected = new vc(false);
+		}
+	}
+
+	if (b && s) {
+		r[s].selected.set(true, false);
+		this.cur.area = r[s];
+	}
+
+	this.area.children = r;
+};

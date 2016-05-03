@@ -12,7 +12,7 @@ LZR.HTML5.Bp.Util.BpTimeAxis = function (obj) {
 	/*
 		参数说明：
 			{
-				count: ,	// 时间刻度数量
+				count : ,	// 时间刻度数量
 				data: ,		// 时间刻度数据
 				style: ,		// 风格（0：压线（含最大时间）；1：压中（不含最大时间））
 
