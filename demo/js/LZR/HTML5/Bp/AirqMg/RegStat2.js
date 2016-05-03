@@ -30,6 +30,9 @@ LZR.HTML5.Bp.AirqMg.RegStat2 = function (obj) {
 	// 图片图层计数器
 	this.countOfOlLayer = 0;
 
+	// 风场是否闪烁
+	this.windFlash = true;
+
 	// 设置参数
 	if (obj) {
 		LZR.setObj (this, obj);
@@ -37,7 +40,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2 = function (obj) {
 	this.initViewByData ();
 };
 LZR.HTML5.Bp.AirqMg.RegStat2.prototype.className = "LZR.HTML5.Bp.AirqMg.RegStat2";
-LZR.HTML5.Bp.AirqMg.RegStat2.prototype.version = "0.1.3";
+LZR.HTML5.Bp.AirqMg.RegStat2.prototype.version = "0.1.4";
 
 // 加载内部类
 LZR.HTML5.loadJs([
@@ -208,9 +211,11 @@ LZR.HTML5.Bp.AirqMg.RegStat2.prototype.initViewByWind = function (obj) {
 							lay.ctrl.num.set (lay[ lay.root.cur.timeStep.id ]);
 						}
 					}
+					lay.ctrl.visible.set(v);
 					this.flush();
+				} else {
+					lay.ctrl.visible.set(v);
 				}
-				lay.ctrl.visible.set(v);
 			};
 
 			// 变更图层透明度
@@ -258,7 +263,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.prototype.initViewByWind = function (obj) {
 						// 基于OpenLayers的风场图层
 						case "LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer":
 							// 风场闪动效果
-							if (y.visible.val) {
+							if (this.windFlash && y.visible.val) {
 								var ap = y.alpha.val;
 								y.alpha.set(0);
 								setTimeout( LZR.bind (this, setAlpha, y, ap), 50 );
