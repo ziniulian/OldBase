@@ -37,7 +37,7 @@ LZR.HTML5.WebGL.Three.BoxMap = function (obj) {
 	this.max = 0;
 };
 LZR.HTML5.WebGL.Three.BoxMap.prototype.className = "LZR.HTML5.WebGL.Three.BoxMap";
-LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.1";
+LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.2";
 
 // 初始化地图
 LZR.HTML5.WebGL.Three.BoxMap.prototype.initMap = function() {
@@ -45,6 +45,9 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.initMap = function() {
 		this.max = this.map.h;
 	} else {
 		this.max = this.map.w;
+	}
+	if (this.max < this.box.z) {
+		this.max = this.box.z;
 	}
 	this.center = {
 		x: this.box.left + this.box.w/2,
@@ -257,12 +260,28 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.flush = function (imgUrl) {
 			east: "data/map.jpg",	// 图片（Base64）
 			south: "data/map.jpg",	// 图片（Base64）
 			west: "data/map.jpg",	// 图片（Base64）
-			north: "data/map.jpg"	// 图片（Base64）
+			north: "data/map.jpg",	// 图片（Base64）
+			map: "data/map.jpg"	// 图片（Base64）
 	*/
-	this.box.obj.top.imgUrl = imgUrl.top;
-	this.box.obj.east.imgUrl = imgUrl.east;
-	this.box.obj.south.imgUrl = imgUrl.south;
-	this.box.obj.west.imgUrl = imgUrl.west;
-	this.box.obj.north.imgUrl = imgUrl.north;
+	if (imgUrl.top) {
+		this.box.obj.top.imgUrl = imgUrl.top;
+	}
+	if (imgUrl.east) {
+		this.box.obj.east.imgUrl = imgUrl.east;
+	}
+	if (imgUrl.south) {
+		this.box.obj.south.imgUrl = imgUrl.south;
+	}
+	if (imgUrl.west) {
+		this.box.obj.west.imgUrl = imgUrl.west;
+	}
+	if (imgUrl.north) {
+		this.box.obj.north.imgUrl = imgUrl.north;
+	}
 	this.box.obj.flush();
+
+	if (imgUrl.map) {
+		this.map.obj.material.map = THREE.ImageUtils.loadTexture (imgUrl.map);
+		this.map.data = imgUrl.map;
+	}
 };
