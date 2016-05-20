@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<title>testThumbnail</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<script src="../../../LZR.js"></script>
 
 		<script>
@@ -13,9 +14,16 @@
 
 				// 创建缩略图对象
 				t = new LZR.HTML5.Canvas.Thumbnail( document.getElementById("canvas") );
-				t.count = 15;	// 图片总数
-				t.width = 180;	// 图片宽度
-				t.wheelScale = 2;	// 滚动系数
+				t.count = 50;	// 图片总数
+				t.direction = 2;	// 滚动方向（横向:1 ；纵向:2）
+				t.width = 100;	// 图片宽度
+				t.height = 130;	// 图片宽度
+				t.wheelScale = 1;	// 滚动系数
+
+				// 选中事件
+				t.onchange = function (i) {
+					alert("第 " + i + " 张图");
+				};
 
 				var pic = new Image();
 				pic.onload = function() {
@@ -29,7 +37,7 @@
 					t.init();
 					ctrl();
 				}
-				pic.src ="http://www.ziniulian.tk/favicon.ico";
+				pic.src ="../../WebGL/THREE/test/data/map.jpg";
 			}
 
 			function ctrl() {
@@ -42,7 +50,7 @@
 	</head>
 
 	<body onload="init()">
-		<canvas id="canvas" width="600"height="100" style="background-color:blue">
+		<canvas id="canvas" width="200"height="600" style="background-color:blue">
 			<p>Your browserdoes not support the canvas element!</p>
 		</canvas>
 	</body>

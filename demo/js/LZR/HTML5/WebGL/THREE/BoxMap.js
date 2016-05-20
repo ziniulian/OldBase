@@ -37,7 +37,7 @@ LZR.HTML5.WebGL.Three.BoxMap = function (obj) {
 	this.max = 0;
 };
 LZR.HTML5.WebGL.Three.BoxMap.prototype.className = "LZR.HTML5.WebGL.Three.BoxMap";
-LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.2";
+LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.3";
 
 // 初始化地图
 LZR.HTML5.WebGL.Three.BoxMap.prototype.initMap = function() {
@@ -106,11 +106,6 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.initCav = function (backColor) {
 		fov: 75,
 		minCtrlDistance: 10,
 		maxCtrlDistance: this.max,
-		cameraPosition: {
-			x: 0,
-			y: -this.max/2,
-			z: this.max/2.5
-		},
 		backColor: backColor,
 		canvas: this.cav
 	});
@@ -138,7 +133,7 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.initCtrl = function (div, strip, btn) {
 		this.box.ctrl[s] = new LZR.HTML5.Util.Scroll({
 			count: 100,
 			position: this.box.obj[s].getAlpha() * 100,
-			direction: 1,
+			direction: 2,
 			autoLen: 1,
 			autoMin: 30,
 			padd: 0,
@@ -249,6 +244,42 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.setAlpha = function (facNam, alpha) {
 		this.box.ctrl[facNam].setPosition(alpha * 100);
 	} else {
 		this.box.obj[facNam].setAlpha(alpha);
+	}
+};
+
+// 相机位置设置
+LZR.HTML5.WebGL.Three.BoxMap.prototype.setCamera = function (facNam) {
+	switch (facNam) {
+		case "top":
+			this.wb.camera.up.x = 0;
+			this.wb.camera.up.y = 1;
+			this.wb.camera.up.z = 0;
+			this.wb.camera.position.set(0, 0, this.max/1.5);
+			break;
+		case "east":
+			this.wb.camera.up.x = -1;
+			this.wb.camera.up.y = 0;
+			this.wb.camera.up.z = 0;
+			this.wb.camera.position.set(this.max/1.5, 0, this.max/5);
+			break;
+		case "west":
+			this.wb.camera.up.x = 1;
+			this.wb.camera.up.y = 0;
+			this.wb.camera.up.z = 0;
+			this.wb.camera.position.set(-this.max/1.5, 0, this.max/5);
+			break;
+		case "south":
+			this.wb.camera.up.x = 0;
+			this.wb.camera.up.y = 1;
+			this.wb.camera.up.z = 0;
+			this.wb.camera.position.set(0, -this.max/1.5, this.max/5);
+			break;
+		case "north":
+			this.wb.camera.up.x = 0;
+			this.wb.camera.up.y = -1;
+			this.wb.camera.up.z = 0;
+			this.wb.camera.position.set(0, this.max/1.5, this.max/5);
+			break;
 	}
 };
 

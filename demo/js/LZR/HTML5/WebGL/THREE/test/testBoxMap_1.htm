@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>地图盒子测试</title>
+		<title>地图盒子测试（控制相机位置）</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<style type="text/css">
 			html, body {
@@ -13,18 +13,36 @@
 				width: 100%;
 				height: 100%;
 			}
-			.scroll {
+			.ctrl {
 				position: absolute;
 				right: 20px;
 				top: 20px;
 				font-size: 0;
 			}
-			.scroll_strip {
+			.gridOut {
+				height: 44px;
+			}
+			.grid {
 				display: inline-block;
 				vertical-align: top;
+				width: 44px;
+				height: 100%;
+
+				line-height: 44px;
+				font-family: "微软雅黑";
+				font-size: 20px;
+				text-align: center;
+
+				background-color: yellow;
+			}
+			.scroll {
+				position: relative;
+				padding: 20px 0 0 60px;
+			}
+			.scroll_strip {
+				position: absolute;
 				width: 10px;
 				height: 200px;
-				margin: 0 0 0 30px;
 				background-color:#0F0;
 			}
 			.scroll_btn {
@@ -70,15 +88,48 @@
 					map: "data/map.jpg"
 				});
 
-				// 设置透明度
-				bm.setAlpha ("top", 1);
+				// 显示控制条
+				var showBar = function(bm, facNam) {
+					for (var s in bm.box.ctrl) {
+						if (s === facNam) {
+							bm.setCamera(s);
+							bm.box.ctrl[s].strip.style.display = "";
+						} else {
+							bm.box.ctrl[s].strip.style.display = "none";
+						}
+					}
+				};
+				showBar(bm, "south");
+				for (var s in bm.box.ctrl) {
+					var d = document.getElementById(s);
+					d.onclick = LZR.bind(d, showBar, bm, s);
+				}
 			}
 		</script>
 	</head>
 
 	<body onload="init()">
 		<div id="box" class="box">
-			<div id="scroll" class="scroll"></div>
+			<div class="ctrl">
+				<div>
+					<div class="gridOut">
+						<div class="grid"></div>
+						<div id="north" class="grid noselect">北</div>
+						<div class="grid"></div>
+					</div>
+					<div class="gridOut">
+						<div id="west" class="grid noselect">西</div>
+						<div id="top" class="grid noselect">上</div>
+						<div id="east" class="grid noselect">东</div>
+					</div>
+					<div class="gridOut">
+						<div class="grid"></div>
+						<div id="south" class="grid noselect">南</div>
+						<div class="grid"></div>
+					</div>
+				</div>
+				<div id="scroll" class="scroll"></div>
+			</div>
 		</div>
 	</body>
 </html>

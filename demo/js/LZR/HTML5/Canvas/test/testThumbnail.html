@@ -54,7 +54,7 @@
 				var pic = new Image();
 				pic.onload = function() {
 					var img = new LZR.HTML5.Canvas.ThumbnailImg();
-					img.layers.push ( new LZR.HTML5.Canvas.Layer(pic) );
+					img.layers.push ( new LZR.HTML5.Canvas.Layer({obj: pic}) );
 					img.getLayers = function () {return this.layers};
 
 					// t
@@ -78,7 +78,7 @@
 
 					ctrl();
 				}
-				pic.src ="../../../../../../data/canvas.png";
+				pic.src ="../../WebGL/THREE/test/data/map.jpg";
 			}
 
 			function ctrl() {
