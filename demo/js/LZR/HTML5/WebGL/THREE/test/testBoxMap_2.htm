@@ -1,0 +1,138 @@
+<html>
+	<head>
+		<title>地图盒子测试（另一种控制界面）</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style type="text/css">
+			html, body {
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			.box {
+				width: 100%;
+				height: 100%;
+			}
+			.ctrl {
+				position: absolute;
+				right: 20px;
+				top: 20px;
+				/*font-size: 0;*/
+			}
+			.grid {
+				display: inline-block;
+				vertical-align: top;
+				width: 30px;
+				height: 30px;
+				/*margin: 5px;*/
+
+				line-height: 30px;
+				font-family: "微软雅黑";
+				font-size: 20px;
+				text-align: center;
+
+				background-color: yellow;
+			}
+			.scroll {
+				position: absolute;
+				right: 21px;
+				top: 50px;
+			}
+			.scroll_strip {
+				position: absolute;
+				width: 10px;
+				height: 200px;
+				background-color:#0F0;
+			}
+			.scroll_btn {
+				width: 32px;
+				height: 32px;
+				line-height: 32px;
+				font-family: "微软雅黑";
+				font-size: 20px;
+				text-align: center;
+				background-color:#FF0;
+			}
+			.noselect {
+				/*文字不被选中*/
+				-webkit-user-select:none;
+				-moz-user-select:none;
+				-ms-user-select:none;
+				user-select:none;
+				cursor: pointer;
+			}
+			.nosee {
+				display: none;
+			}
+		</style>
+		<script src="../../../../LZR.js"></script>
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([ LZR.HTML5.jsPath + "HTML5/WebGL/THREE/BoxMap.js"]);
+
+				var bm = new LZR.HTML5.WebGL.Three.BoxMap();
+				bm.init({
+					backColor: 0x00FFFF,
+					div: document.getElementById("box")
+				});
+
+				// 创建透明度控制条
+				bm.initCtrl (document.getElementById("scroll"), "scroll_strip", "scroll_btn noselect");
+
+				// 刷新图片
+				bm.flush({
+					top: "data/map.jpg",	// 图片（Base64）
+					east: "data/map.jpg",	// 图片（Base64）
+					south: "data/map.jpg",	// 图片（Base64）
+					west: "data/map.jpg",	// 图片（Base64）
+					north: "data/map.jpg",	// 图片（Base64）
+					map: "data/map.jpg"
+				});
+
+				// 显示控制条
+				var barEx = true;	// 控制条是否展开
+				var showBar = function(bm, facNam) {
+					if (barEx) {
+						for (var s in bm.box.ctrl) {
+							if (s === facNam) {
+								bm.setCamera(s);
+								bm.box.ctrl[s].strip.style.display = "";
+								document.getElementById(s).style.display = "";
+							} else {
+								bm.box.ctrl[s].strip.style.display = "none";
+								document.getElementById(s).style.display = "none";
+							}
+						}
+						barEx = false;
+					} else {
+						for (var s in bm.box.ctrl) {
+							document.getElementById(s).style.display = "";
+						}
+						barEx = true;
+					}
+				};
+				showBar(bm, "south");
+				for (var s in bm.box.ctrl) {
+					var d = document.getElementById(s);
+					d.onclick = LZR.bind(d, showBar, bm, s);
+				}
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div id="box" class="box">
+			<div class="ctrl">
+				<div>
+					<div id="east" class="grid noselect">东</div>
+					<div id="south" class="grid noselect">南</div>
+					<div id="west" class="grid noselect">西</div>
+					<div id="north" class="grid noselect">北</div>
+					<div id="top" class="grid noselect">上</div>
+				</div>
+				<div id="scroll" class="scroll"></div>
+			</div>
+		</div>
+	</body>
+</html>

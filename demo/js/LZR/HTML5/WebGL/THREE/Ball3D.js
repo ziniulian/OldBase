@@ -19,7 +19,7 @@ LZR.HTML5.WebGL.Three.Ball3D = function (obj) {
 		obj.width,				// 场景宽度
 		obj.height,				// 场景高度
 		obj.fov,					// 透视角度
-		obj:zoom,				// 正交缩放比例
+		obj.zoom,				// 正交缩放比例
 		obj.cameraPosition:{x, y, z},		// 初始相机位置
 		obj.center:{x, y, z},			// 旋转中心
 		obj.backColor,			// 背景色

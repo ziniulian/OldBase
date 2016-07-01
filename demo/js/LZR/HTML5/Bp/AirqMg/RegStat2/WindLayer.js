@@ -88,7 +88,7 @@ LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer = function (obj) {
 LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype = LZR.createPrototype (LZR.Util.Layer.prototype);
 LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype._super = LZR.Util.Layer.prototype;
 LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype.className = "LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer";
-LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype.version = "0.0.2";
+LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype.version = "0.0.3";
 
 // 初始化
 LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype.init = function (olmap) {
@@ -194,10 +194,41 @@ LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype.handleWindData = function (obj)
 			// 旋转系数
 			var p = this.gp.calcTransform(a, 1, 1, 0, 0);
 			var c = ol.proj.transform([d[0], d[1]], this.dataProj, this.mapProj);
-			r.push([p, (this.length.val * speed), c]);
+			var size;
+
+			// 比例风速
+			// size = this.length.val * speed;
+
+			// 级别风速
+			size = this.getWindSize(speed);
+
+			r.push([p, size, c]);
 		}
 	}
 	return r;
+};
+
+// 通过风力的级别来决定风的绘制长度
+LZR.HTML5.Bp.AirqMg.RegStat2.WindLayer.prototype.getWindSize = function (speed) {
+	var size = 0;
+	if (speed <= 1.5) {
+		size = 12;
+	} else if (speed <= 3.3) {
+		size = 13;
+	} else if (speed <= 5.4) {
+		size = 14;
+	} else if (speed <= 7.9) {
+		size = 15;
+	} else if (speed <= 10.7) {
+		size = 16;
+	} else if (speed <= 13.8) {
+		size = 17;
+	} else if (speed <= 17.1) {
+		size = 18;
+	} else {
+		size = 19;
+	}
+	return size;
 };
 
 // 画风场

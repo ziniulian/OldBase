@@ -254,31 +254,32 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.setCamera = function (facNam) {
 			this.wb.camera.up.x = 0;
 			this.wb.camera.up.y = 1;
 			this.wb.camera.up.z = 0;
-			this.wb.camera.position.set(0, 0, this.max/1.5);
+			// this.wb.camera.position.set(0, -this.box.h/5, this.box.z*2.1);
+			this.wb.camera.position.set(0, -this.box.h/1.8, this.box.z*2.2);
 			break;
 		case "east":
 			this.wb.camera.up.x = -1;
 			this.wb.camera.up.y = 0;
 			this.wb.camera.up.z = 0;
-			this.wb.camera.position.set(this.max/1.5, 0, this.max/5);
+			this.wb.camera.position.set(this.box.w*1.2, 0, this.box.z*1.1);
 			break;
 		case "west":
 			this.wb.camera.up.x = 1;
 			this.wb.camera.up.y = 0;
 			this.wb.camera.up.z = 0;
-			this.wb.camera.position.set(-this.max/1.5, 0, this.max/5);
+			this.wb.camera.position.set(-this.box.w*1.2, 0, this.box.z*1.1);
 			break;
 		case "south":
 			this.wb.camera.up.x = 0;
 			this.wb.camera.up.y = 1;
 			this.wb.camera.up.z = 0;
-			this.wb.camera.position.set(0, -this.max/1.5, this.max/5);
+			this.wb.camera.position.set(0, -this.box.h*1.2, this.box.z*1.1);
 			break;
 		case "north":
 			this.wb.camera.up.x = 0;
 			this.wb.camera.up.y = -1;
 			this.wb.camera.up.z = 0;
-			this.wb.camera.position.set(0, this.max/1.5, this.max/5);
+			this.wb.camera.position.set(0, this.box.h*1.2, this.box.z*1.1);
 			break;
 	}
 };

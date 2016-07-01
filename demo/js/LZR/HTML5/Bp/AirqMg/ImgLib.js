@@ -51,7 +51,8 @@ LZR.HTML5.Bp.AirqMg.ImgLib = function (obj) {
 	this.tbn.wheelStyle = 2;
 	this.tbn.ctx.fillStyle="#777";
 	this.tbn.draw = LZR.bind (this, function (tb, i, x, y, w, h) {
-		tb.ctx.fillText( tb.imgs[i].tim, x+this.tbnFont[0].left , y + h + this.tbnFont[0].bottom);
+		tb.ctx.textAlign = "center";	// 画布字体居中
+		tb.ctx.fillText( tb.imgs[i].tim, x+this.tbn.width/2 , y + h + this.tbnFont[0].bottom);
 	});
 	this.tbn.onchange = LZR.HTML5.Util.bind (this, function (i) {
 		this.map.layers[0].obj = this.tbn.imgs[i].getLayers()[0].obj;
@@ -288,7 +289,8 @@ LZR.HTML5.Bp.AirqMg.ImgLib.prototype.fillLayers = function (count) {
 LZR.HTML5.Bp.AirqMg.ImgLib.prototype.onTbns = function (index, img, data) {
 	// 获取时间
 	var tim = "";
-	for (var i=0; i<data.picTime.length; i++) {
+	var n = data.picTime.length;
+	for (var i=0; i<n; i++) {
 		tim += data.picTime[i];
 		switch (i) {
 			case 3:
@@ -296,11 +298,15 @@ LZR.HTML5.Bp.AirqMg.ImgLib.prototype.onTbns = function (index, img, data) {
 				tim += "-";
 				break;
 			case 7:
-				tim += " ";
+				if (n>8) {
+					tim += " ";
+				}
 				break;
 		}
 	}
-	tim += "时";
+	if (n>8) {
+		tim += "时";
+	}
 
 	var ms = this.tbn.imgs[index];
 	if (ms) {
