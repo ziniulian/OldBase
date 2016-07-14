@@ -195,7 +195,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 	}
 };
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.className = "LZR.HTML5.Bp.OpenLayers.Orbit";
-LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.4";
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.5";
 
 // 初始化随机颜色
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initColor = function (objColor) {
@@ -273,6 +273,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.init = function () {
 				this.mapH = s.scrollHeight;	// 容器高度
 				this.titleObi = -1;	// DIV所在的轨迹
 				this.titleNdi = -1;	// DIV所在的节点
+				this.mouseObi = -1;	// 鼠标所在的轨迹
 			}
 			if (this.flush (this.ctx)) {
 				this.map.render();
@@ -321,6 +322,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 						}
 					}
 				}
+
 			} else {
 				// 动画下一帧
 				this.ap[i] += this.orbitSpeed;
@@ -340,10 +342,31 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 
 		// 隐藏DIV
 		if (this.titleNdi !== -1 && this.nodeOverIndex === -1) {
+			this.onHidTitle (this.title, this.data[this.titleObi].nodes[this.titleNdi], this.titleObi, this.titleNdi);
 			this.titleObi = -1;
 			this.titleNdi = -1;
 			this.title.style.visibility = "hidden";
 		}
+
+		// 触发鼠标经过/移开事件
+		if (this.orbitOverIndex === -1) {
+			if (this.mouseObi !== -1) {
+// console.log ("out - " + this.mouseObi);
+				this.onMouseOut(this.mouseObi);
+				this.mouseObi = -1;
+			}
+		} else {
+			if (this.mouseObi !== this.orbitOverIndex) {
+				if (this.mouseObi !== -1) {
+// console.log ("out - " + this.mouseObi);
+					this.onMouseOut(this.mouseObi);
+				}
+// console.log ("in - " + this.orbitOverIndex);
+				this.onMouseOver(this.orbitOverIndex);
+				this.mouseObi = this.orbitOverIndex;
+			}
+		}
+
 		return true;
 	} else {
 		return false;
@@ -598,3 +621,11 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.calcPixel = function (lon, lat) {
 // 提示框显示事件（接口）
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.onShowTitle = function (div, data, i, j) {};
 
+// 提示框消失事件（接口）
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.onHidTitle = function (div, data, i, j) {};
+
+// 鼠标经过路径事件（接口）
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.onMouseOver = function (i) {};
+
+// 鼠标移开路径事件（接口）
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.onMouseOut = function (i) {};
