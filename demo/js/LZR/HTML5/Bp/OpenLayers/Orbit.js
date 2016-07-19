@@ -48,6 +48,72 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 		// openLayers_Map
 		this.map = obj.map;
 
+		// 颜色参数
+		this.clrStr = {
+			"0": "245,255,255",
+			"3.5": "210,255,255",
+			"7.0": "190,255,255",
+			"10.5": "150,243,255",
+			"14.0": "131,232,255",
+			"17.5": "74,221,255",
+			"21.0": "26,212,255",
+			"24.5": "0,195,255",
+			"28.0": "0,202,255",
+			"31.5": "0,220,220",
+			"35.0": "0,232,190",
+			"39.0": "0,230,175",
+			"43.0": "0,230,140",
+			"47.0": "0,230,110",
+			"51.0": "0,230,80",
+			"55.0": "0,230,60",
+			"59.0": "0,230,50",
+			"63.0": "0,230,0",
+			"67.0": "30,230,0",
+			"71.0": "100,235,0",
+			"75.0": "180,240,0",
+			"79.0": "220,250,0",
+			"83.0": "255,255,0",
+			"87.0": "255,250,0",
+			"91.0": "255,245,0",
+			"95.0": "255,242,0",
+			"99.0": "255,240,0",
+			"103.0": "255,238,0",
+			"107.0": "255,235,0",
+			"111.0": "255,230,0",
+			"115.0": "255,220,0",
+			"118.5": "255,200,0",
+			"122.0": "255,190,0",
+			"125.5": "255,185,0",
+			"129.0": "255,180,0",
+			"132.5": "255,175,0",
+			"136.0": "255,170,0",
+			"139.5": "255,165,0",
+			"143.0": "255,145,0",
+			"146.5": "255,115,0",
+			"150.0": "255,95,0",
+			"160.0": "255,70,0",
+			"170.0": "255,20,0",
+			"180.0": "255,0,0",
+			"190.0": "245,0,0",
+			"200.0": "247,0,0",
+			"210.0": "249,0,0",
+			"220.0": "250,0,0",
+			"230.0": "252,0,0",
+			"240.0": "240,0,20",
+			"250.0": "240,0,50",
+			"260.0": "220,0,100",
+			"270.0": "200,0,145",
+			"280.0": "180,0,150",
+			"290.0": "160,0,150",
+			"300.0": "150,0,150",
+			"310.0": "140,0,160",
+			"320.0": "135,0,160",
+			"330.0": "130,0,160",
+			"340.0": "125,0,160",
+			"350.0": "120,0,160",
+			"10000.0": "110,0,160"
+		};
+
 		// 轨迹数据
 		this.initData(obj.data);
 
@@ -195,7 +261,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 	}
 };
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.className = "LZR.HTML5.Bp.OpenLayers.Orbit";
-LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.5";
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.6";
 
 // 初始化随机颜色
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initColor = function (objColor) {
@@ -316,7 +382,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 						var s = this.title.style;
 						s.left = this.curentPosition[0] + "px";
 						s.top = (this.curentPosition[1] - this.mapH) + "px";
-						this.onShowTitle (this.title, nodes[this.titleNdi], this.titleObi, this.titleNdi);
+						// this.onShowTitle (this.title, nodes[this.titleNdi], this.titleObi, this.titleNdi);
+						this.onShowTitle (this.title, this.oldDat[this.titleObi].grdCollection[this.titleNdi], this.titleObi, this.titleNdi);
 						if (s.visibility === "hidden") {
 							s.visibility = "visible";
 						}
@@ -342,7 +409,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 
 		// 隐藏DIV
 		if (this.titleNdi !== -1 && this.nodeOverIndex === -1) {
-			this.onHidTitle (this.title, this.data[this.titleObi].nodes[this.titleNdi], this.titleObi, this.titleNdi);
+			// this.onHidTitle (this.title, this.data[this.titleObi].nodes[this.titleNdi], this.titleObi, this.titleNdi);
+			this.onHidTitle (this.title, this.oldDat[this.titleObi].grdCollection[this.titleNdi], this.titleObi, this.titleNdi);
 			this.titleObi = -1;
 			this.titleNdi = -1;
 			this.title.style.visibility = "hidden";
@@ -375,6 +443,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 
 // 整理轨迹数据
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data) {
+	this.oldDat = data;
 	this.data = [];
 	this.ap = [];	// 动画参数
 	if (data) {
@@ -403,6 +472,16 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data) {
 					}
 				}
 
+				// 添加污染物信息
+				if (c[j].values) {
+					n.fom = {
+						val: c[j].values[1],
+						// clr: "rgba(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", 1)"
+						// clr: "yellow"
+						clr: this.getClrByStr(c[j].values[1])
+					};
+				}
+
 				d.nodes.push(n);
 			}
 			this.data.push(d);
@@ -411,6 +490,43 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data) {
 			this.ap.push(0);
 		}
 	}
+};
+
+// 根据AQI值获取颜色
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.getClrByAQI = function (v) {
+	if (v<0) {
+		return "rgba(0,0,0,0)";
+	} else if (v<=50) {
+		return "rgba(0,228,0,1)";
+	} else if (v<=100) {
+		return "rgba(255,255,0,1)";
+	} else if (v<=150) {
+		return "rgba(255,126,0,1)";
+	} else if (v<=200) {
+		return "rgba(255,0,0,1)";
+	} else if (v<=300) {
+		return "rgba(153,0,76,1)";
+	} else if (v<=500) {
+		return "rgba(126,0,35,1)";
+	} else {
+		return "rgba(0,0,0,0)";
+	}
+};
+
+// 根据浓度值获取颜色
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.getClrByStr = function (v) {
+	var ps = null;
+	for (var s in this.clrStr) {
+		if (v < s) {
+			if (ps) {
+				return "rgba(" + this.clrStr[ps] + ",1)";
+			} else {
+				return "rgba(0,0,0,0)";
+			}
+		}
+		ps = s;
+	}
+	return "rgba(" + this.clrStr[ps] + ",1)";
 };
 
 // 计算节点边长
@@ -461,8 +577,9 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawOrbitPath = function (nodes, ctx, in
 	ctx.fillStyle = this.orbitColor[index];
 	ctx.shadowColor = this.orbitShadowColor[index];
 	ctx.shadowBlur = this.orbitBlur;
-	ctx.beginPath();
 	for (var i=0; i<nodes.length-1; i++) {
+		ctx.beginPath();
+
 		// ctx.arc(nodes[i].x, nodes[i].y, 10, 0, Math.PI);
 		var p = this.gp.calcTransform(nodes[i].lineAngle, 1, 1, nodes[i].x, nodes[i].y);
 		ctx.setTransform(p[0], p[1], p[2], p[3], p[4], p[5]);
@@ -471,8 +588,17 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawOrbitPath = function (nodes, ctx, in
 		ctx.lineTo(nodes[i].lineLong, -w);
 		ctx.arc(nodes[i].lineLong, 0, w, -Math.PI/2,  Math.PI/2);
 		ctx.closePath();
+
+		// 渐变色
+		if (nodes[i].fom) {
+			var grd=ctx.createLinearGradient(0,0,nodes[i].lineLong,0);
+			grd.addColorStop(0, nodes[i].fom.clr);
+			grd.addColorStop(1, nodes[i+1].fom.clr);
+			ctx.shadowBlur = 0;
+			ctx.fillStyle = grd;
+		}
+		ctx.fill();
 	}
-	ctx.fill();
 	ctx.restore();
 
 	// 判断轨迹是否经过
