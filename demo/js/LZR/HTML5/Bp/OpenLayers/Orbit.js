@@ -442,7 +442,11 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 };
 
 // 整理轨迹数据
-LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data) {
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data, clrs) {
+	if (clrs) {
+		this.clrStr = clrs;
+	}
+
 	this.oldDat = data;
 	this.data = [];
 	this.ap = [];	// 动画参数

@@ -221,6 +221,9 @@ LZR.HTML5.Bp.AirqMg.RegStat = function (obj) {
 		fld: "URL"		// 马远接口的图片路径值
 	};
 
+	// 用于分日期查询的天数偏移量
+	this.dayOffset = 0;
+
 	// 添加窗体变化自适应功能
 	LZR.HTML5.Util.Event.addEvent (window, "resize", LZR.bind(this, this.resize), false);
 };
@@ -243,7 +246,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.init = function () {
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.initTbn = function () {
 	if (this.condition.ttyp == 1) {
 		this.tbn.index = new Date().getHours();
-		if (this.tbn.index > this.condition.tim) {
+		if (this.dayOffset === 0 && this.tbn.index > this.condition.tim) {
 			this.tbn.index = Math.floor( (this.tbn.index - this.condition.tim) / this.hourStep) + 1;
 		} else {
 			this.tbn.index = 0;
@@ -456,7 +459,7 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.fillLayers = function (img) {
 LZR.HTML5.Bp.AirqMg.RegStat.prototype.createImg = function (index, d) {
 	var r = new LZR.HTML5.Bp.AirqMg.RegImg();
 	if (this.condition.ttyp == 1) {
-		d += (index * this.hourStep + this.condition.tim) * 60 * 60 *1000;
+		d += (index * this.hourStep + this.condition.tim + this.dayOffset * 24) * 60 * 60 *1000;
 		d = new Date( d );
 
 		r.tim = d.getFullYear();
@@ -520,8 +523,8 @@ LZR.HTML5.Bp.AirqMg.RegStat.prototype.createWeatherQry = function (qry, typ, mod
 		"modelType": [mod],
 		"domain": ["d"+ LZR.HTML5.Util.format (this.condition.area, 2, "0")],
 		"times": this.condition._date + this.condition._tim,
-		"periodStart": this.periodStart,
-		"periodEnd": (24 * this.dayNum + this.periodStart)
+		"periodStart": this.periodStart + this.dayOffset * 24,
+		"periodEnd": (24 * this.dayNum + this.periodStart + this.dayOffset * 24)
 	};
 	return qry;
 };
