@@ -58,7 +58,7 @@ LZR.HTML5.Canvas.LayerManager = function (obj) {
 	// 平移不超出父边框
 	this.autoMove = true;
 
-	// 缩放不超出父边框
+	// 缩放不超出父边框（0：不限制，1/true：不超出父边框，2：有限制，但保证内容）
 	this.autoZoom = true;
 };
 LZR.HTML5.Canvas.LayerManager.prototype.className = "LZR.HTML5.Canvas.LayerManager";
@@ -152,10 +152,17 @@ LZR.HTML5.Canvas.LayerManager.prototype.zoom = function (s, x, y) {
 		s += 1.0;
 	}
 
-	if (this.autoZoom) {
-		this.s.zoomInParent (s, x, y, this.max, this.min);
-	} else {
-		this.s.zoom(s, x, y);
+	switch (this.autoZoom) {
+		case 2:
+			this.s.zoomInParentInContain (s, x, y, this.max, this.min);
+			break;
+		case 1:
+		case true:
+			this.s.zoomInParent (s, x, y, this.max, this.min);
+			break;
+		default:
+			this.s.zoom(s, x, y);
+			break;
 	}
 	// this.s.floor();	// 取整后误差太大
 };

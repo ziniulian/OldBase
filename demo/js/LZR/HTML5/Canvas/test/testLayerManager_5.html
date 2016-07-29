@@ -1,6 +1,7 @@
 <html>
 	<head>
-		<title>testLayerManager</title>
+		<title>缩放限制测试</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<script src="../../../LZR.js"></script>
 
 		<script>
@@ -12,12 +13,14 @@
 					LZR.HTML5.jsPath + "HTML5/Canvas/LayerManager.js"
 				]);
 				lm = new LZR.HTML5.Canvas.LayerManager( document.getElementById("canvas") );
-				lm.init();
+				lm.autoZoom = 2;
 
 				var pic = new Image();
 				pic.onload = function() {
 					lm.addLayer (new LZR.HTML5.Canvas.Layer({name:"test", obj:pic}));
-					lm.ctrlEnable ();
+					lm.resetMax(0, 0 , 365, 266);
+					lm.init();
+					lm.ctrlEnable();
 					ctrl();
 				}
 				pic.src ="https://ziniulian.github.io/LX_JS/img/web/ReleaseS/V0/city_130400.png";
@@ -33,8 +36,8 @@
 	</head>
 
 	<body onload="init()">
-		<div style="width: 100%; margin: 50px; text-align: center">
-			<canvas id="canvas" width="350"height="250" style="background-color:yellow;">
+		<div style="width: 80%; margin: 10%; text-align: center">
+			<canvas id="canvas" width="600" height="400" style="background-color:yellow;">
 				<p>Your browserdoes not support the canvas element!</p>
 			</canvas>
 		</div>

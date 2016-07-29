@@ -19,7 +19,7 @@ LZR.Util.Graphics.Edge = function (obj) {
 
 };
 LZR.Util.Graphics.Edge.prototype.className = "LZR.Util.Graphics.Edge";
-LZR.Util.Graphics.Edge.prototype.version = "0.0.0";
+LZR.Util.Graphics.Edge.prototype.version = "0.0.1";
 
 // 重设上下宽高
 LZR.Util.Graphics.Edge.prototype.reset = function (obj) {
@@ -215,7 +215,8 @@ LZR.Util.Graphics.Edge.prototype.rrByChild = function (child) {
 // 在父类内平移
 LZR.Util.Graphics.Edge.prototype.moveInParent = function (x, y, father) {
 	this.move(x, y);
-	this.positionByParent (father);
+	// this.positionByParent (father);
+	this.positionByParentInContain (father);
 };
 
 // 在父类边框内缩放
@@ -226,6 +227,7 @@ LZR.Util.Graphics.Edge.prototype.zoomInParent = function (s, x, y, father, child
 	this.h *= s;
 	if ( s>1 ) {
 		this.rrByParent( father );
+		// this.rrByParentInContain( father );
 	} else if (s<1 ) {
 		this.rrByChild( child );
 	}
@@ -233,7 +235,8 @@ LZR.Util.Graphics.Edge.prototype.zoomInParent = function (s, x, y, father, child
 	sy *= this.h;
 	this.move (x - sx, y - sy);
 	if ( s>1 ) {
-		this.positionByParent (father);
+		// this.positionByParent (father);
+		this.positionByParentInContain (father);
 	}
 };
 
@@ -261,5 +264,107 @@ LZR.Util.Graphics.Edge.prototype.alineInParent = function (aline, father) {
 			return false;
 	}
 	return true;
+};
+
+// 位置适应父类（保证内容）
+LZR.Util.Graphics.Edge.prototype.positionByParentInContain = function (father) {
+	if (!father) {
+		father = this.parent;
+		if (!father) return false;
+	}
+
+	var d=0;
+	if (this.r < father.r) {
+		// 宽限制，高居中
+		if (this.left < father.left) {
+			this.left = father.left;
+		} else {
+			d = father.right() - this.right();
+			if (d<0) {
+				this.left += d;
+			}
+		}
+
+		if (this.h > father.h) {
+			this.top = (father.h - this.h)/2;
+		} else {
+			if (this.top < father.top) {
+				this.top = father.top;
+			} else {
+				d = father.bottom() - this.bottom();
+				if (d<0) {
+					this.top += d;
+				}
+			}
+		}
+	} else {
+		// 高限制，宽居中
+		if (this.top < father.top) {
+			this.top = father.top;
+		} else {
+			d = father.bottom() - this.bottom();
+			if (d<0) {
+				this.top += d;
+			}
+		}
+
+		if (this.w > father.w) {
+			this.left = (father.w - this.w)/2;
+		} else {
+			if (this.left < father.left) {
+				this.left = father.left;
+			} else {
+				d = father.right() - this.right();
+				if (d<0) {
+					this.left += d;
+				}
+			}
+		}
+	}
+
+};
+
+// 宽高适应父类（保证内容）
+LZR.Util.Graphics.Edge.prototype.rrByParentInContain = function (father) {
+	if (!father) {
+		father = this.parent;
+		if (!father) return false;
+	}
+
+	if (this.r < father.r) {
+		// 宽对比
+		if (this.w > father.w) {
+			this.w = father.w;
+			this.h = this.w / this.r;
+			return true;
+		}
+	} else {
+		// 高对比
+		if (this.h > father.h) {
+			this.h = father.h;
+			this.w = this.r * this.h;
+			return true;
+		}
+	}
+	return false;
+};
+
+// 在父类边框内缩放（保证内容）
+LZR.Util.Graphics.Edge.prototype.zoomInParentInContain = function (s, x, y, father, child) {
+	var sx = x/this.w;
+	var sy = y/this.h;
+	this.w *= s;
+	this.h *= s;
+	if ( s>1 ) {
+		this.rrByParentInContain( father );
+	} else if (s<1 ) {
+		this.rrByChild( child );
+	}
+	sx *= this.w;
+	sy *= this.h;
+	this.move (x - sx, y - sy);
+	if ( s>1 ) {
+		this.positionByParentInContain (father);
+	}
 };
 
