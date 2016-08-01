@@ -115,7 +115,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 		};
 
 		// 轨迹数据
-		this.initData(obj.data);
+		// this.initData(obj.data);
+		this.initData(obj.data, this.clrStr);
 
 		// 原点波纹颜色
 		if (obj.sourceColor) {
@@ -261,7 +262,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 	}
 };
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.className = "LZR.HTML5.Bp.OpenLayers.Orbit";
-LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.6";
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.version = "0.0.7";
 
 // 初始化随机颜色
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initColor = function (objColor) {
@@ -383,7 +384,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 						s.left = this.curentPosition[0] + "px";
 						s.top = (this.curentPosition[1] - this.mapH) + "px";
 						// this.onShowTitle (this.title, nodes[this.titleNdi], this.titleObi, this.titleNdi);
-						this.onShowTitle (this.title, this.oldDat[this.titleObi].grdCollection[this.titleNdi], this.titleObi, this.titleNdi);
+						this.onShowTitle (this.title, this.oldDat[this.titleObi].points[this.titleNdi], this.titleObi, this.titleNdi);
 						if (s.visibility === "hidden") {
 							s.visibility = "visible";
 						}
@@ -410,7 +411,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 		// 隐藏DIV
 		if (this.titleNdi !== -1 && this.nodeOverIndex === -1) {
 			// this.onHidTitle (this.title, this.data[this.titleObi].nodes[this.titleNdi], this.titleObi, this.titleNdi);
-			this.onHidTitle (this.title, this.oldDat[this.titleObi].grdCollection[this.titleNdi], this.titleObi, this.titleNdi);
+			this.onHidTitle (this.title, this.oldDat[this.titleObi].points[this.titleNdi], this.titleObi, this.titleNdi);
 			this.titleObi = -1;
 			this.titleNdi = -1;
 			this.title.style.visibility = "hidden";
@@ -447,6 +448,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data, clrs) {
 		this.clrStr = clrs;
 	}
 
+	this.crtNamLayer(data);
 	this.oldDat = data;
 	this.data = [];
 	this.ap = [];	// 动画参数
@@ -454,22 +456,23 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data, clrs) {
 		for (var i = 0; i<data.length; i++) {
 			var d = {};
 			d.visible = true;
-			d.zlevel = data[i].zlevel;
+			// d.zlevel = data[i].zlevel;
+			d.zlevel = data[i];
 			d.nodes = [];
-			var c = data[i].grdCollection;
+			var c = data[i].points;
 			for (var j=0; j<c.length; j++) {
 				var n = {};
 				for (var k in c[j]) {
 					n[k] = c[j][k];
 				}
-				n.lon = c[j].x;
-				n.lat = c[j].y;
+				n.lon = c[j].lon;
+				n.lat = c[j].lat;
 
 				// 计算线条的真实角度
 				if (j>0) {
 					var pn = d.nodes[j-1];
-					var y = n.y-pn.y;
-					var x = n.x-pn.x;
+					var y = n.lat-pn.lat;
+					var x = n.lon-pn.lon;
 					pn.lineAngle = Math.asin( y / Math.sqrt(y*y + x*x) );
 					if (x<0) {
 						pn.lineAngle = Math.PI - pn.lineAngle;
@@ -477,12 +480,12 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data, clrs) {
 				}
 
 				// 添加污染物信息
-				if (c[j].values) {
+				if (clrs && c[j].values) {
 					n.fom = {
-						val: c[j].values[1],
+						val: c[j].values[0],
 						// clr: "rgba(" + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", " + Math.floor(Math.random() * 255) + ", 1)"
 						// clr: "yellow"
-						clr: this.getClrByStr(c[j].values[1])
+						clr: this.getClrByStr(c[j].values[0])
 					};
 				}
 
@@ -492,6 +495,37 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.initData = function (data, clrs) {
 
 			// 动画参数
 			this.ap.push(0);
+		}
+	}
+};
+
+// 创建名字图层
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.crtNamLayer = function (dat) {
+	var i;
+	if (this.namLayer) {
+		for (i=0; i<this.namLayer.length; i++) {
+			this.map.removeLayer(this.namLayer[i]);
+		}
+	}
+	this.namLayer = [];
+	for (i=0; i<dat.length; i++) {
+		if (dat[i].name) {
+			var mark = document.createElement("div");
+			var namDiv = document.createElement("div");
+			mark.style.position = "relative";
+			mark.appendChild(namDiv);
+			namDiv.innerHTML = dat[i].name;
+			var p = ol.proj.fromLonLat([dat[i].points[0].lon, dat[i].points[0].lat]);
+			var marker = new ol.Overlay({
+				position: p,
+				// positioning: "center-center",
+				// positioning: "bottom-left",
+				positioning: "bottom-center",
+				element: mark,
+				stopEvent: false
+			});
+			this.map.addOverlay(marker);
+			this.namLayer.push(marker);
 		}
 	}
 };
