@@ -382,7 +382,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.flush = function (ctx) {
 						this.titleNdi = this.nodeOverIndex;
 						var s = this.title.style;
 						s.left = this.curentPosition[0] + "px";
-						s.top = (this.curentPosition[1] - this.mapH) + "px";
+						s.top = (this.curentPosition[1] - this.canvas.height) + "px";
 						// this.onShowTitle (this.title, nodes[this.titleNdi], this.titleObi, this.titleNdi);
 						this.onShowTitle (this.title, this.oldDat[this.titleObi].points[this.titleNdi], this.titleObi, this.titleNdi);
 						if (s.visibility === "hidden") {
@@ -515,7 +515,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.crtNamLayer = function (dat) {
 			mark.style.position = "relative";
 			mark.appendChild(namDiv);
 			namDiv.innerHTML = dat[i].name;
-			var p = ol.proj.fromLonLat([dat[i].points[0].lon, dat[i].points[0].lat]);
+			var pi = dat[i].points.length-1;
+			var p = ol.proj.fromLonLat([dat[i].points[pi].lon, dat[i].points[pi].lat]);
 			var marker = new ol.Overlay({
 				position: p,
 				// positioning: "center-center",
@@ -750,9 +751,13 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawSource = function (ctx, doRender) {
 
 // 设置轨迹是否可见
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.setVisible = function (index, visible) {
+	var n = this.namLayer[index];
 	var o = this.data[index];
 	if (o) {
 		o.visible = visible;
+	}
+	if (n) {
+		n.getElement().style.visibility = visible?"visible":"hidden";
 	}
 	if (visible) {
 		this.map.render();
