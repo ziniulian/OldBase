@@ -504,29 +504,39 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.crtNamLayer = function (dat) {
 	var i;
 	if (this.namLayer) {
 		for (i=0; i<this.namLayer.length; i++) {
-			this.map.removeLayer(this.namLayer[i]);
+			this.map.removeOverlay(this.namLayer[i]);
 		}
 	}
 	this.namLayer = [];
-	for (i=0; i<dat.length; i++) {
-		if (dat[i].name) {
-			var mark = document.createElement("div");
-			var namDiv = document.createElement("div");
-			mark.style.position = "relative";
-			mark.appendChild(namDiv);
-			namDiv.innerHTML = dat[i].name;
-			var pi = dat[i].points.length-1;
-			var p = ol.proj.fromLonLat([dat[i].points[pi].lon, dat[i].points[pi].lat]);
-			var marker = new ol.Overlay({
-				position: p,
-				// positioning: "center-center",
-				// positioning: "bottom-left",
-				positioning: "bottom-center",
-				element: mark,
-				stopEvent: false
-			});
-			this.map.addOverlay(marker);
-			this.namLayer.push(marker);
+	if (dat) {
+		for (i=0; i<dat.length; i++) {
+			if (dat[i].name) {
+				var mark = document.createElement("div");
+				var namDiv = document.createElement("div");
+				mark.style.position = "relative";
+				mark.appendChild(namDiv);
+				namDiv.innerHTML = dat[i].name;
+				var pi;
+				switch (this.showNode) {
+					case 2:
+						pi = 0;
+						break;
+					default:
+						pi = dat[i].points.length-1;
+						break;
+				}
+				var p = ol.proj.fromLonLat([dat[i].points[pi].lon, dat[i].points[pi].lat]);
+				var marker = new ol.Overlay({
+					position: p,
+					// positioning: "center-center",
+					// positioning: "bottom-left",
+					positioning: "bottom-center",
+					element: mark,
+					stopEvent: false
+				});
+				this.map.addOverlay(marker);
+				this.namLayer.push(marker);
+			}
 		}
 	}
 };

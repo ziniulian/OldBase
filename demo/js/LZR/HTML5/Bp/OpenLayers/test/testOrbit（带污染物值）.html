@@ -78,6 +78,17 @@
 				};
 				ob.init();
 
+				// 三秒后切换数据
+				setTimeout (function () {
+					// ob.setShowNode (2);
+					ob.initData (null);
+					// ob.setVisible(0, true);
+					// setTimeout (function () {
+					// 	ob.initData (data);
+					// 	// ob.setVisible(0, true);
+					// }, 3000);
+				}, 3000);
+
 				// 生成选择按钮
  				var s = new LZR.HTML5.Util.Selector ({
  					data:[
