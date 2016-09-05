@@ -2,14 +2,9 @@
 	<head>
 		<title>testWebSocket3</title>
 		<meta charset="utf-8" />
-		<script src="../../../LZR.js"></script>
 		<script>
 
  			function init(d, index, typ) {
-				LZR.HTML5.jsPath = LZR.HTML5.upPath(3);
-				LZR.HTML5.loadJs([
-					LZR.HTML5.jsPath + "util/expand/json2.js"
-				]);
 
 				var i, img;
 				var wsServer = 'ws://192.168.1.130:8901'; //服务器地址
@@ -18,7 +13,7 @@
 
 				websocket.onopen = function (evt) {
 					//已经建立连接
-					alert("onopen : ");
+					// alert("onopen : ");
 
 					// URL形式接口 抓取pm2.5预报区域形势图
 					websocket.send( JSON.stringify ({
@@ -51,7 +46,7 @@
 
 				websocket.onclose = function (evt) {
 					//已经关闭连接
-					alert("onclose : ");
+					// alert("onclose : ");
 				};
 
 				websocket.onmessage = function (evt) {
@@ -66,7 +61,7 @@
 							document.body.appendChild(img);
 							break;
 						case "5":
-							alert(evt.data);
+							// alert(evt.data);
 							break;
 						default:
 							alert("state : " + data.state);

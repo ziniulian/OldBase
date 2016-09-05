@@ -155,6 +155,9 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 		// 轨迹颜色
 		this.orbitColor = this.initColor(obj.orbitColor);
 
+		// 调整轨迹名称颜色
+		this.setNamLayerClr();
+
 		// 轨迹阴影级别
 		if (obj.orbitBlur) {
 			this.orbitBlur = obj.orbitBlur;
@@ -515,6 +518,7 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.crtNamLayer = function (dat) {
 				var namDiv = document.createElement("div");
 				mark.style.position = "relative";
 				mark.appendChild(namDiv);
+				namDiv.className = "Lc_oldBase_Orbit_namLayer";
 				namDiv.innerHTML = dat[i].name;
 				var pi;
 				switch (this.showNode) {
@@ -788,6 +792,16 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.setShowNode = function (n) {
 		this.apSource = 0;
 		if (this.sourceSpeed < 0) {
 			this.sourceSpeed *= -1;
+		}
+	}
+};
+
+// 调整轨迹名称颜色
+LZR.HTML5.Bp.OpenLayers.Orbit.prototype.setNamLayerClr = function () {
+	var i;
+	for (i=0; i<this.orbitColor.length; i++) {
+		if (this.namLayer[i]) {
+			this.namLayer[i].getElement().style.color = this.orbitColor[i];
 		}
 	}
 };
