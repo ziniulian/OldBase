@@ -707,6 +707,8 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawNode = function (nodes, ctx, index) 
 LZR.HTML5.Bp.OpenLayers.Orbit.prototype.drawOrbit = function (nodes, ctx, index) {
 	ctx.save();
 	ctx.fillStyle = this.orbitAnimationColor[index];
+	ctx.shadowColor = this.orbitShadowColor[index];
+	ctx.shadowBlur = this.orbitBlur;
 	ctx.beginPath();
 	for (i=1; i<nodes.length; i++) {
 		var x = (nodes[i].x - nodes[i-1].x) * this.ap[index] + nodes[i-1].x;

@@ -28,8 +28,7 @@
 			.Lc_oldBase_Orbit_namLayer {
 				font-size: 20px;
 				font-weight: bold;
-				/*text-shadow: 2px 2px 0 #FFF,-2px -2px 0 #FFF;*/
-				background-color: #FFF;
+				text-shadow: 1px 1px 0 #f91,-1px -1px 0 #f91;
 			}
 		</style>
 
@@ -73,16 +72,18 @@
 					orbitAnimationColor: ["white", "white", "white"],
 					nodeMin : 6,
 					nodeMax : 8,
-					orbitBlur : 5,
+					orbitBlur : 20,
 					orbitSpeed:0.01,
 					sourceColor: "yellow",
 					titleArea: 3,
 					title: title
 				});
+				ob.clrStr = null;
 				ob.onShowTitle = function (div, data, i, j) {
 					div.innerHTML = i + " , " + j + " : " + data.time;
 				};
 				ob.init();
+				ob.initData(data);
 /*
 				// 三秒后切换数据
 				setTimeout (function () {
