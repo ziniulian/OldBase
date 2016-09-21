@@ -48,6 +48,9 @@ LZR.HTML5.Bp.OpenLayers.Orbit = function (obj) {
 		// openLayers_Map
 		this.map = obj.map;
 
+		// 轨迹颜色
+		this.orbitColor = obj.orbitColor;
+
 		// 颜色参数
 		this.clrStr = {
 			"0": "245,255,255",
@@ -519,6 +522,9 @@ LZR.HTML5.Bp.OpenLayers.Orbit.prototype.crtNamLayer = function (dat) {
 				mark.style.position = "relative";
 				mark.appendChild(namDiv);
 				namDiv.className = "Lc_oldBase_Orbit_namLayer";
+				if (this.orbitColor) {
+					namDiv.style.color = this.orbitColor[i];
+				}
 				namDiv.innerHTML = dat[i].name;
 				var pi;
 				switch (this.showNode) {
