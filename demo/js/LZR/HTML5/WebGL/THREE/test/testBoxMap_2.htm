@@ -76,6 +76,26 @@
 					backColor: 0x00FFFF,
 					div: document.getElementById("box")
 				});
+/*
+				// 创建箭头
+				bm.drawArrow ([
+					[0, 0, 0, 0, 0, 300]
+				]);
+*/
+
+				// 创建随机箭头
+				var i, j, arrows = [];
+				for (i = 0; i<1000; i++) {
+					arrows[i] = [
+						Math.random() * 500 - 250,
+						Math.random() * 500 - 250,
+						Math.random() * 300,
+						Math.random() * 500 - 250,
+						Math.random() * 500 - 250,
+						Math.random() * 300
+					]
+				}
+				bm.drawArrow(arrows);
 
 				// 创建透明度控制条
 				bm.initCtrl (document.getElementById("scroll"), "scroll_strip", "scroll_btn noselect");

@@ -37,7 +37,7 @@ LZR.HTML5.WebGL.Three.BoxMap = function (obj) {
 	this.max = 0;
 };
 LZR.HTML5.WebGL.Three.BoxMap.prototype.className = "LZR.HTML5.WebGL.Three.BoxMap";
-LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.3";
+LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.4";
 
 // 初始化地图
 LZR.HTML5.WebGL.Three.BoxMap.prototype.initMap = function() {
@@ -316,4 +316,29 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.flush = function (imgUrl) {
 		this.map.obj.material.map = THREE.ImageUtils.loadTexture (imgUrl.map);
 		this.map.data = imgUrl.map;
 	}
+};
+
+// 画箭头
+LZR.HTML5.WebGL.Three.BoxMap.prototype.drawArrow = function (dat) {
+	var d, i, l;
+	this.wb.removeMesh( "arrow");
+	this.arrow = new THREE.Mesh();
+
+	for (i=0; i<dat.length; i++) {
+		d = new THREE.Vector3((dat[i][3] - dat[i][0]), (dat[i][4] - dat[i][1]), (dat[i][5] - dat[i][2]));
+		l = d.length();
+		this.arrow.add(new THREE.ArrowHelper(
+			d.normalize(),
+			new THREE.Vector3(dat[i][0], dat[i][1], dat[i][2]),
+			l,
+			0xFFFF00
+		));
+	}
+
+	this.wb.appendMesh( "arrow",  this.arrow);
+};
+
+// 清空箭头
+LZR.HTML5.WebGL.Three.BoxMap.prototype.clearArrow = function () {
+	this.wb.removeMesh( "arrow");
 };
