@@ -1,0 +1,259 @@
+<html>
+	<head>
+		<title>地图盒子测试（带3D风场）</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<style type="text/css">
+			html, body {
+				width: 100%;
+				height: 100%;
+				padding: 0;
+				margin: 0;
+			}
+			.box {
+				width: 100%;
+				height: 100%;
+			}
+			.ctrl {
+				position: absolute;
+				right: 20px;
+				top: 20px;
+				/*font-size: 0;*/
+			}
+			.grid {
+				display: inline-block;
+				vertical-align: top;
+				width: 30px;
+				height: 30px;
+				/*margin: 5px;*/
+
+				line-height: 30px;
+				font-family: "微软雅黑";
+				font-size: 20px;
+				text-align: center;
+
+				background-color: yellow;
+			}
+			.scroll {
+				position: absolute;
+				right: 21px;
+				top: 50px;
+			}
+			.scroll_strip {
+				position: absolute;
+				width: 10px;
+				height: 200px;
+				background-color:#0F0;
+			}
+			.scroll_btn {
+				width: 32px;
+				height: 32px;
+				line-height: 32px;
+				font-family: "微软雅黑";
+				font-size: 20px;
+				text-align: center;
+				background-color:#FF0;
+			}
+			.noselect {
+				/*文字不被选中*/
+				-webkit-user-select:none;
+				-moz-user-select:none;
+				-ms-user-select:none;
+				user-select:none;
+				cursor: pointer;
+			}
+			.nosee {
+				display: none;
+			}
+
+			.wind {
+				position: absolute;
+				right: 10px;
+				bottom: 10px;
+			}
+
+			.wind .arrow {
+				width: 50px;
+				height: 30px;
+				margin: 0 0 10px 0;
+				text-align: center;
+				line-height: 30px;
+				background-color: yellow;
+			}
+		</style>
+		<script src="../../../../LZR.js"></script>
+		<script>
+ 			function init() {
+				LZR.HTML5.jsPath = LZR.HTML5.upPath(4);
+				LZR.HTML5.loadJs([
+					LZR.HTML5.jsPath + "HTML5/util/Ajax.js",
+					LZR.HTML5.jsPath + "HTML5/WebGL/THREE/BoxMap.js"
+				]);
+
+				var bm = new LZR.HTML5.WebGL.Three.BoxMap();
+				bm.init({
+					backColor: 0x00FFFF,
+					div: document.getElementById("box")
+				});
+/*
+				// 创建箭头
+				bm.drawArrow2 ([
+					[0, 0, 100, 100, 200, 350]
+				]);
+*/
+/*
+				// 创建随机箭头
+				var i, j, arrows = [];
+				for (i = 0; i<1000; i++) {
+					arrows[i] = [
+						Math.random() * 1000 - 500,
+						Math.random() * 1000 - 500,
+						Math.random() * 500,
+						Math.random() * 1000 - 500,
+						Math.random() * 1000 - 500,
+						Math.random() * 500
+					]
+				}
+				bm.drawArrow2(arrows);
+*/
+
+				// 创建箭头
+				bm.drawArrow(getWindDat(10, 10, 1, 1000, 1000), "a1");
+				bm.drawArrow(getWindDat(10, 10, 2, 1000, 1000), "a2");
+				bm.drawArrow(getWindDat(10, 10, 3, 1000, 1000), "a3");
+				bm.drawArrow(getWindDat(10, 10, 4, 1000, 1000), "a4");
+				bm.drawArrow(getWindDat(10, 10, 5, 1000, 1000), "a5");
+				bm.drawArrow(getWindDat(10, 10, 6, 1000, 1000), "a6");
+				bm.drawArrow(getWindDat(10, 10, 7, 1000, 1000), "a7");
+				bm.drawArrow(getWindDat(10, 10, 8, 1000, 1000), "a8");
+				bm.drawArrow(getWindDat(10, 10, 9, 1000, 1000), "a9");
+				bm.drawArrow(getWindDat(10, 10, 10, 1000, 1000), "a10");
+				bm.drawArrow(getWindDat(10, 10, 11, 1000, 1000), "a11");
+				bm.drawArrow(getWindDat(10, 10, 12, 1000, 1000), "a12");
+
+				// 创建透明度控制条
+				bm.initCtrl (document.getElementById("scroll"), "scroll_strip", "scroll_btn noselect");
+
+				// 刷新图片
+				bm.flush({
+					top: "data/map.jpg",	// 图片（Base64）
+					east: "data/map.jpg",	// 图片（Base64）
+					south: "data/map.jpg",	// 图片（Base64）
+					west: "data/map.jpg",	// 图片（Base64）
+					north: "data/map.jpg",	// 图片（Base64）
+					map: "data/map.jpg"
+				});
+
+				// 显示控制条
+				var barEx = true;	// 控制条是否展开
+				var showBar = function(bm, facNam) {
+					if (barEx) {
+						for (var s in bm.box.ctrl) {
+							if (s === facNam) {
+								bm.setCamera(s);
+								bm.box.ctrl[s].strip.style.display = "";
+								document.getElementById(s).style.display = "";
+							} else {
+								bm.box.ctrl[s].strip.style.display = "none";
+								document.getElementById(s).style.display = "none";
+							}
+						}
+						barEx = false;
+					} else {
+						for (var s in bm.box.ctrl) {
+							document.getElementById(s).style.display = "";
+						}
+						barEx = true;
+					}
+				};
+				showBar(bm, "south");
+				for (var s in bm.box.ctrl) {
+					var d = document.getElementById(s);
+					d.onclick = LZR.bind(d, showBar, bm, s);
+				}
+
+				// 画图片
+				bm.drawPlan("data/map.jpg", 100, "p1");
+				bm.drawPlan("data/map.jpg", 200, "p2");
+
+			}
+
+			// 获取风场数据
+			function getWindDat(r, c, z, w, h) {
+				// 数据
+				var i, j, ox, dx, oy, dy, l, u, v;
+				var d = [];
+				ox = -w / 2;
+				oy = -h / 2;
+				dx = w / (c-1);
+				dy = h / (r-1);
+				for (i=0; i<r; i++) {
+					for (j=0; j<c; j++) {
+						d.push([
+							ox + j * dx,
+							oy + i * dy,
+							z*25
+						])
+					}
+				}
+				// console.log (d);
+
+				// 路径
+				var url = "http://192.168.1.130/gisserverv0010/api/GrdHandler/getWindData?model=naqpms&isAverage=true&prediction=1&zone=1&pTime=2015-07-03%2000&cTime=2015-07-03%2006&lonmin=113.93920898437499&latmin=38.1410373664433&lonmax=118.05908203124999&latmax=39.84861229610175";
+				url += "&rowNo=" + r;
+				url += "&columnNo=" + c;
+				url += "&z=" + z;
+
+				var aj = new LZR.HTML5.Util.Ajax ();
+				var txt = aj.get(url);
+				var od = JSON.parse( txt );
+				// console.log (od);
+
+				for (i=0; i<d.length; i++) {
+					if (od[i]) {
+						u = od[i][2];
+						v = od[i][3];
+						l = Math.sqrt( u*u + v*v );
+						u /= l;
+						v /= l;
+						d[i][3] = u;
+						d[i][4] = v;
+						d[i][5] = 0;
+						d[i][6] = l * 3;
+					}
+				}
+				// console.log (d);
+
+				return d;
+			}
+		</script>
+	</head>
+
+	<body onload="init()">
+		<div id="box" class="box">
+			<div class="ctrl">
+				<div>
+					<div id="east" class="grid noselect">东</div>
+					<div id="south" class="grid noselect">南</div>
+					<div id="west" class="grid noselect">西</div>
+					<div id="north" class="grid noselect">北</div>
+					<div id="top" class="grid noselect">上</div>
+				</div>
+				<div id="scroll" class="scroll"></div>
+			</div>
+		</div>
+		<div class="wind">
+			<div class="arrow">12层</div>
+			<div class="arrow">11层</div>
+			<div class="arrow">10层</div>
+			<div class="arrow">9层</div>
+			<div class="arrow">8层</div>
+			<div class="arrow">7层</div>
+			<div class="arrow">6层</div>
+			<div class="arrow">5层</div>
+			<div class="arrow">4层</div>
+			<div class="arrow">3层</div>
+			<div class="arrow">2层</div>
+			<div class="arrow">1层</div>
+		</div>
+	</body>
+</html>

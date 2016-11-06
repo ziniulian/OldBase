@@ -37,7 +37,7 @@ LZR.HTML5.WebGL.Three.BoxMap = function (obj) {
 	this.max = 0;
 };
 LZR.HTML5.WebGL.Three.BoxMap.prototype.className = "LZR.HTML5.WebGL.Three.BoxMap";
-LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.4";
+LZR.HTML5.WebGL.Three.BoxMap.prototype.version = "0.0.5";
 
 // 初始化地图
 LZR.HTML5.WebGL.Three.BoxMap.prototype.initMap = function() {
@@ -318,27 +318,75 @@ LZR.HTML5.WebGL.Three.BoxMap.prototype.flush = function (imgUrl) {
 	}
 };
 
-// 画箭头
-LZR.HTML5.WebGL.Three.BoxMap.prototype.drawArrow = function (dat) {
+// 画箭头（两点式）
+LZR.HTML5.WebGL.Three.BoxMap.prototype.drawArrow2 = function (dat) {
 	var d, i, l;
 	this.wb.removeMesh( "arrow");
-	this.arrow = new THREE.Mesh();
+	var arrow = new THREE.Mesh();
 
 	for (i=0; i<dat.length; i++) {
 		d = new THREE.Vector3((dat[i][3] - dat[i][0]), (dat[i][4] - dat[i][1]), (dat[i][5] - dat[i][2]));
 		l = d.length();
-		this.arrow.add(new THREE.ArrowHelper(
+		arrow.add(new THREE.ArrowHelper(
 			d.normalize(),
 			new THREE.Vector3(dat[i][0], dat[i][1], dat[i][2]),
 			l,
-			0xFFFF00
+			0xFF0000
 		));
 	}
 
-	this.wb.appendMesh( "arrow",  this.arrow);
+	this.wb.appendMesh("arrow",  arrow);
+};
+
+// 画箭头
+LZR.HTML5.WebGL.Three.BoxMap.prototype.drawArrow = function (dat, nam) {
+	this.wb.removeMesh(nam);
+	var arrow = new THREE.Mesh();
+
+	for (var i=0; i<dat.length; i++) {
+		arrow.add(new THREE.ArrowHelper(
+			new THREE.Vector3(dat[i][3], dat[i][4], dat[i][5]),
+			new THREE.Vector3(dat[i][0], dat[i][1], dat[i][2]),
+			dat[i][6],
+			0xFF0000,
+			0.3 * dat[i][6],
+			0.22 * dat[i][6]
+		));
+	}
+
+	this.wb.appendMesh(nam,  arrow);
 };
 
 // 清空箭头
-LZR.HTML5.WebGL.Three.BoxMap.prototype.clearArrow = function () {
-	this.wb.removeMesh( "arrow");
+LZR.HTML5.WebGL.Three.BoxMap.prototype.clearArrow = function (nam) {
+	this.wb.removeMesh (nam);
+};
+
+// 画平面
+LZR.HTML5.WebGL.Three.BoxMap.prototype.drawPlan = function (img, z, nam) {
+	this.wb.removeMesh(nam);
+
+	var g = new THREE.PlaneGeometry(this.map.w, this.map.h);
+	g.vertices[0].x = -this.center.x;
+	g.vertices[0].y = this.center.y;
+	g.vertices[0].z = z;
+	g.vertices[1].x = this.map.w - this.center.x;
+	g.vertices[1].y = this.center.y;
+	g.vertices[1].z = z;
+	g.vertices[2].x = -this.center.x;
+	g.vertices[2].y = this.center.y - this.map.h;
+	g.vertices[2].z = z;
+	g.vertices[3].x = this.map.w - this.center.x;
+	g.vertices[3].y = this.center.y - this.map.h;
+	g.vertices[3].z = z;
+
+	var m = new THREE.Mesh (
+		g,
+		new THREE.MeshBasicMaterial ({
+			map:THREE.ImageUtils.loadTexture (img),
+			side:THREE.DoubleSide
+		})
+	);
+
+	this.wb.appendMesh(nam,  m);
 };
